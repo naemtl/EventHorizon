@@ -12,7 +12,7 @@ let url =
 MongoClient.connect(url, { useNewUrlParser: true }, (err, db) => {
   dbo = db.db("event-horizon");
 });
-
+//test
 reloadMagic(app);
 
 app.use("/", express.static("build")); // Needed for the HTML and JS files
