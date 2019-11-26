@@ -29,6 +29,7 @@
     "chokidar": "^3.0.0",
     "cookie-parser": "^1.4.4",
     "express": "^4.16.4",
+    "mongodb": "^3.3.4",
     "react-redux": "^6.0.1",
     "redux": "^4.0.4",
     "shelljs": "^0.8.3",
