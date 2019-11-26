@@ -1,7 +1,7 @@
 let express = require("express");
 let app = express();
 let reloadMagic = require("./reload-magic.js");
-let MongoClient = require("mongodb".MongoClient);
+let MongoClient = require("mongodb").MongoClient;
 let ObjectID = require("mongodb").ObjectID;
 let multer = require("multer");
 let upload = multer({ dest: __dirname + "/uploads/" });
@@ -24,13 +24,9 @@ app.use("/", express.static("public")); // Needed for local assets
 
 // SIGNUP
 
-app.post("/signup", upload.none(), (req, res, dbo) => {
+app.post("/signup", upload.none(), (req, res) => {
   console.log("signup endpoint hit", req.body);
-  let username = req.body.username;
-  let password = req.body.password;
-  let email = req.body.email;
-  let province = req.body.province;
-  let accountType = req.body.accountType;
+  let { username, password, email, province, accountType } = req.body;
 
   // if any field is missing, signup failed
   if (
@@ -40,24 +36,15 @@ app.post("/signup", upload.none(), (req, res, dbo) => {
     province === undefined ||
     accountType === undefined
   ) {
-    res.send(JSON.stringify({ success: false }));
+    res.json({ success: false }); // same as res.send(JSON.stringify({ success: false })
     return;
   }
-  // dbo.standardUsers.aggregate([  ASK ABOUT LOOKUP
-  //   {
-  //     $lookup: {
-  //       from: "businessUsers",
-  //       localField: "username",
-  //       foreignField: "username",
-  //       as: "usernames"
-  //     }
-  //   }
-  // ]);
-  dbo.collection(users).findOne({ email }, (err, user) => {
+
+  dbo.collection("users").findOne({ email }, (err, user) => {
     if (err) {
       // if db returns error, signup process is terminated
       console.log("There was an error on signup: ", err);
-      return res.send(JSON.stringify({ success: false }));
+      return res.json({ success: false });
     }
 
     if (user !== null) {
@@ -65,14 +52,16 @@ app.post("/signup", upload.none(), (req, res, dbo) => {
       console.log("Username is taken");
       return res.send(JSON.stringify({ success: false, err }));
     }
-    // if no error and username is free, add data to collection
-    dbo.collection(users).insertOne({
-      // should I add messages and event listings to user collection...? I don't know about that...
+    // if no error and username is free, add new user data to collection
+    dbo.collection("users").insertOne({
       username,
       password,
       email,
       province,
-      accountType
+      accountType,
+      avatar: undefined,
+      blockUser: [],
+      friendsList: []
     });
     res.send(
       JSON.stringify({
@@ -82,10 +71,50 @@ app.post("/signup", upload.none(), (req, res, dbo) => {
           password,
           email,
           province,
-          accountType
+          accountType,
+          avatar: undefined,
+          blockUser: [],
+          friendsList: []
         }
       })
     );
+  });
+});
+
+app.post("/login", upload.none(), (req, res) => {
+  console.log("login endpoint hit", req.body);
+  let username = req.body.username;
+  let enteredPassword = req.body.password;
+  console.log("credentials: ", username, enteredPassword);
+
+  if (username === undefined || enteredPassword === undefined) {
+    return res.send(JSON.stringify({ success: false }));
+  }
+  dbo.collection("users").findOne({ username }, (err, foundUser) => {
+    if (err) {
+      // if db throws error, end login process
+      console.log("There was an error at login: ", err);
+      return res.send(JSON.stringify({ success: false, err }));
+    }
+    if (foundUser === null) {
+      // if user doesn't exist, return error
+      return res.send(JSON.stringify({ success: false, err }));
+    }
+    if (foundUser.password === enteredPassword) {
+      console.log("Login successful");
+
+      // if passwords match, login is successful and sessionID is generated
+      let sid = generateSID();
+      dbo
+        .collection("sessions")
+        .insertOne({ sid, userId: user._id }, (err, insertedSession) => {
+          if (err) {
+            return res.send(JSON.stringify({ success: false }));
+          }
+          res.cookie("sid", sid);
+          return res.send(JSON.stringify({ success: true, user }));
+        });
+    }
   });
 });
 // Your endpoints go before this line
