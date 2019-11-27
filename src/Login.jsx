@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
+import { Link, withRouter } from "react-router-dom";
 
 class UnconnectedLogin extends Component {
   constructor(props) {
@@ -44,6 +45,7 @@ class UnconnectedLogin extends Component {
     window.alert("Log-in successful");
     console.log("Log-in successful");
     this.props.dispatch({ type: "login-success", user: this.state.user });
+    this.props.history.push("/");
   };
 
   render = () => {
@@ -67,11 +69,14 @@ class UnconnectedLogin extends Component {
           />
           <input type="submit" />
         </form>
+        <Link to="/signup">
+          <button>Sign up</button>
+        </Link>
       </div>
     );
   };
 }
 
-let Login = connect()(UnconnectedLogin);
+let Login = connect()(withRouter(UnconnectedLogin));
 
 export default Login;

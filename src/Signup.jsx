@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
+import { withRouter } from "react-router-dom";
 
 class UnconnectedSignup extends Component {
   constructor(props) {
@@ -59,6 +60,7 @@ class UnconnectedSignup extends Component {
       type: "login-success",
       user: parsed.user
     });
+    this.props.history.push("/");
   };
 
   render = () => {
@@ -124,6 +126,6 @@ class UnconnectedSignup extends Component {
   };
 }
 
-let Signup = connect()(UnconnectedSignup);
+let Signup = connect()(withRouter(UnconnectedSignup));
 
 export default Signup;

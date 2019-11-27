@@ -70,9 +70,12 @@ app.post("/signup", upload.none(), (req, res) => {
       email,
       province,
       accountType,
+      isAdmin: false,
+      isBanned: false,
       avatar: undefined,
       blockUser: [],
-      friendsList: []
+      friendsList: [],
+      myGenres: []
     });
     res.send(
       JSON.stringify({
@@ -83,9 +86,13 @@ app.post("/signup", upload.none(), (req, res) => {
           email,
           province,
           accountType,
+          isAdmin: false,
+          isBanned: false,
           avatar: undefined,
           blockUser: [],
-          friendsList: []
+          friendsList: [],
+          following: [],
+          myGenres: []
         }
       })
     );
@@ -118,31 +125,49 @@ app.post("/login", upload.none(), (req, res) => {
       let sid = generateSID();
       dbo
         .collection("sessions")
-        .insertOne({ sid, userId: user._id }, (err, session) => {
-          if (err) {
-            return res.send(JSON.stringify({ success: false }));
+        .insertOne(
+          { sid, userId: user._id, expirationDate: Date.now() + 86400000 },
+          (err, session) => {
+            if (err) {
+              return res.send(JSON.stringify({ success: false }));
+            }
+            res.cookie("sid", sid, { maxAge: 86400000 });
+            // TODO add 'secure: true' to cookie options when site hosted
+            return res.send(JSON.stringify({ success: true, user }));
           }
-          res.cookie("sid", sid, { maxAge: 86400000 });
-          // TODO add 'secure: true' to cookie options when site hosted
-          return res.send(JSON.stringify({ success: true, user }));
-        });
+        );
     }
   });
 });
 
-// app.post("/auto-login", upload.none(), (req, res) => {
-//   let sid = parseInt(req.cookies.sid);
-//   console.log("sid: ", sid);
-//   dbo.collection("sessions").findOne({ sid }, (err, sid) => {
-//     if (err || sid === null) {
-//       return res.json({ success: false });
-//     }
+app.post("/auto-login", upload.none(), (req, res) => {
+  let sid = parseInt(req.cookies.sid);
+  console.log("sid: ", sid);
+  dbo.collection("sessions").findOne({ sid }, (err, session) => {
+    if (err || session === null) {
+      return res.json({ success: false });
+    }
 
-//     if (sid !== null) {
-
-//     }
-//   });
-// });
+    if (session !== null) {
+      dbo
+        .collection("users")
+        .findOne({ _id: ObjectID(session.userId) }, (err, user) => {
+          if (err) {
+            console.log("Something is wrong...");
+            return res.json({ success: false });
+          }
+          console.log("active user: ", user);
+          return res.json({ success: true, user });
+        });
+      // dbo
+      //   .collection(signupType)
+      //   .findOne({ username: sid.username }, (err, user) => {
+      //     console.log("user: ", user);
+      //     return res.send(JSON.stringify({ success: true, user }));
+      //   });
+    }
+  });
+});
 
 // Your endpoints go before this line
 
@@ -154,3 +179,5 @@ app.all("/*", (req, res, next) => {
 app.listen(4000, "0.0.0.0", () => {
   console.log("Server running on port 4000");
 });
+
+// NOTES: create isBanned & isAdmin (bool) properties on every user
