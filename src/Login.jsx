@@ -6,7 +6,8 @@ class UnconnectedLogin extends Component {
     super(props);
     this.state = {
       username: "",
-      password: ""
+      password: "",
+      user: undefined
     };
   }
 
@@ -20,9 +21,29 @@ class UnconnectedLogin extends Component {
     this.setState({ password: event.target.value });
   };
 
-  handleSubmit = event => {
+  handleSubmit = async event => {
     event.preventDefault();
+    console.log("login form submitted");
     let data = new FormData();
+    data.append("username", this.state.username);
+    data.append("password", this.state.password);
+    let response = await fetch("/login", {
+      method: "POST",
+      body: data
+    });
+    let responseBody = await response.text();
+    let parsed = JSON.parse(responseBody);
+    console.log("parsed response from login endpoint: ", parsed);
+    if (!parsed.success) {
+      window.alert("Log-in failed, check your credentials");
+      return;
+    }
+    console.log("USER ************", parsed.user);
+
+    this.setState({ username: "", password: "", user: parsed.user });
+    window.alert("Log-in successful");
+    console.log("Log-in successful");
+    this.props.dispatch({ type: "login-success", user: this.state.user });
   };
 
   render = () => {

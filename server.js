@@ -1,24 +1,35 @@
+// load libraries
+
 let express = require("express");
-let app = express();
-let reloadMagic = require("./reload-magic.js");
+let multer = require("multer");
 let MongoClient = require("mongodb").MongoClient;
 let ObjectID = require("mongodb").ObjectID;
-let multer = require("multer");
+let cookieParser = require("cookie-parser");
+let reloadMagic = require("./reload-magic.js");
+
+// initialize libraries
+
+let app = express();
 let upload = multer({ dest: __dirname + "/uploads/" });
+app.use("/", express.static("build")); // Needed for the HTML and JS files
+app.use("/", express.static("public")); // Needed for local assets
 app.use("/uploads", express.static("uploads"));
+app.use(cookieParser());
+reloadMagic(app);
+
+// mongo setup
+
 let dbo = undefined;
 let url =
   "mongodb+srv://mstinis:eR5w+i^<*A@cluster0-xb9sp.mongodb.net/test?retryWrites=true&w=majority";
 MongoClient.connect(url, { useNewUrlParser: true }, (err, db) => {
   dbo = db.db("EventHorizon");
 });
+
+// globals
 let generateSID = () => {
   return Math.floor(Math.random() * 100000000);
 };
-reloadMagic(app);
-
-app.use("/", express.static("build")); // Needed for the HTML and JS files
-app.use("/", express.static("public")); // Needed for local assets
 
 // Your endpoints go after this line
 
@@ -90,33 +101,49 @@ app.post("/login", upload.none(), (req, res) => {
   if (username === undefined || enteredPassword === undefined) {
     return res.send(JSON.stringify({ success: false }));
   }
-  dbo.collection("users").findOne({ username }, (err, foundUser) => {
+  dbo.collection("users").findOne({ username }, (err, user) => {
     if (err) {
       // if db throws error, end login process
       console.log("There was an error at login: ", err);
       return res.send(JSON.stringify({ success: false, err }));
     }
-    if (foundUser === null) {
+    if (user === null) {
       // if user doesn't exist, return error
       return res.send(JSON.stringify({ success: false, err }));
     }
-    if (foundUser.password === enteredPassword) {
+    if (user.password === enteredPassword) {
       console.log("Login successful");
 
       // if passwords match, login is successful and sessionID is generated
       let sid = generateSID();
       dbo
         .collection("sessions")
-        .insertOne({ sid, userId: user._id }, (err, insertedSession) => {
+        .insertOne({ sid, userId: user._id }, (err, session) => {
           if (err) {
             return res.send(JSON.stringify({ success: false }));
           }
-          res.cookie("sid", sid);
+          res.cookie("sid", sid, { maxAge: 86400000 });
+          // TODO add 'secure: true' to cookie options when site hosted
           return res.send(JSON.stringify({ success: true, user }));
         });
     }
   });
 });
+
+// app.post("/auto-login", upload.none(), (req, res) => {
+//   let sid = parseInt(req.cookies.sid);
+//   console.log("sid: ", sid);
+//   dbo.collection("sessions").findOne({ sid }, (err, sid) => {
+//     if (err || sid === null) {
+//       return res.json({ success: false });
+//     }
+
+//     if (sid !== null) {
+
+//     }
+//   });
+// });
+
 // Your endpoints go before this line
 
 app.all("/*", (req, res, next) => {
