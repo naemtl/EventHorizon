@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
+import { Link } from "react-router-dom";
 
 class UnconnectedEventCard extends Component {
   constructor(props) {
@@ -9,11 +10,7 @@ class UnconnectedEventCard extends Component {
     };
   }
 
-  componentDidMount = () => {
-    this.getAllEvents();
-  };
-
-  getAllEvents = async () => {
+  componentDidMount = async () => {
     let response = await fetch("/render-events", {
       method: "POST"
     });
@@ -23,6 +20,9 @@ class UnconnectedEventCard extends Component {
     this.setState({ events: parsed.events });
   };
 
+  // TODO: pass entire user object here when you can.
+  // store all users who own events in the store and access them
+
   render = () => {
     console.log("TEST****************************** COMPONENT");
 
@@ -30,9 +30,11 @@ class UnconnectedEventCard extends Component {
       <div className="flex">
         {this.state.events.map(event => {
           return (
-            <div>
+            <div className="card-padding">
               <div>{event.title}</div>
-              <div>{event.host}</div>
+              <div>
+                <Link to={"/user/" + event.hostId}>{event.hostId}</Link>
+              </div>
               <div>{event.description}</div>
               <div>{event.date}</div>
               <div>{event.time}</div>
@@ -46,6 +48,12 @@ class UnconnectedEventCard extends Component {
   };
 }
 
-let EventCard = connect()(UnconnectedEventCard);
+let mapStateToProps = state => {
+  return {
+    user: state.user
+  };
+};
+
+let EventCard = connect(mapStateToProps)(UnconnectedEventCard);
 
 export default EventCard;

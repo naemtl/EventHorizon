@@ -24,8 +24,8 @@ class UnconnectedNavbar extends Component {
         </Link>
         {!this.props.isLoggedIn && <Link to="/login">Log in</Link>}
         {this.props.isLoggedIn && (
-          <div>
-            <div>{this.props.user.username}</div>
+          <div className="flex space-between">
+            <Link to={"/my-dashboard"}>{this.props.user.username}</Link>
             <button onClick={this.logout}>Log out</button>
             <Link to="/create-event">Create Event</Link>
           </div>

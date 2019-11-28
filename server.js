@@ -64,36 +64,41 @@ app.post("/signup", upload.none(), (req, res) => {
       return res.send(JSON.stringify({ success: false, err }));
     }
     // if no error and username is free, add new user data to collection
-    dbo.collection("users").insertOne({
-      username,
-      password,
-      email,
-      province,
-      accountType,
-      isAdmin: false,
-      isBanned: false,
-      avatar: undefined,
-      blockUser: [],
-      friendsList: [],
-      myGenres: []
-    });
-    res.send(
-      JSON.stringify({
-        success: true,
-        user: {
-          username,
-          password,
-          email,
-          province,
-          accountType,
-          isAdmin: false,
-          isBanned: false,
-          avatar: undefined,
-          blockUser: [],
-          friendsList: [],
-          myGenres: []
-        }
-      })
+    dbo.collection("users").insertOne(
+      {
+        username,
+        password,
+        email,
+        province,
+        accountType,
+        isAdmin: false,
+        isBanned: false,
+        avatar: undefined,
+        blockUser: [],
+        friendsList: [],
+        myGenres: []
+      },
+      (err, doc) => {
+        res.send(
+          JSON.stringify({
+            success: true,
+            user: {
+              userId: doc.ops[0]._id,
+              username,
+              password,
+              email,
+              province,
+              accountType,
+              isAdmin: false,
+              isBanned: false,
+              avatar: undefined,
+              blockUser: [],
+              friendsList: [],
+              myGenres: []
+            }
+          })
+        );
+      }
     );
   });
 });
@@ -155,7 +160,7 @@ app.post("/auto-login", upload.none(), (req, res) => {
             console.log("Something is wrong...");
             return res.json({ success: false });
           }
-          console.log("active user: ", user);
+          console.log("active user: ", user.username);
           return res.json({ success: true, user });
         });
     }
@@ -165,10 +170,10 @@ app.post("/auto-login", upload.none(), (req, res) => {
 app.post("/new-event", upload.single("img"), (req, res) => {
   console.log("new event endpoint hit");
   let file = req.file;
-  let { title, host, description, date, time, city, location } = req.body;
+  let { title, hostId, description, date, time, city, location } = req.body;
   if (
     title === undefined ||
-    host === undefined ||
+    hostId === undefined ||
     description === undefined ||
     date === undefined ||
     time === undefined ||
@@ -189,7 +194,7 @@ app.post("/new-event", upload.single("img"), (req, res) => {
       }
       dbo.collection("eventListings").insertOne({
         title,
-        host,
+        hostId,
         description,
         date,
         time,
@@ -206,7 +211,6 @@ app.post("/new-event", upload.single("img"), (req, res) => {
 
 app.post("/render-events", (req, res) => {
   console.log("render-events endpoint hit");
-  console.log("TEST****************************** ENDPOINT");
 
   dbo
     .collection("eventListings")
@@ -218,6 +222,21 @@ app.post("/render-events", (req, res) => {
       }
       return res.json({ events });
     });
+});
+
+app.post("/render-user", upload.none(), (req, res) => {
+  let userId = req.body.uid;
+  dbo.collection("users").findOne({ _id: ObjectID(userId) }, (err, user) => {
+    if (err) {
+      console.log("Error in render-user");
+      return res.json({ success: false });
+    }
+    if (user === null || user === undefined) {
+      console.log("user not found");
+      return res.json({ success: false });
+    }
+    return res.json({ success: true, user });
+  });
 });
 
 // Your endpoints go before this line

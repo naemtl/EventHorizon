@@ -6,6 +6,8 @@ import Login from "./Login.jsx";
 import Signup from "./Signup.jsx";
 import Navbar from "./Navbar.jsx";
 import CreateEvent from "./CreateEvent.jsx";
+import UserProfile from "./UserProfile.jsx";
+import UserDashboard from "./UserDashboard.jsx";
 
 class UnconnectedApp extends Component {
   constructor(props) {
@@ -16,11 +18,15 @@ class UnconnectedApp extends Component {
       method: "POST"
     });
     let responseBody = await response.text();
-    console.log("autologin resbody*******", responseBody);
     let parsed = JSON.parse(responseBody);
     if (parsed.success) {
       this.props.dispatch({ type: "login-success", user: parsed.user });
     }
+  };
+
+  renderUserProfile = routerData => {
+    let userId = routerData.match.params.uid;
+    return <UserProfile id={userId} />;
   };
 
   render = () => {
@@ -40,6 +46,16 @@ class UnconnectedApp extends Component {
           <Route path="/create-event" exact={true}>
             <CreateEvent />
           </Route>
+          <Route
+            path="/user/:uid"
+            exact={true}
+            render={this.renderUserProfile}
+          />
+          <Route
+            path="/my-dashboard"
+            exact={true}
+            component={UserDashboard}
+          ></Route>
         </BrowserRouter>
       </>
     );
