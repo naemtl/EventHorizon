@@ -91,7 +91,6 @@ app.post("/signup", upload.none(), (req, res) => {
           avatar: undefined,
           blockUser: [],
           friendsList: [],
-          following: [],
           myGenres: []
         }
       })
@@ -159,14 +158,63 @@ app.post("/auto-login", upload.none(), (req, res) => {
           console.log("active user: ", user);
           return res.json({ success: true, user });
         });
-      // dbo
-      //   .collection(signupType)
-      //   .findOne({ username: sid.username }, (err, user) => {
-      //     console.log("user: ", user);
-      //     return res.send(JSON.stringify({ success: true, user }));
-      //   });
     }
   });
+});
+
+app.post("/new-event", upload.single("img"), (req, res) => {
+  console.log("new event endpoint hit");
+  let file = req.file;
+  let { title, description, date, time, city, location } = req.body;
+  if (
+    title === undefined ||
+    description === undefined ||
+    date === undefined ||
+    time === undefined ||
+    city === undefined ||
+    location === undefined
+  ) {
+    console.log("failed event, you fucking failure");
+    res.json({ success: false });
+    return;
+  }
+
+  dbo
+    .collection("eventListings")
+    .findOne({ _id: ObjectID() }, (err, listing) => {
+      if (err) {
+        console.log("There was an error on event creation: ", err);
+        return res.json({ success: false });
+      }
+      dbo.collection("eventListings").insertOne({
+        title,
+        description,
+        date,
+        time,
+        city,
+        location,
+        file,
+        comments: [],
+        isFeatured: false
+      });
+      res.json({ success: true });
+    });
+});
+
+app.post("/render-events", (req, res) => {
+  console.log("render-events endpoint hit");
+  console.log("TEST****************************** ENDPOINT");
+
+  dbo
+    .collection("eventListings")
+    .find({})
+    .toArray((err, events) => {
+      if (err) {
+        console.log("Error getting event listings: ", err);
+        return res.json({ success: false });
+      }
+      return res.json({ events });
+    });
 });
 
 // Your endpoints go before this line

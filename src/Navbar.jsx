@@ -22,18 +22,12 @@ class UnconnectedNavbar extends Component {
         <Link to="/">
           <img src="/images/logo.png" alt="EventHorizon logo" height="50px" />
         </Link>
-        {!this.props.isLoggedIn && (
-          <button>
-            <Link to="/login">Log in</Link>
-          </button>
-        )}
+        {!this.props.isLoggedIn && <Link to="/login">Log in</Link>}
         {this.props.isLoggedIn && (
           <div>
             <div>{this.props.user.username}</div>
             <button onClick={this.logout}>Log out</button>
-            <button>
-              <Link to="/create-event">Create Event</Link>
-            </button>
+            <Link to="/create-event">Create Event</Link>
           </div>
         )}
       </nav>

@@ -44,9 +44,29 @@ class UnconnectedCreateEvent extends Component {
     this.setState({ banner: event.target.value });
   };
 
-  handleSubmit = event => {
+  handleSubmit = async event => {
     event.preventDefault();
     console.log("New event form submission");
+    let data = new FormData();
+    data.append("title", this.state.title);
+    data.append("description", this.state.description);
+    data.append("date", this.state.date);
+    data.append("time", this.state.time);
+    data.append("city", this.state.city);
+    data.append("location", this.state.location);
+    data.append("img", this.state.banner);
+    let response = await fetch("/new-event", {
+      method: "POST",
+      body: data
+    });
+    let responseBody = await response.text();
+    let parsed = JSON.parse(responseBody);
+    console.log("parsed response from new-event endpoint: ", parsed);
+    if (!parsed.success) {
+      window.alert("Your event could not be created.");
+      return;
+    }
+    window.alert("Event created.");
   };
 
   render = () => {
@@ -77,7 +97,7 @@ class UnconnectedCreateEvent extends Component {
           />
           <label htmlFor="eventStartTime">Start time</label>
           <input
-            type="text"
+            type="time"
             id="eventStartTime"
             value={this.state.time}
             onChange={this.handleTimeChange}
