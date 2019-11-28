@@ -27,11 +27,12 @@ class UnconnectedEventCard extends Component {
     console.log("TEST****************************** COMPONENT");
 
     return (
-      <>
+      <div className="flex">
         {this.state.events.map(event => {
           return (
             <div>
               <div>{event.title}</div>
+              <div>{event.host}</div>
               <div>{event.description}</div>
               <div>{event.date}</div>
               <div>{event.time}</div>
@@ -40,7 +41,7 @@ class UnconnectedEventCard extends Component {
             </div>
           );
         })}
-      </>
+      </div>
     );
   };
 }

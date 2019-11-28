@@ -165,9 +165,10 @@ app.post("/auto-login", upload.none(), (req, res) => {
 app.post("/new-event", upload.single("img"), (req, res) => {
   console.log("new event endpoint hit");
   let file = req.file;
-  let { title, description, date, time, city, location } = req.body;
+  let { title, host, description, date, time, city, location } = req.body;
   if (
     title === undefined ||
+    host === undefined ||
     description === undefined ||
     date === undefined ||
     time === undefined ||
@@ -188,6 +189,7 @@ app.post("/new-event", upload.single("img"), (req, res) => {
       }
       dbo.collection("eventListings").insertOne({
         title,
+        host,
         description,
         date,
         time,
@@ -195,7 +197,8 @@ app.post("/new-event", upload.single("img"), (req, res) => {
         location,
         file,
         comments: [],
-        isFeatured: false
+        isFeatured: false,
+        isSpam: false
       });
       res.json({ success: true });
     });

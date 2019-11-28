@@ -18,7 +18,7 @@ class UnconnectedNavbar extends Component {
 
   render = () => {
     return (
-      <nav>
+      <nav className="flex space-between">
         <Link to="/">
           <img src="/images/logo.png" alt="EventHorizon logo" height="50px" />
         </Link>
