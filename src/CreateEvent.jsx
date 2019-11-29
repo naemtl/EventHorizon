@@ -50,6 +50,7 @@ class UnconnectedCreateEvent extends Component {
     let data = new FormData();
     data.append("title", this.state.title);
     data.append("hostId", this.props.user.userId);
+    data.append("host", this.props.user.username);
     data.append("description", this.state.description);
     data.append("date", this.state.date);
     data.append("time", this.state.time);

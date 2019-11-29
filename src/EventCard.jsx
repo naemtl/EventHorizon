@@ -33,7 +33,7 @@ class UnconnectedEventCard extends Component {
             <div className="card-padding">
               <div>{event.title}</div>
               <div>
-                <Link to={"/user/" + event.hostId}>{event.hostId}</Link>
+                <Link to={"/user/" + event.hostId}>{event.host}</Link>
               </div>
               <div>{event.description}</div>
               <div>{event.date}</div>

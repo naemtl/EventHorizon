@@ -170,7 +170,16 @@ app.post("/auto-login", upload.none(), (req, res) => {
 app.post("/new-event", upload.single("img"), (req, res) => {
   console.log("new event endpoint hit");
   let file = req.file;
-  let { title, hostId, description, date, time, city, location } = req.body;
+  let {
+    title,
+    hostId,
+    host,
+    description,
+    date,
+    time,
+    city,
+    location
+  } = req.body;
   if (
     title === undefined ||
     hostId === undefined ||
@@ -195,6 +204,7 @@ app.post("/new-event", upload.single("img"), (req, res) => {
       dbo.collection("eventListings").insertOne({
         title,
         hostId,
+        host,
         description,
         date,
         time,

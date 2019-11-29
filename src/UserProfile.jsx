@@ -27,7 +27,8 @@ class UnconnectedUserProfile extends Component {
     return (
       <div>
         <div>{this.state.viewedUser.username}</div>
-        <div></div>
+        <div>{this.state.viewedUser.province}</div>
+        <div>{this.state.viewedUser.email}</div>
         <div>Send a message to this user</div>
       </div>
     );
