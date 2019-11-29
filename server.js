@@ -37,7 +37,16 @@ let generateSID = () => {
 
 app.post("/signup", upload.none(), (req, res) => {
   console.log("signup endpoint hit", req.body);
-  let { username, password, email, province, accountType } = req.body;
+  let {
+    username,
+    password,
+    email,
+    province,
+    myCategories,
+    accountType
+  } = req.body;
+
+  myCategories = JSON.parse(myCategories);
 
   // if any field is missing, signup failed
   if (
@@ -76,7 +85,7 @@ app.post("/signup", upload.none(), (req, res) => {
         avatar: undefined,
         blockUser: [],
         friendsList: [],
-        myGenres: []
+        myCategories
       },
       (err, doc) => {
         res.send(
@@ -94,7 +103,7 @@ app.post("/signup", upload.none(), (req, res) => {
               avatar: undefined,
               blockUser: [],
               friendsList: [],
-              myGenres: []
+              myCategories
             }
           })
         );
@@ -173,13 +182,14 @@ app.post("/new-event", upload.single("img"), (req, res) => {
   let {
     title,
     hostId,
-    host,
     description,
     date,
     time,
     city,
-    location
+    location,
+    categories
   } = req.body;
+  categories = JSON.parse(categories);
   if (
     title === undefined ||
     hostId === undefined ||
@@ -204,13 +214,13 @@ app.post("/new-event", upload.single("img"), (req, res) => {
       dbo.collection("eventListings").insertOne({
         title,
         hostId,
-        host,
         description,
         date,
         time,
         city,
         location,
         file,
+        categories,
         comments: [],
         isFeatured: false,
         isSpam: false
@@ -230,7 +240,28 @@ app.post("/render-events", (req, res) => {
         console.log("Error getting event listings: ", err);
         return res.json({ success: false });
       }
-      return res.json({ events });
+      let userIds = events.map(event => {
+        return event.hostId;
+      });
+      dbo
+        .collection("users")
+        .find({})
+        .toArray((err, users) => {
+          if (err) {
+            console.log(
+              "error getting users from event listings endpoint: ",
+              err
+            );
+            res.json({ success: false });
+          }
+          let hosts = users.filter(user => {
+            //console.log("host IDSSSSS", typeof user._id.toString(), userIds);
+            return userIds.includes(user._id.toString());
+          });
+          //console.log("HOSTS: ", hosts);
+
+          return res.json({ success: true, events, hosts });
+        });
     });
 });
 
