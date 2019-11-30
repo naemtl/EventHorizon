@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { Link, withRouter } from "react-router-dom";
+import { Link, withRouter, Redirect } from "react-router-dom";
 
 class UnconnectedLogin extends Component {
   constructor(props) {
@@ -49,6 +49,9 @@ class UnconnectedLogin extends Component {
   };
 
   render = () => {
+    if (this.props.isLoggedIn) {
+      return <Redirect to="/" />;
+    }
     return (
       <div>
         <h2>Log in below</h2>
@@ -77,6 +80,12 @@ class UnconnectedLogin extends Component {
   };
 }
 
-let Login = connect()(withRouter(UnconnectedLogin));
+let mapStateToProps = state => {
+  return {
+    isLoggedIn: state.loggedIn
+  };
+};
+
+let Login = connect(mapStateToProps)(withRouter(UnconnectedLogin));
 
 export default Login;

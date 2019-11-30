@@ -17,35 +17,34 @@ class UnconnectedCreateEvent extends Component {
     };
   }
 
-  handleTitleChange = event => {
+  titleChangeHandler = event => {
     console.log("new input value: ", event.target.value);
     this.setState({ title: event.target.value });
   };
-  handleDescChange = event => {
+  descChangeHandler = event => {
     console.log("new input value: ", event.target.value);
     this.setState({ description: event.target.value });
   };
-  handleDateChange = event => {
+  dateChangeHandler = event => {
     console.log("new input value: ", event.target.value);
     this.setState({ date: event.target.value });
   };
-  handleTimeChange = event => {
+  timeChangeHandler = event => {
     console.log("new input value: ", event.target.value);
     this.setState({ time: event.target.value });
   };
-  handleCityChange = event => {
+  cityChangeHandler = event => {
     console.log("new input value: ", event.target.value);
     this.setState({ city: event.target.value });
   };
-  handleLocationChange = event => {
+  locationChangeHandler = event => {
     console.log("new input value: ", event.target.value);
     this.setState({ location: event.target.value });
   };
-  handleBannerChange = event => {
-    console.log("new input value: ", event.target.value);
-    this.setState({ banner: event.target.value });
+  bannerChangeHandler = event => {
+    console.log("new input value: ", event.target.files[0]);
+    this.setState({ banner: event.target.files[0] });
   };
-
   categoryChangeHandler = event => {
     console.log("new categories: ", event.target.name);
     if (this.state.categories.includes(event.target.name)) {
@@ -108,49 +107,49 @@ class UnconnectedCreateEvent extends Component {
               type="text"
               id="eventTitle"
               value={this.state.title}
-              onChange={this.handleTitleChange}
+              onChange={this.titleChangeHandler}
             />
             <label htmlFor="eventDesc">Description</label>
             <input
               type="text"
               id="eventDesc"
               value={this.state.description}
-              onChange={this.handleDescChange}
+              onChange={this.descChangeHandler}
             />
             <label htmlFor="eventDate">Date</label>
             <input
               type="date"
               id=""
               value={this.state.date}
-              onChange={this.handleDateChange}
+              onChange={this.dateChangeHandler}
             />
             <label htmlFor="eventStartTime">Start time</label>
             <input
               type="time"
               id="eventStartTime"
               value={this.state.time}
-              onChange={this.handleTimeChange}
+              onChange={this.timeChangeHandler}
             />
             <label htmlFor="city">City</label>
             <input
               type="text"
               id="city"
               value={this.state.city}
-              onChange={this.handleCityChange}
+              onChange={this.cityChangeHandler}
             />
             <label htmlFor="location">Location</label>
             <input
               type="text"
               id="location"
               value={this.state.location}
-              onChange={this.handleLocationChange}
+              onChange={this.locationChangeHandler}
             />
             <label htmlFor="banner">Banner</label>
             <input
               type="file"
               id="banner"
-              value={this.state.banner}
-              onChange={this.handleBannerChange}
+              //value={this.state.banner}
+              onChange={this.bannerChangeHandler}
             />
             <div>Select event categories</div>
             {/* TAGS */}

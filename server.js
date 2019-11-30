@@ -212,6 +212,7 @@ app.post("/new-event", upload.single("img"), (req, res) => {
     categories
   } = req.body;
   categories = JSON.parse(categories);
+  let frontendPath = "/uploads/" + file.filename;
   if (
     title === undefined ||
     hostId === undefined ||
@@ -241,7 +242,7 @@ app.post("/new-event", upload.single("img"), (req, res) => {
         time,
         city,
         location,
-        file,
+        frontendPath,
         categories,
         comments: [],
         isFeatured: false,
