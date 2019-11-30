@@ -222,7 +222,23 @@ app.post("/auto-login", upload.none(), (req, res) => {
             return res.json({ success: false });
           }
           console.log("active user: ", user.username);
-          return res.json({ success: true, user });
+          return res.json({
+            success: true,
+            user: {
+              userId: user._id,
+              username: user.username,
+              password: user.password,
+              email: user.email,
+              province: user.province,
+              accountType: user.accountType,
+              isAdmin: user.isAdmin,
+              isBanned: user.isBanned,
+              avatar: user.avatar,
+              blockUser: user.blockUser,
+              friendsList: user.friendsList,
+              myCategories: user.myCategories
+            }
+          });
         });
     }
   });
