@@ -31,10 +31,31 @@ let generateSID = () => {
   return Math.floor(Math.random() * 100000000);
 };
 
-// Your endpoints go after this line
+// CLEAR EXPIRED COOKIES
+setInterval(() => {
+  // map all sessions to an array
+  dbo
+    .collection("sessions")
+    .find({})
+    .toArray((err, sessions) => {
+      if (err) {
+        console.log("error getting sessions from database: ", err);
+        return;
+      }
+      let expiredSessions = [];
+      // evaluate if sessions are expired, if so -> push session ID to expiredSessions array
+      sessions.forEach(session => {
+        if (session.expirationDate < Date.now()) {
+          expiredSessions.push(session._id);
+        }
+      });
+      console.log("expired SESH", expiredSessions);
+      // delete all entries in sessions that match the _id's in my expiredSessions array
+      dbo.collection("sessions").deleteMany({ _id: { $in: expiredSessions } });
+    });
+}, 600000);
 
 // SIGNUP
-
 app.post("/signup", upload.none(), (req, res) => {
   console.log("signup endpoint hit", req.body);
   let {
@@ -88,7 +109,7 @@ app.post("/signup", upload.none(), (req, res) => {
         myCategories
       },
       (err, doc) => {
-        res.send(
+        return res.send(
           JSON.stringify({
             success: true,
             user: {
@@ -127,7 +148,7 @@ app.post("/login", upload.none(), (req, res) => {
       console.log("There was an error at login: ", err);
       return res.send(JSON.stringify({ success: false, err }));
     }
-    if (user === null) {
+    if (user === null || user.password !== enteredPassword) {
       // if user doesn't exist, return error
       return res.send(JSON.stringify({ success: false, err }));
     }
@@ -146,17 +167,32 @@ app.post("/login", upload.none(), (req, res) => {
             }
             res.cookie("sid", sid, { maxAge: 86400000 });
             // TODO add 'secure: true' to cookie options when site hosted
-            return res.send(JSON.stringify({ success: true, user }));
+            console.log("LOGIN USER*****", user);
+
+            return res.send(
+              JSON.stringify({
+                success: true,
+                user: {
+                  userId: user._id,
+                  username: user.username,
+                  password: user.password,
+                  email: user.email,
+                  province: user.province,
+                  accountType: user.accountType,
+                  isAdmin: user.isAdmin,
+                  isBanned: user.isBanned,
+                  avatar: user.avatar,
+                  blockUser: user.blockUser,
+                  friendsList: user.friendsList,
+                  myCategories: user.myCategories
+                }
+              })
+            );
           }
         );
     }
   });
 });
-
-// TODO: fix logout
-// See below. When I reload/refresh the page after logout, I am automatically logged in again despite my attempt to destroy my session
-// Richard The T.C.
-// Fixed when using findOneAndDelete... lol
 
 app.post("/logout", upload.none(), (req, res) => {
   let sid = parseInt(req.cookies.sid);
@@ -165,12 +201,6 @@ app.post("/logout", upload.none(), (req, res) => {
     if (err) {
       return res.json({ success: false, err });
     }
-    // dbo.collection("sessions").deleteOne({ session });
-    // // Check out my spaghetti
-    // // res.clearCookie(sid.toString());
-    // // //res.clearCookie(session.sid);
-    // // console.log("after clearCookie ", sid);
-    // console.log("after delete session: ", session);
     return res.json({ success: true });
   });
 });

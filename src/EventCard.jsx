@@ -83,6 +83,7 @@ class UnconnectedEventCard extends Component {
               <div>{event.time}</div>
               <div>{event.location}</div>
               <div>{event.city}</div>
+              <div>{event.categories.join(", ")}</div>
             </div>
           );
         })}
