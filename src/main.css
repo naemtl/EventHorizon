@@ -1,6 +1,7 @@
 body {
   background-color: #bbb;
   margin: 0;
+  font-family: monospace;
 }
 
 .overlay {
