@@ -11,7 +11,17 @@ class UnconnectedNavbar extends Component {
     };
   }
 
-  logout = () => {
+  logout = async () => {
+    // TODO: fix logout
+    let response = await fetch("/logout", {
+      method: "POST"
+    });
+    let responseBody = await response.text();
+    let parsed = JSON.parse(responseBody);
+    if (!parsed.success) {
+      console.log("cannot logout/clear session", parsed.err);
+      return;
+    }
     this.props.dispatch({ type: "logout-success" });
     this.props.history.push("/");
   };

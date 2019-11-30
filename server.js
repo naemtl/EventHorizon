@@ -153,6 +153,28 @@ app.post("/login", upload.none(), (req, res) => {
   });
 });
 
+// TODO: fix logout
+// See below. When I reload/refresh the page after logout, I am automatically logged in again despite my attempt to destroy my session
+// Richard The T.C.
+// Fixed when using findOneAndDelete... lol
+
+app.post("/logout", upload.none(), (req, res) => {
+  let sid = parseInt(req.cookies.sid);
+  console.log("sid: ", sid);
+  dbo.collection("sessions").findOneAndDelete({ sid }, (err, session) => {
+    if (err) {
+      return res.json({ success: false, err });
+    }
+    // dbo.collection("sessions").deleteOne({ session });
+    // // Check out my spaghetti
+    // // res.clearCookie(sid.toString());
+    // // //res.clearCookie(session.sid);
+    // // console.log("after clearCookie ", sid);
+    // console.log("after delete session: ", session);
+    return res.json({ success: true });
+  });
+});
+
 app.post("/auto-login", upload.none(), (req, res) => {
   let sid = parseInt(req.cookies.sid);
   console.log("sid: ", sid);

@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { withRouter } from "react-router-dom";
+import { withRouter, Redirect } from "react-router-dom";
 
 class UnconnectedSignup extends Component {
   constructor(props) {
@@ -80,6 +80,9 @@ class UnconnectedSignup extends Component {
   };
 
   render = () => {
+    if (this.props.isLoggedIn) {
+      return <Redirect to="/" />;
+    }
     return (
       <div>
         <h2>Sign up below</h2>
@@ -246,7 +249,6 @@ class UnconnectedSignup extends Component {
           </div>
           {/* <div>Miscellaneous social events</div>
           <div></div> */}
-
           <input type="submit" />
         </form>
       </div>
@@ -254,6 +256,12 @@ class UnconnectedSignup extends Component {
   };
 }
 
-let Signup = connect()(withRouter(UnconnectedSignup));
+let mapStateToProps = state => {
+  return {
+    isLoggedIn: state.loggedIn
+  };
+};
+
+let Signup = connect(mapStateToProps)(withRouter(UnconnectedSignup));
 
 export default Signup;
