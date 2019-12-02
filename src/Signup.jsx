@@ -11,6 +11,7 @@ class UnconnectedSignup extends Component {
       confirmPassword: "",
       email: "",
       province: "Quebec",
+      avatar: undefined,
       accountType: "",
       myCategories: []
     };
@@ -33,6 +34,11 @@ class UnconnectedSignup extends Component {
   emailChangeHandler = event => {
     console.log("new email input change: ", event.target.value);
     this.setState({ email: event.target.value });
+  };
+
+  avatarChangeHandler = event => {
+    console.log("new avatar file: ", event.target.files[0]);
+    this.setState({ avatar: event.target.files[0] });
   };
 
   accountTypeHandler = event => {
@@ -67,6 +73,7 @@ class UnconnectedSignup extends Component {
     data.append("password", this.state.password);
     data.append("email", this.state.email);
     data.append("province", this.state.province);
+    data.append("img", this.state.avatar);
     data.append("myCategories", JSON.stringify(this.state.myCategories));
     data.append("accountType", this.state.accountType);
     console.log("Singup FormData: ", data);
@@ -137,6 +144,12 @@ class UnconnectedSignup extends Component {
             value={this.state.province}
             required
             disabled
+          />
+          <label for="signAvatar">Avatar</label>
+          <input
+            id="signAvatar"
+            type="file"
+            onChange={this.avatarChangeHandler}
           />
           <span>Account Type: </span>
           <label htmlFor="standardAccountType">Standard</label>

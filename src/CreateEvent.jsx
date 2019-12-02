@@ -12,7 +12,7 @@ class UnconnectedCreateEvent extends Component {
       time: "",
       city: "",
       location: "",
-      banner: null,
+      banner: undefined,
       categories: []
     };
   }
@@ -148,7 +148,6 @@ class UnconnectedCreateEvent extends Component {
             <input
               type="file"
               id="banner"
-              //value={this.state.banner}
               onChange={this.bannerChangeHandler}
             />
             <div>Select event categories</div>

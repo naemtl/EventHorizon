@@ -37,15 +37,11 @@ class UnconnectedNavbar extends Component {
           <div className="flex space-between">
             <Link to={"/my-dashboard"}>
               <div>
-                {this.props.user.avatar !== null ? (
-                  <img src={this.props.user.avatar} alt="default image" />
-                ) : (
-                  <img
-                    src="/images/default-avatar.png"
-                    alt="default image"
-                    width="40px"
-                  />
-                )}
+                <img
+                  src={this.props.user.avatar}
+                  alt="user avatar"
+                  width="40px"
+                />
                 {this.props.user.username}
               </div>
             </Link>

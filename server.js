@@ -56,8 +56,9 @@ setInterval(() => {
 }, 600000);
 
 // SIGNUP
-app.post("/signup", upload.none(), (req, res) => {
+app.post("/signup", upload.single("img"), (req, res) => {
   console.log("signup endpoint hit", req.body);
+  let file = req.file;
   let {
     username,
     password,
@@ -66,7 +67,12 @@ app.post("/signup", upload.none(), (req, res) => {
     myCategories,
     accountType
   } = req.body;
-
+  let frontendPath;
+  if (file !== undefined) {
+    frontendPath = "/uploads/" + file.filename;
+  } else {
+    frontendPath = "/images/default-avatar.png";
+  }
   myCategories = JSON.parse(myCategories);
 
   // if any field is missing, signup failed
@@ -103,7 +109,7 @@ app.post("/signup", upload.none(), (req, res) => {
         accountType,
         isAdmin: false,
         isBanned: false,
-        avatar: undefined,
+        avatar: frontendPath,
         blockUser: [],
         friendsList: [],
         myCategories
@@ -121,7 +127,7 @@ app.post("/signup", upload.none(), (req, res) => {
               accountType,
               isAdmin: false,
               isBanned: false,
-              avatar: undefined,
+              avatar: frontendPath,
               blockUser: [],
               friendsList: [],
               myCategories
@@ -259,7 +265,7 @@ app.post("/new-event", upload.single("img"), (req, res) => {
   } = req.body;
   categories = JSON.parse(categories);
   let frontendPath;
-  if (req.file !== undefined) {
+  if (file !== undefined) {
     frontendPath = "/uploads/" + file.filename;
   } else {
     frontendPath = "/images/default-banner.png";
@@ -293,7 +299,7 @@ app.post("/new-event", upload.single("img"), (req, res) => {
         time,
         city,
         location,
-        frontendPath,
+        banner: frontendPath,
         categories,
         comments: [],
         isFeatured: false,
