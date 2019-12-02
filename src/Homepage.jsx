@@ -18,7 +18,9 @@ class UnconnectedHomepage extends Component {
         <div>
           <h3>Featured events</h3>
           <div>
-            <EventCard />
+            <Link to={"/event/"}>
+              <EventCard />
+            </Link>
           </div>
           {/*
           <h3>Staff picks</h3>

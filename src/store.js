@@ -2,7 +2,8 @@ import { createStore } from "redux";
 
 let initialState = {
   loggedIn: false,
-  user: undefined
+  user: undefined,
+  eventIds: []
 };
 
 let reducer = (state, action) => {
@@ -24,6 +25,12 @@ let reducer = (state, action) => {
     return {
       ...state,
       user: action.user
+    };
+  }
+  if (action.type === "get-eventIds") {
+    return {
+      ...state,
+      eventIds: action.eventIds
     };
   }
   return state;

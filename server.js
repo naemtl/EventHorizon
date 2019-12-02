@@ -335,6 +335,25 @@ app.post("/render-events", (req, res) => {
     });
 });
 
+app.post("/event-ids", (req, res) => {
+  console.log("event-ids endpoint hit");
+  dbo
+    .collection("eventListings")
+    .find({})
+    .toArray((err, events) => {
+      if (err) {
+        console.log("Error getting event listings: ", err);
+        res.json({ success: false });
+        return;
+      }
+      let eventIds = events.map(event => {
+        console.log("single event from event-ids endpoint: ", event);
+        return event._id;
+      });
+      res.json({ success: true, eventIds });
+    });
+});
+
 app.post("/render-user", upload.none(), (req, res) => {
   console.log("RENDER USER HIT", req.body.uid);
 
