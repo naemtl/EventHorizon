@@ -35,7 +35,20 @@ class UnconnectedNavbar extends Component {
         {!this.props.isLoggedIn && <Link to="/login">Log in</Link>}
         {this.props.isLoggedIn && (
           <div className="flex space-between">
-            <Link to={"/my-dashboard"}>{this.props.user.username}</Link>
+            <Link to={"/my-dashboard"}>
+              <div>
+                {this.props.user.avatar !== null ? (
+                  <img src={this.props.user.avatar} alt="default image" />
+                ) : (
+                  <img
+                    src="/images/default-avatar.png"
+                    alt="default image"
+                    width="40px"
+                  />
+                )}
+                {this.props.user.username}
+              </div>
+            </Link>
             <button onClick={this.logout}>Log out</button>
             <Link to="/create-event">Create Event</Link>
           </div>

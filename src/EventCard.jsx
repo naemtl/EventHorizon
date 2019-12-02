@@ -68,11 +68,19 @@ class UnconnectedEventCard extends Component {
           return (
             <div className="card-padding">
               <div>
-                <img
-                  src={event.frontendPath}
-                  alt="event banner"
-                  width="100px"
-                />
+                {event.frontendPath !== null ? (
+                  <img
+                    src={event.frontendPath}
+                    alt="event banner"
+                    width="100px"
+                  />
+                ) : (
+                  <img
+                    src="/images/default-banner.png"
+                    alt="event banner"
+                    width="100px"
+                  />
+                )}
               </div>
               <div>{event.title}</div>
               <div>
