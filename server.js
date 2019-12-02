@@ -115,24 +115,40 @@ app.post("/signup", upload.single("img"), (req, res) => {
         myCategories
       },
       (err, doc) => {
-        return res.send(
-          JSON.stringify({
-            success: true,
-            user: {
-              userId: doc.ops[0]._id,
-              username,
-              password,
-              email,
-              province,
-              accountType,
-              isAdmin: false,
-              isBanned: false,
-              avatar: frontendPath,
-              blockUser: [],
-              friendsList: [],
-              myCategories
+        let sid = generateSID();
+        dbo.collection("sessions").insertOne(
+          {
+            sid,
+            userId: doc.ops[0]._id,
+            expirationDate: Date.now() + 86400000
+          },
+          (err, session) => {
+            if (err) {
+              return res.send(JSON.stringify({ success: false }));
             }
-          })
+            res.cookie("sid", sid, { maxAge: 86400000 });
+            // TODO add 'secure: true' to cookie options when site hosted
+            console.log("SIGNUP USER*****", user);
+            return res.send(
+              JSON.stringify({
+                success: true,
+                user: {
+                  _id: doc.ops[0]._id,
+                  username,
+                  password,
+                  email,
+                  province,
+                  accountType,
+                  isAdmin: false,
+                  isBanned: false,
+                  avatar: frontendPath,
+                  blockUser: [],
+                  friendsList: [],
+                  myCategories
+                }
+              })
+            );
+          }
         );
       }
     );
@@ -178,20 +194,7 @@ app.post("/login", upload.none(), (req, res) => {
             return res.send(
               JSON.stringify({
                 success: true,
-                user: {
-                  userId: user._id,
-                  username: user.username,
-                  password: user.password,
-                  email: user.email,
-                  province: user.province,
-                  accountType: user.accountType,
-                  isAdmin: user.isAdmin,
-                  isBanned: user.isBanned,
-                  avatar: user.avatar,
-                  blockUser: user.blockUser,
-                  friendsList: user.friendsList,
-                  myCategories: user.myCategories
-                }
+                user
               })
             );
           }
@@ -230,20 +233,7 @@ app.post("/auto-login", upload.none(), (req, res) => {
           console.log("active user: ", user.username);
           return res.json({
             success: true,
-            user: {
-              userId: user._id,
-              username: user.username,
-              password: user.password,
-              email: user.email,
-              province: user.province,
-              accountType: user.accountType,
-              isAdmin: user.isAdmin,
-              isBanned: user.isBanned,
-              avatar: user.avatar,
-              blockUser: user.blockUser,
-              friendsList: user.friendsList,
-              myCategories: user.myCategories
-            }
+            user
           });
         });
     }
@@ -346,6 +336,8 @@ app.post("/render-events", (req, res) => {
 });
 
 app.post("/render-user", upload.none(), (req, res) => {
+  console.log("RENDER USER HIT", req.body.uid);
+
   let userId = req.body.uid;
   dbo.collection("users").findOne({ _id: ObjectID(userId) }, (err, user) => {
     if (err) {
@@ -358,6 +350,25 @@ app.post("/render-user", upload.none(), (req, res) => {
     }
     return res.json({ success: true, user });
   });
+});
+
+app.post("/update-avatar", upload.single("img"), (req, res) => {
+  console.log("update-avatar endpoint hit");
+  let file = req.file;
+  let userId = req.body.userId;
+  let frontendPath = "/uploads/" + file.filename;
+  dbo
+    .collection("users")
+    .updateOne(
+      { _id: ObjectID(userId) },
+      { $set: { avatar: frontendPath } },
+      (err, user) => {
+        if (err || user === null) {
+          return res.json({ success: false, err });
+        }
+        return res.json({ success: true });
+      }
+    );
 });
 
 app.post("/update-username", upload.none(), (req, res) => {
@@ -373,7 +384,11 @@ app.post("/update-username", upload.none(), (req, res) => {
         if (err || user === null) {
           return res.json({ success: false, err });
         }
-        return res.json({ success: true });
+        console.log("user document on update", user);
+
+        return res.json({
+          success: true
+        });
       }
     );
 });

@@ -6,12 +6,64 @@ class UnconnectedUserProfile extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      newAvatar: undefined,
       newUsername: "",
       newPassword: "",
       confirmNewPassword: "",
       newEmail: ""
     };
   }
+
+  renderUser = async () => {
+    let dataRenderUser = new FormData();
+    dataRenderUser.append("uid", this.props.user._id);
+    let responseRenderUser = await fetch("/render-user", {
+      method: "POST",
+      body: dataRenderUser
+    });
+    let responseBodyRenderUser = await responseRenderUser.text();
+    let parsedRenderUser = JSON.parse(responseBodyRenderUser);
+    console.log(
+      "parsedRenderUser body of render-user endpoint: ",
+      parsedRenderUser
+    );
+    this.setState({
+      newAvatar: undefined,
+      newUsername: "",
+      newPassword: "",
+      confirmNewPassword: "",
+      newEmail: ""
+    });
+    console.log("PARSED USER", parsedRenderUser.user);
+
+    this.props.dispatch({ type: "update-user", user: parsedRenderUser.user });
+  };
+
+  newAvatarChangeHandler = event => {
+    console.log("new Avatar change input value: ", event.target.files[0]);
+    this.setState({ newAvatar: event.target.files[0] });
+  };
+
+  newAvatarSubmitHandler = async event => {
+    event.preventDefault();
+    console.log("Avatar change form submitted");
+    let data = new FormData();
+    data.append("userId", this.props.user._id);
+    data.append("img", this.state.newAvatar);
+    let response = await fetch("/update-avatar", {
+      method: "POST",
+      body: data
+    });
+    let responseBody = await response.text();
+    let parsed = JSON.parse(responseBody);
+    console.log("parsed body from update-avatar endpoint: ", parsed);
+    if (parsed.success) {
+      this.renderUser();
+      window.alert("Avatar updated successfully");
+      return;
+    }
+    window.alert("Something went wrong");
+  };
 
   newUsernameChangeHandler = event => {
     console.log("new username change input value: ", event.target.value);
@@ -22,7 +74,7 @@ class UnconnectedUserProfile extends Component {
     event.preventDefault();
     console.log("username change form submitted");
     let data = new FormData();
-    data.append("userId", this.props.user.userId);
+    data.append("userId", this.props.user._id);
     data.append("username", this.state.newUsername);
     let response = await fetch("/update-username", {
       method: "POST",
@@ -32,7 +84,7 @@ class UnconnectedUserProfile extends Component {
     let parsed = JSON.parse(responseBody);
     console.log("parsed body from update-username endpoint: ", parsed);
     if (parsed.success) {
-      this.setState({ newUsername: "" });
+      this.renderUser();
       window.alert("Username updated successfully");
       return;
     }
@@ -61,7 +113,7 @@ class UnconnectedUserProfile extends Component {
       return;
     }
     let data = new FormData();
-    data.append("userId", this.props.user.userId);
+    data.append("userId", this.props.user._id);
     data.append("password", this.state.newPassword);
     let response = await fetch("/update-password", {
       method: "POST",
@@ -88,7 +140,7 @@ class UnconnectedUserProfile extends Component {
     event.preventDefault();
     console.log("email change form submitted");
     let data = new FormData();
-    data.append("userId", this.props.user.userId);
+    data.append("userId", this.props.user._id);
     data.append("email", this.state.newEmail);
     let response = await fetch("/update-email", {
       method: "POST",
@@ -98,7 +150,7 @@ class UnconnectedUserProfile extends Component {
     let parsed = JSON.parse(responseBody);
     console.log("parsed response from update-email endpoint", parsed);
     if (parsed.success) {
-      this.setState({ newEmail: "" });
+      this.renderUser();
       window.alert("Email updated successfully");
       return;
     }
@@ -119,6 +171,11 @@ class UnconnectedUserProfile extends Component {
             <div>{this.props.user.blockUser}</div>
             <div>{this.props.user.friendsList}</div>
           </div>
+          <div>Change avatar</div>
+          <form onSubmit={this.newAvatarSubmitHandler}>
+            <input type="file" onChange={this.newAvatarChangeHandler} />
+            <input type="submit" />
+          </form>
           <div>Change username</div>
           <form onSubmit={this.newUsernameSubmitHandler}>
             <input

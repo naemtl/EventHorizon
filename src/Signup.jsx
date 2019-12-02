@@ -262,6 +262,14 @@ class UnconnectedSignup extends Component {
               checked={this.state.myCategories.includes("Post Punk/New Wave")}
               onChange={this.categoryChangeHandler}
             />
+            <label htmlFor="pop">Pop</label>
+            <input
+              name="Pop"
+              type="checkbox"
+              id="pop"
+              checked={this.state.myCategories.includes("Pop")}
+              onChange={this.categoryChangeHandler}
+            />
             <label htmlFor="rave">Rave</label>
             <input
               name="Rave"

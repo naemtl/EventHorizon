@@ -20,6 +20,12 @@ let reducer = (state, action) => {
       user: undefined
     };
   }
+  if (action.type === "update-user") {
+    return {
+      ...state,
+      user: action.user
+    };
+  }
   return state;
 };
 

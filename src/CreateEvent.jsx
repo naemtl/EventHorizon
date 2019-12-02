@@ -64,7 +64,7 @@ class UnconnectedCreateEvent extends Component {
     console.log("New event form submission");
     let data = new FormData();
     data.append("title", this.state.title);
-    data.append("hostId", this.props.user.userId);
+    data.append("hostId", this.props.user._id);
     data.append("description", this.state.description);
     data.append("date", this.state.date);
     data.append("time", this.state.time);
@@ -110,8 +110,9 @@ class UnconnectedCreateEvent extends Component {
               onChange={this.titleChangeHandler}
             />
             <label htmlFor="eventDesc">Description</label>
-            <input
-              type="text"
+            <textarea
+              rows="10"
+              cols="20"
               id="eventDesc"
               value={this.state.description}
               onChange={this.descChangeHandler}
@@ -232,6 +233,14 @@ class UnconnectedCreateEvent extends Component {
                 type="checkbox"
                 id="metal"
                 checked={this.state.categories.includes("Metal")}
+                onChange={this.categoryChangeHandler}
+              />
+              <label htmlFor="pop">Pop</label>
+              <input
+                name="Pop"
+                type="checkbox"
+                id="pop"
+                checked={this.state.categories.includes("Pop")}
                 onChange={this.categoryChangeHandler}
               />
               <label htmlFor="postPunk">Post Punk/New Wave</label>
