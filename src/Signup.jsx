@@ -8,6 +8,7 @@ class UnconnectedSignup extends Component {
     this.state = {
       username: "",
       password: "",
+      confirmPassword: "",
       email: "",
       province: "Quebec",
       accountType: "",
@@ -15,22 +16,26 @@ class UnconnectedSignup extends Component {
     };
   }
 
-  handleUsernameChange = event => {
+  usernameChangeHandler = event => {
     console.log("new username input change: ", event.target.value);
     this.setState({ username: event.target.value });
   };
 
-  handlePasswordChange = event => {
+  passwordChangeHandler = event => {
     console.log("new password input change: ", event.target.value);
     this.setState({ password: event.target.value });
   };
+  confirmPasswordChangeHandler = event => {
+    console.log("new confirm password input change: ", event.target.value);
+    this.setState({ confirmPassword: event.target.value });
+  };
 
-  handleEmailChange = event => {
+  emailChangeHandler = event => {
     console.log("new email input change: ", event.target.value);
     this.setState({ email: event.target.value });
   };
 
-  handleAccountType = event => {
+  accountTypeHandler = event => {
     console.log("new account type: ", event.target.value);
     this.setState({ accountType: event.target.value });
   };
@@ -52,6 +57,11 @@ class UnconnectedSignup extends Component {
   handleSubmit = async event => {
     event.preventDefault();
     console.log("new signup submission");
+    if (this.state.password !== this.state.confirmPassword) {
+      window.alert("Your password fields must match");
+      this.setState({ password: "", confirmPassword: "" });
+      return;
+    }
     let data = new FormData();
     data.append("username", this.state.username);
     data.append("password", this.state.password);
@@ -92,7 +102,7 @@ class UnconnectedSignup extends Component {
             id="signUsername"
             type="text"
             value={this.state.username}
-            onChange={this.handleUsernameChange}
+            onChange={this.usernameChangeHandler}
             required
           />
           <label htmlFor="signPassword">Password</label>
@@ -100,7 +110,16 @@ class UnconnectedSignup extends Component {
             id="signPassword"
             type="password"
             value={this.state.password}
-            onChange={this.handlePasswordChange}
+            onChange={this.passwordChangeHandler}
+            placeholder="Enter a password"
+            required
+          />
+          <input
+            id="signPassword"
+            type="password"
+            value={this.state.confirmPassword}
+            onChange={this.confirmPasswordChangeHandler}
+            placeholder="Confirm password"
             required
           />
           <label htmlFor="signEmail">Email</label>
@@ -108,7 +127,7 @@ class UnconnectedSignup extends Component {
             id="signEmail"
             type="email"
             value={this.state.email}
-            onChange={this.handleEmailChange}
+            onChange={this.emailChangeHandler}
             required
           />
           <label htmlFor="signProvince">Province</label>
@@ -126,7 +145,7 @@ class UnconnectedSignup extends Component {
             type="radio"
             value="Standard"
             name="account-type"
-            onClick={this.handleAccountType}
+            onClick={this.accountTypeHandler}
             required
           />
           <label htmlFor="businessAccountType">Business</label>
@@ -135,7 +154,7 @@ class UnconnectedSignup extends Component {
             type="radio"
             value="Business"
             name="account-type"
-            onClick={this.handleAccountType}
+            onClick={this.accountTypeHandler}
             required
           />
           <div>Select prefered categories</div>
