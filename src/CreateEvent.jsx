@@ -12,7 +12,7 @@ class UnconnectedCreateEvent extends Component {
       time: "",
       city: "",
       location: "",
-      banner: "",
+      banner: null,
       categories: []
     };
   }

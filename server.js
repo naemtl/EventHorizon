@@ -258,7 +258,12 @@ app.post("/new-event", upload.single("img"), (req, res) => {
     categories
   } = req.body;
   categories = JSON.parse(categories);
-  let frontendPath = "/uploads/" + file.filename;
+  let frontendPath;
+  if (req.file !== undefined) {
+    frontendPath = "/uploads/" + file.filename;
+  } else {
+    frontendPath = "/images/default-banner.png";
+  }
   if (
     title === undefined ||
     hostId === undefined ||
