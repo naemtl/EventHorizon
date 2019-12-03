@@ -26,7 +26,7 @@ class UnconnectedEventCard extends Component {
   };
 
   // TODO: pass entire user object here when you can.
-  // store all users who own events in the store and access them
+  // store all users who own events in the store and access them <div>{event.date}</div><div>{event.time}</div>
 
   render = () => {
     console.log("TEST****************************** COMPONENT");
@@ -53,8 +53,7 @@ class UnconnectedEventCard extends Component {
                 <Link to={"/user/" + event.hostId}>{eventHost.username}</Link>
               </div>
               <div>{event.description}</div>
-              <div>{event.date}</div>
-              <div>{event.time}</div>
+              <div>{event.dateTime}</div>
               <div>{event.location}</div>
               <div>{event.city}</div>
               <div>{event.categories.join(", ")}</div>

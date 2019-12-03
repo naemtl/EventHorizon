@@ -247,8 +247,9 @@ app.post("/new-event", upload.single("img"), (req, res) => {
     title,
     hostId,
     description,
-    date,
-    time,
+    // date,
+    // time,
+    dateTime,
     city,
     location,
     categories
@@ -264,12 +265,12 @@ app.post("/new-event", upload.single("img"), (req, res) => {
     title === undefined ||
     hostId === undefined ||
     description === undefined ||
-    date === undefined ||
-    time === undefined ||
+    // date === undefined ||
+    // time === undefined ||
+    dateTime === undefined ||
     city === undefined ||
     location === undefined
   ) {
-    console.log("failed event, you fucking failure");
     res.json({ success: false });
     return;
   }
@@ -285,8 +286,9 @@ app.post("/new-event", upload.single("img"), (req, res) => {
         title,
         hostId,
         description,
-        date,
-        time,
+        // date,
+        // time,
+        dateTime,
         city,
         location,
         banner: frontendPath,

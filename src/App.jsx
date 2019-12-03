@@ -29,7 +29,7 @@ class UnconnectedApp extends Component {
     if (
       (parsed.success &&
         this.props.eventIds.length !== prevProps.eventIds.length) ||
-      this.props.eventIds.length === 0
+      this.props.eventIds === 0
     ) {
       this.props.dispatch({ type: "get-eventIds", eventIds: parsed.eventIds });
       return;
@@ -48,8 +48,6 @@ class UnconnectedApp extends Component {
     }
   };
 
-  getEventIds = async () => {};
-
   renderUserProfile = routerData => {
     let userId = routerData.match.params.uid;
     return <UserProfile id={userId} />;
@@ -66,7 +64,7 @@ class UnconnectedApp extends Component {
         <BrowserRouter>
           <Navbar />
           <Route path="/" exact={true}>
-            <Homepage />
+            <Homepage eventIds={this.props.eventIds} />
           </Route>
           <Route path="/login" exact={true}>
             <Login />
@@ -87,11 +85,7 @@ class UnconnectedApp extends Component {
             exact={true}
             render={this.renderUserProfile}
           />
-          <Route
-            path="/my-dashboard"
-            exact={true}
-            component={UserDashboard}
-          ></Route>
+          <Route path="/my-dashboard" exact={true} component={UserDashboard} />
         </BrowserRouter>
       </>
     );
