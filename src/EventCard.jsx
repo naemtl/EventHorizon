@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
+import * as dateformat from "dateformat";
+// converts 'require syntax' to importable library
 
 class UnconnectedEventCard extends Component {
   constructor(props) {
@@ -19,6 +21,8 @@ class UnconnectedEventCard extends Component {
     this.setState({ eventHost: eventHost });
   };
   render = () => {
+    let eventStartDate = new Date(parseInt(this.props.event.startDateTime));
+    let eventEndDate = new Date(parseInt(this.props.event.endDateTime));
     return (
       <div className="card-padding">
         <div>
@@ -37,8 +41,8 @@ class UnconnectedEventCard extends Component {
           </Link>
         </div>
         <div>{this.props.event.description}</div>
-        <div>{this.props.event.startDateTime}</div>
-        <div>{this.props.event.endDateTime}</div>
+        <div>{dateformat(eventStartDate, "mm/dd/yyyy, H:MM")}</div>
+        <div>{dateformat(eventEndDate, "mm/dd/yyyy, H:MM")}</div>
         <div>{this.props.event.location}</div>
         <div>{this.props.event.city}</div>
         <div>{this.props.event.categories.join(", ")}</div>

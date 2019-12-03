@@ -29,11 +29,11 @@ class UnconnectedCreateEvent extends Component {
   };
   startDateTimeChangeHandler = date => {
     console.log("new input value: ", date);
-    this.setState({ startDateTime: date });
+    this.setState({ startDateTime: date.getTime() });
   };
   endDateTimeChangeHandler = date => {
     console.log("new input value: ", date);
-    this.setState({ endDateTime: date });
+    this.setState({ endDateTime: date.getTime() });
   };
   cityChangeHandler = event => {
     console.log("new input value: ", event.target.value);
@@ -63,6 +63,10 @@ class UnconnectedCreateEvent extends Component {
 
   handleSubmit = async event => {
     event.preventDefault();
+    if (this.state.startDateTime > this.state.endDateTime) {
+      window.alert("Your event cannot end before it begins");
+      return;
+    }
     console.log("New event form submission");
     let data = new FormData();
     data.append("title", this.state.title);
@@ -124,8 +128,9 @@ class UnconnectedCreateEvent extends Component {
               selected={this.state.startDateTime}
               onChange={this.startDateTimeChangeHandler}
               showTimeSelect
+              minDate={new Date()}
               timeFormat="HH:mm"
-              timeIntervals={15}
+              timeIntervals={30}
               timeCaption="time"
               dateFormat="MMMM d, yyyy h:mm aa"
             />
@@ -135,7 +140,7 @@ class UnconnectedCreateEvent extends Component {
               onChange={this.endDateTimeChangeHandler}
               showTimeSelect
               timeFormat="HH:mm"
-              timeIntervals={15}
+              timeIntervals={30}
               timeCaption="time"
               dateFormat="MMMM d, yyyy h:mm aa"
             />

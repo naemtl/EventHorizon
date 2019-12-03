@@ -19,6 +19,10 @@ class UnconnectedSearchEvents extends Component {
 
   titleSearchSubmit = async event => {
     event.preventDefault();
+    if (this.state.titleSearch === "") {
+      window.alert("Please enter a valid search query");
+      return;
+    }
     let data = new FormData();
     data.append("searchQuery", this.state.titleSearch);
     let response = await fetch("/search-title", {
@@ -41,6 +45,10 @@ class UnconnectedSearchEvents extends Component {
 
   locationSearchSubmit = async event => {
     event.preventDefault();
+    if (this.state.locationSearch === "") {
+      window.alert("Please enter a valid search query");
+      return;
+    }
     let data = new FormData();
     data.append("searchQuery", this.state.locationSearch);
     let response = await fetch("/search-location", {
