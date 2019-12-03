@@ -111,7 +111,7 @@ app.post("/signup", upload.single("img"), (req, res) => {
         isBanned: false,
         avatar: frontendPath,
         blockUser: [],
-        friendsList: [],
+        followUser: [],
         myCategories
       },
       (err, doc) => {
@@ -143,7 +143,7 @@ app.post("/signup", upload.single("img"), (req, res) => {
                   isBanned: false,
                   avatar: frontendPath,
                   blockUser: [],
-                  friendsList: [],
+                  followUser: [],
                   myCategories
                 }
               })
@@ -444,6 +444,44 @@ app.post("/update-email", upload.none(), (req, res) => {
       }
       return res.json({ success: true });
     });
+});
+
+app.post("/follow-user", upload.none(), (req, res) => {
+  console.log("follow-user endpoint hit");
+  let userId = req.body.userId;
+  let newFollowUser = req.body.followUser;
+  console.log("NEW FOLLOW", newFollowUser);
+  dbo
+    .collection("users")
+    .updateOne(
+      { _id: ObjectID(userId) },
+      { $push: { followUser: newFollowUser } },
+      (err, user) => {
+        if (err || user === null) {
+          return res.json({ success: false, err });
+        }
+        return res.json({ success: true });
+      }
+    );
+});
+
+app.post("/block-user", upload.none(), (req, res) => {
+  console.log("block-user endpoint hit");
+  let userId = req.body.userId;
+  let newBlockUser = req.body.blockUser;
+  console.log("NEW BLOCK", newBlockUser);
+  dbo
+    .collection("users")
+    .updateOne(
+      { _id: ObjectID(userId) },
+      { $push: { blockUser: newBlockUser } },
+      (err, user) => {
+        if (err || user === null) {
+          return res.json({ success: false, err });
+        }
+        return res.json({ success: true });
+      }
+    );
 });
 
 // Your endpoints go before this line
