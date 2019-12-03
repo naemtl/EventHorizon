@@ -3,6 +3,7 @@ import { createStore } from "redux";
 let initialState = {
   loggedIn: false,
   user: undefined,
+  hosts: [],
   eventIds: []
 };
 
@@ -31,6 +32,12 @@ let reducer = (state, action) => {
     return {
       ...state,
       eventIds: action.eventIds
+    };
+  }
+  if (action.type === "get-hosts") {
+    return {
+      ...state,
+      hosts: action.hosts
     };
   }
   return state;

@@ -158,6 +158,19 @@ class UnconnectedUserProfile extends Component {
     console.log("Error from update-email endpoint", parsed.err);
   };
 
+  getSavedEvents = () => {
+    if (this.props.user.savedEvents.length !== 0) {
+      return (
+        <div>
+          {this.props.user.savedEvents.map(event => {
+            <EventCard event={event} />;
+          })}
+        </div>
+      );
+    }
+    return <div>You have no saved events</div>;
+  };
+
   render = () => {
     if (this.props.user) {
       return (
@@ -168,8 +181,17 @@ class UnconnectedUserProfile extends Component {
             <div>{this.props.user.accountType}</div>
             <div>My preferred categories:</div>
             <div>{this.props.user.myCategories.join(", ")}</div>
-            <div>{this.props.user.blockUser}</div>
-            <div>{this.props.user.friendsList}</div>
+            <div>
+              {this.props.user.blockUser.map(user => {
+                <div>{user}</div>;
+              })}
+            </div>
+            <div>
+              {this.props.user.followUser.map(user => {
+                <div>{user}</div>;
+              })}
+            </div>
+            {this.getSavedEvents()}
           </div>
           <div>Change avatar</div>
           <form onSubmit={this.newAvatarSubmitHandler}>

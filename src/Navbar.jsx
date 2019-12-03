@@ -12,7 +12,6 @@ class UnconnectedNavbar extends Component {
   }
 
   logout = async () => {
-    // TODO: fix logout
     let response = await fetch("/logout", {
       method: "POST"
     });
@@ -49,6 +48,7 @@ class UnconnectedNavbar extends Component {
             <Link to="/create-event">Create Event</Link>
           </div>
         )}
+        <Link to="/search">Search</Link>
       </nav>
     );
   };

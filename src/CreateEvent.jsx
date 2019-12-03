@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Redirect } from "react-router-dom";
 import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 
 class UnconnectedCreateEvent extends Component {
   constructor(props) {
@@ -9,9 +10,8 @@ class UnconnectedCreateEvent extends Component {
     this.state = {
       title: "",
       description: "",
-      // date: "",
-      // time: "",
-      dateTime: "",
+      startDateTime: "",
+      endDateTime: "",
       city: "",
       location: "",
       banner: undefined,
@@ -27,17 +27,13 @@ class UnconnectedCreateEvent extends Component {
     console.log("new input value: ", event.target.value);
     this.setState({ description: event.target.value });
   };
-  // dateChangeHandler = event => {
-  //   console.log("new input value: ", event.target.value);
-  //   this.setState({ date: event.target.value });
-  // };
-  // timeChangeHandler = event => {
-  //   console.log("new input value: ", event.target.value);
-  //   this.setState({ time: event.target.value });
-  // };
-  dateTimeChangeHandler = date => {
+  startDateTimeChangeHandler = date => {
     console.log("new input value: ", date);
-    this.setState({ dateTime: date });
+    this.setState({ startDateTime: date });
+  };
+  endDateTimeChangeHandler = date => {
+    console.log("new input value: ", date);
+    this.setState({ endDateTime: date });
   };
   cityChangeHandler = event => {
     console.log("new input value: ", event.target.value);
@@ -72,9 +68,8 @@ class UnconnectedCreateEvent extends Component {
     data.append("title", this.state.title);
     data.append("hostId", this.props.user._id);
     data.append("description", this.state.description);
-    // data.append("date", this.state.date);
-    // data.append("time", this.state.time);
-    data.append("dateTime", this.state.dateTime);
+    data.append("startDateTime", this.state.startDateTime);
+    data.append("endDateTime", this.state.endDateTime);
     data.append("city", this.state.city);
     data.append("location", this.state.location);
     data.append("img", this.state.banner);
@@ -94,9 +89,8 @@ class UnconnectedCreateEvent extends Component {
     this.setState({
       title: "",
       description: "",
-      // date: "",
-      // time: "",
-      dateTime: "",
+      startDateTime: "",
+      endDateTime: "",
       city: "",
       location: "",
       banner: "",
@@ -125,24 +119,20 @@ class UnconnectedCreateEvent extends Component {
               value={this.state.description}
               onChange={this.descChangeHandler}
             />
-            <label htmlFor="eventDate">Date</label>
-            <input
-              type="date"
-              id="eventDate"
-              //value={this.state.date}
-              //onChange={this.dateChangeHandler}
-            />
-            <label htmlFor="eventStartTime">Start time</label>
-            <input
-              type="time"
-              id="eventStartTime"
-              //value={this.state.time}
-              //onChange={this.timeChangeHandler}
-            />
-            <label htmlFor="date_time">Date/Time</label>
+            <label htmlFor="startDateTime">Start date</label>
             <DatePicker
-              selected={new Date()}
-              onChange={this.dateTimeChangeHandler}
+              selected={this.state.startDateTime}
+              onChange={this.startDateTimeChangeHandler}
+              showTimeSelect
+              timeFormat="HH:mm"
+              timeIntervals={15}
+              timeCaption="time"
+              dateFormat="MMMM d, yyyy h:mm aa"
+            />
+            <label htmlFor="endDateTime">End date</label>
+            <DatePicker
+              selected={this.state.endDateTime}
+              onChange={this.endDateTimeChangeHandler}
               showTimeSelect
               timeFormat="HH:mm"
               timeIntervals={15}

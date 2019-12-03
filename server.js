@@ -112,6 +112,7 @@ app.post("/signup", upload.single("img"), (req, res) => {
         avatar: frontendPath,
         blockUser: [],
         followUser: [],
+        savedEvents: [],
         myCategories
       },
       (err, doc) => {
@@ -144,6 +145,7 @@ app.post("/signup", upload.single("img"), (req, res) => {
                   avatar: frontendPath,
                   blockUser: [],
                   followUser: [],
+                  savedEvents: [],
                   myCategories
                 }
               })
@@ -247,9 +249,8 @@ app.post("/new-event", upload.single("img"), (req, res) => {
     title,
     hostId,
     description,
-    // date,
-    // time,
-    dateTime,
+    startDateTime,
+    endDateTime,
     city,
     location,
     categories
@@ -265,9 +266,8 @@ app.post("/new-event", upload.single("img"), (req, res) => {
     title === undefined ||
     hostId === undefined ||
     description === undefined ||
-    // date === undefined ||
-    // time === undefined ||
-    dateTime === undefined ||
+    startDateTime === undefined ||
+    endDateTime === undefined ||
     city === undefined ||
     location === undefined
   ) {
@@ -286,9 +286,8 @@ app.post("/new-event", upload.single("img"), (req, res) => {
         title,
         hostId,
         description,
-        // date,
-        // time,
-        dateTime,
+        startDateTime,
+        endDateTime,
         city,
         location,
         banner: frontendPath,
@@ -327,34 +326,46 @@ app.post("/render-events", (req, res) => {
             res.json({ success: false });
           }
           let hosts = users.filter(user => {
-            //console.log("host IDSSSSS", typeof user._id.toString(), userIds);
             return userIds.includes(user._id.toString());
           });
-          //console.log("HOSTS: ", hosts);
 
           return res.json({ success: true, events, hosts });
         });
     });
 });
 
-app.post("/event-ids", (req, res) => {
-  console.log("event-ids endpoint hit");
+app.post("/render-single-event", upload.none(), (req, res) => {
+  console.log("single-event endpoint hit");
+  let eventId = req.body.eventId;
   dbo
     .collection("eventListings")
-    .find({})
-    .toArray((err, events) => {
+    .findOne({ _id: ObjectID(eventId) }, (err, event) => {
       if (err) {
-        console.log("Error getting event listings: ", err);
+        console.log("Error getting event: ", err);
         res.json({ success: false });
         return;
       }
-      let eventIds = events.map(event => {
-        console.log("single event from event-ids endpoint: ", event);
-        return event._id;
-      });
-      res.json({ success: true, eventIds });
+      res.json({ success: true, event });
     });
 });
+// app.post("/event-ids", (req, res) => {
+//   console.log("event-ids endpoint hit");
+//   dbo
+//     .collection("eventListings")
+//     .find({})
+//     .toArray((err, events) => {
+//       if (err) {
+//         console.log("Error getting event listings: ", err);
+//         res.json({ success: false });
+//         return;
+//       }
+//       let eventIds = events.map(event => {
+//         console.log("single event from event-ids endpoint: ", event);
+//         return event._id;
+//       });
+//       res.json({ success: true, eventIds });
+//     });
+// });
 
 app.post("/render-user", upload.none(), (req, res) => {
   console.log("RENDER USER HIT", req.body.uid);
@@ -482,6 +493,40 @@ app.post("/block-user", upload.none(), (req, res) => {
         return res.json({ success: true });
       }
     );
+});
+
+app.post("/search-title", upload.none(), (req, res) => {
+  console.log("Search title endpoint hit");
+  let searchQuery = new RegExp(req.body.searchQuery);
+  dbo
+    .collection("eventListings")
+    .find({ title: searchQuery })
+    .toArray((err, events) => {
+      if (err) {
+        console.log("error retrieving events from title search");
+        res.json({ success: false });
+        return;
+      }
+      console.log("events array from title search: ", events);
+      res.json({ success: true, events });
+    });
+});
+
+app.post("/search-location", upload.none(), (req, res) => {
+  console.log("Search location endpoint hit");
+  let searchQuery = new RegExp(req.body.searchQuery);
+  dbo
+    .collection("eventListings")
+    .find({ location: searchQuery })
+    .toArray((err, events) => {
+      if (err) {
+        console.log("error retrieving events from location search");
+        res.json({ success: false });
+        return;
+      }
+      console.log("events array from location search: ", events);
+      res.json({ success: true, events });
+    });
 });
 
 // Your endpoints go before this line

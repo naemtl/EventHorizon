@@ -9,6 +9,7 @@ import CreateEvent from "./CreateEvent.jsx";
 import UserProfile from "./UserProfile.jsx";
 import UserDashboard from "./UserDashboard.jsx";
 import SingleListing from "./SingleListing.jsx";
+import SearchEvents from "./SearchEvents.jsx";
 
 class UnconnectedApp extends Component {
   constructor(props) {
@@ -19,23 +20,23 @@ class UnconnectedApp extends Component {
     this.autoLogin();
   };
 
-  componentDidUpdate = async prevProps => {
-    let response = await fetch("/event-ids", {
-      method: "POST"
-    });
-    let responseBody = await response.text();
-    let parsed = JSON.parse(responseBody);
-    console.log("PARSED body from /event-ids: ", parsed);
-    if (
-      (parsed.success &&
-        this.props.eventIds.length !== prevProps.eventIds.length) ||
-      this.props.eventIds === 0
-    ) {
-      this.props.dispatch({ type: "get-eventIds", eventIds: parsed.eventIds });
-      return;
-    }
-    console.log("Unsuccessful attempt at getting event ids from db/server");
-  };
+  // componentDidUpdate = async prevProps => {
+  //   let response = await fetch("/event-ids", {
+  //     method: "POST"
+  //   });
+  //   let responseBody = await response.text();
+  //   let parsed = JSON.parse(responseBody);
+  //   console.log("PARSED body from /event-ids: ", parsed);
+  //   if (
+  //     (parsed.success &&
+  //       this.props.eventIds.length !== prevProps.eventIds.length) ||
+  //     this.props.eventIds === 0
+  //   ) {
+  //     this.props.dispatch({ type: "get-eventIds", eventIds: parsed.eventIds });
+  //     return;
+  //   }
+  //   console.log("Unsuccessful attempt at getting event ids from db/server");
+  // };
 
   autoLogin = async () => {
     let response = await fetch("/auto-login", {
@@ -86,6 +87,7 @@ class UnconnectedApp extends Component {
             render={this.renderUserProfile}
           />
           <Route path="/my-dashboard" exact={true} component={UserDashboard} />
+          <Route path="/search" exact={true} component={SearchEvents} />
         </BrowserRouter>
       </>
     );

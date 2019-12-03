@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import FeaturedEvents from "./FeaturedEvents.jsx";
-import EventCard from "./EventCard.jsx";
+import AllEvents from "./AllEvents.jsx";
 import StaffPicks from "./StaffPicks.jsx";
 import EventsByGenre from "./EventsByGenre.jsx";
 
@@ -18,7 +18,7 @@ class UnconnectedHomepage extends Component {
         <div>
           <h3>Featured events</h3>
           <div>
-            <EventCard />
+            <AllEvents />
           </div>
           {/*
             <Link to={"/event/"}></Link>
