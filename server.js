@@ -552,6 +552,48 @@ app.post("/discard-saved-event", upload.none(), (req, res) => {
     );
 });
 
+app.post("/update-event", upload.single("img"), (req, res) => {
+  console.log("new update-event endpoint hit");
+  let file = req.file;
+  let {
+    eventId,
+    title,
+    hostId,
+    description,
+    startDateTime,
+    endDateTime,
+    city,
+    location,
+    categories
+  } = req.body;
+  let frontendPath = "/uploads/" + file.filename;
+
+  dbo.collection("eventListings").findOneAndUpdate(
+    { _id: ObjectID(eventId) },
+    {
+      $set: title,
+      hostId,
+      description,
+      startDateTime,
+      endDateTime,
+      city,
+      location,
+      frontendPath,
+      categories
+    },
+    { returnOriginal: false },
+    (err, event) => {
+      if (err || event === null) {
+        console.log("Event update unsuccessful");
+        res.json({ success: false });
+        return;
+      }
+      res.json({ success: true, event });
+      return;
+    }
+  );
+});
+
 // Your endpoints go before this line
 
 app.all("/*", (req, res, next) => {

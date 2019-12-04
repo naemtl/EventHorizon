@@ -1,23 +1,57 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { Redirect } from "react-router-dom";
 import DatePicker from "react-datepicker";
+import { Redirect } from "react-router-dom";
 import "react-datepicker/dist/react-datepicker.css";
 
-class UnconnectedCreateEvent extends Component {
+class UnconnectedSingleListing extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      title: "",
-      description: "",
-      startDateTime: "",
-      endDateTime: "",
-      city: "",
-      location: "",
-      banner: undefined,
-      categories: []
+      title: this.props.event.title,
+      description: this.props.event.description,
+      startDateTime: new Date(parseInt(this.props.event.startDateTime)),
+      endDateTime: new Date(parseInt(this.props.event.endDateTime)),
+      city: this.props.event.city,
+      location: this.props.event.location,
+      banner: this.props.event.banner,
+      categories: this.props.event.categories
     };
   }
+
+  componentWillMount = async () => {
+    console.log([
+      "DATE OBJECTS: ",
+      new Date(parseInt(this.props.event.startDateTime)),
+      new Date(parseInt(this.props.event.endDateTime)),
+      this.props.event.startDateTime,
+      this.props.event.endDateTime
+    ]);
+    //this.getEventHost();
+  };
+
+  //   getEventHost = () => {
+  //     console.log("THIS PROPS HOSTS", this.props.hosts);
+  //     console.log("THIS STATE EVENT", this.state.event);
+
+  //     let eventHost = this.props.hosts.find(host => {
+  //       console.log("value of host and event: ", this.state.event, host);
+
+  //       return this.state.event.hostId === host._id;
+  //     });
+  //     console.log("Value of eventHost: ", eventHost);
+  //     this.setState({ eventHost: eventHost });
+  //   };
+
+  getUpdatedUser = async data => {
+    let userResponse = await fetch("/render-user", {
+      method: "POST",
+      body: data
+    });
+    let userResponseBody = await userResponse.text();
+    let userParsed = JSON.parse(userResponseBody);
+    this.props.dispatch({ type: "update-user", user: userParsed.user });
+  };
 
   titleChangeHandler = event => {
     console.log("new input value: ", event.target.value);
@@ -67,8 +101,9 @@ class UnconnectedCreateEvent extends Component {
       window.alert("Your event cannot end before it begins");
       return;
     }
-    console.log("New event form submission");
+    console.log("New edit event form submission");
     let data = new FormData();
+    data.append("eventId", this.props.event._id);
     data.append("title", this.state.title);
     data.append("hostId", this.props.user._id);
     data.append("description", this.state.description);
@@ -78,35 +113,42 @@ class UnconnectedCreateEvent extends Component {
     data.append("location", this.state.location);
     data.append("img", this.state.banner);
     data.append("categories", JSON.stringify(this.state.categories));
-    let response = await fetch("/new-event", {
+    let response = await fetch("/update-event", {
       method: "POST",
       body: data
     });
     let responseBody = await response.text();
     let parsed = JSON.parse(responseBody);
-    console.log("parsed response from new-event endpoint: ", parsed);
+    console.log("parsed response from update-event endpoint: ", parsed);
     if (!parsed.success) {
-      window.alert("Your event could not be created.");
+      window.alert("Your event could not be updated.");
       return;
     }
-    window.alert("Event created.");
+    window.alert("Event updated.");
     this.setState({
-      title: "",
-      description: "",
-      startDateTime: "",
-      endDateTime: "",
-      city: "",
-      location: "",
-      banner: "",
-      categories: []
+      title: parsed.event.title,
+      description: parsed.event.description,
+      startDateTime: new Date(parseInt(this.props.event.startDateTime)),
+      endDateTime: new Date(parseInt(this.props.event.endDateTime)),
+      city: parsed.event.city,
+      location: parsed.event.location,
+      banner: parsed.event.frontendPath,
+      categories: parsed.event.categories
     });
   };
 
   render = () => {
-    if (this.props.user) {
+    // if (this.state.eventHost === undefined) {
+    //   console.log("Loading block");
+
+    //   return <div>Loading...</div>;
+    // }
+    if (
+      this.props.isLoggedIn &&
+      this.props.user._id === this.props.event.hostId
+    ) {
       return (
         <div>
-          <h3>Create Event</h3>
           <form onSubmit={this.handleSubmit}>
             <label htmlFor="eventTitle">Title</label>
             <input
@@ -285,18 +327,18 @@ class UnconnectedCreateEvent extends Component {
           </form>
         </div>
       );
-    } else {
-      return <Redirect to="/" />;
     }
+    return <Redirect to="/" />;
   };
 }
 
 let mapStateToProps = state => {
   return {
+    isLoggedIn: state.loggedIn,
+    hosts: state.hosts,
     user: state.user
   };
 };
+let SingleListing = connect(mapStateToProps)(UnconnectedSingleListing);
 
-let CreateEvent = connect(mapStateToProps)(UnconnectedCreateEvent);
-
-export default CreateEvent;
+export default SingleListing;
