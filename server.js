@@ -348,29 +348,11 @@ app.post("/render-single-event", upload.none(), (req, res) => {
       res.json({ success: true, event });
     });
 });
-// app.post("/event-ids", (req, res) => {
-//   console.log("event-ids endpoint hit");
-//   dbo
-//     .collection("eventListings")
-//     .find({})
-//     .toArray((err, events) => {
-//       if (err) {
-//         console.log("Error getting event listings: ", err);
-//         res.json({ success: false });
-//         return;
-//       }
-//       let eventIds = events.map(event => {
-//         console.log("single event from event-ids endpoint: ", event);
-//         return event._id;
-//       });
-//       res.json({ success: true, eventIds });
-//     });
-// });
 
 app.post("/render-user", upload.none(), (req, res) => {
-  console.log("RENDER USER HIT", req.body.uid);
+  console.log("RENDER USER HIT", req.body._id);
 
-  let userId = req.body.uid;
+  let userId = req.body._id;
   dbo.collection("users").findOne({ _id: ObjectID(userId) }, (err, user) => {
     if (err) {
       console.log("Error in render-user");
@@ -531,16 +513,37 @@ app.post("/search-location", upload.none(), (req, res) => {
 
 app.post("/save-event", upload.none(), (req, res) => {
   console.log("save-event endpoint hit");
-  let { userId, eventId } = req.body;
+  let { _id, eventId } = req.body;
+  // sdkskldjdsklj
   console.log("NEW EVENT SAVE", eventId);
   dbo
     .collection("users")
     .updateOne(
-      { _id: ObjectID(userId) },
+      { _id: ObjectID(_id) },
       { $push: { savedEvents: eventId } },
       (err, user) => {
         if (err || user === null) {
           console.log("Error, could not save ", err);
+          res.json({ success: false });
+          return;
+        }
+        res.json({ success: true });
+      }
+    );
+});
+
+app.post("/discard-saved-event", upload.none(), (req, res) => {
+  console.log("Discard saved event endpoint hit");
+  let { _id, eventId } = req.body;
+  console.log("DISCARD SAVED EVENT", eventId);
+  dbo
+    .collection("users")
+    .update(
+      { _id: ObjectID(_id) },
+      { $pull: { savedEvents: eventId } },
+      (err, user) => {
+        if (err || user === null) {
+          console.log("Could not update savedEvents array");
           res.json({ success: false });
           return;
         }

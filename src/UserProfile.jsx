@@ -11,7 +11,7 @@ class UnconnectedUserProfile extends Component {
 
   componentDidMount = async () => {
     let data = new FormData();
-    data.append("uid", this.props.id);
+    data.append("_id", this.props.id);
     let response = await fetch("/render-user", {
       method: "POST",
       body: data

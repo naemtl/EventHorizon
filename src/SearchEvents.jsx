@@ -19,7 +19,7 @@ class UnconnectedSearchEvents extends Component {
 
   titleSearchSubmit = async event => {
     event.preventDefault();
-    if (this.state.titleSearch === "") {
+    if (this.state.titleSearch === "" || this.state.titleSearch === " ") {
       window.alert("Please enter a valid search query");
       return;
     }
@@ -33,7 +33,11 @@ class UnconnectedSearchEvents extends Component {
     let parsed = JSON.parse(responseBody);
     console.log("parsed response from search-text: ", parsed);
     if (parsed.success) {
-      this.setState({ titleSearch: "", results: parsed.events });
+      this.setState({
+        titleSearch: "",
+        locationSearch: "",
+        results: parsed.events
+      });
       return;
     }
     window.alert("Could not complete your search");
@@ -45,7 +49,7 @@ class UnconnectedSearchEvents extends Component {
 
   locationSearchSubmit = async event => {
     event.preventDefault();
-    if (this.state.locationSearch === "") {
+    if (this.state.locationSearch === "" || this.state.locationSearch === " ") {
       window.alert("Please enter a valid search query");
       return;
     }
@@ -59,7 +63,11 @@ class UnconnectedSearchEvents extends Component {
     let parsed = JSON.parse(responseBody);
     console.log("parsed response from search-text: ", parsed);
     if (parsed.success) {
-      this.setState({ locationSearch: "", results: parsed.events });
+      this.setState({
+        titleSearch: "",
+        locationSearch: "",
+        results: parsed.events
+      });
       return;
     }
     window.alert("Could not complete your search");

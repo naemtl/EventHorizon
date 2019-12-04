@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Redirect } from "react-router-dom";
+import EventCard from "./EventCard.jsx";
 
 class UnconnectedUserProfile extends Component {
   constructor(props) {
@@ -16,7 +17,7 @@ class UnconnectedUserProfile extends Component {
 
   renderUser = async () => {
     let dataRenderUser = new FormData();
-    dataRenderUser.append("uid", this.props.user._id);
+    dataRenderUser.append("_id", this.props.user._id);
     let responseRenderUser = await fetch("/render-user", {
       method: "POST",
       body: dataRenderUser
@@ -165,6 +166,7 @@ class UnconnectedUserProfile extends Component {
           {this.props.user.savedEvents.map(event => {
             <EventCard event={event} />;
           })}
+          FIX ME
         </div>
       );
     }
