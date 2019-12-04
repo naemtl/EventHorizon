@@ -7,19 +7,19 @@ import * as dateformat from "dateformat";
 class UnconnectedEventCard extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      eventHost: {}
-    };
+    // this.state = {
+    //   eventHost: {}
+    // };
   }
-  componentDidMount = async () => {
-    let eventHost = this.props.hosts.find(host => {
-      console.log("value of host and event: ", this.props.event, host);
+  // componentDidMount = async () => {
+  //   let eventHost = this.props.hosts.find(host => {
+  //     console.log("value of host and event: ", this.props.event, host);
 
-      return this.props.event.hostId === host._id;
-    });
-    console.log("Value of eventHost: ", eventHost);
-    this.setState({ eventHost: eventHost });
-  };
+  //     return this.props.event.hostId === host._id;
+  //   });
+  //   console.log("Value of eventHost: ", eventHost);
+  //   this.setState({ eventHost: eventHost });
+  // };
   render = () => {
     let eventStartDate = new Date(parseInt(this.props.event.startDateTime));
     let eventEndDate = new Date(parseInt(this.props.event.endDateTime));
@@ -35,11 +35,11 @@ class UnconnectedEventCard extends Component {
           </Link>
         </div>
         <div>{this.props.event.title}</div>
-        <div>
+        {/*<div>
           <Link to={"/user/" + this.props.event.hostId}>
             {this.state.eventHost.username}
           </Link>
-        </div>
+        </div>*/}
         <div>{this.props.event.description}</div>
         <div>{dateformat(eventStartDate, "mm/dd/yyyy, H:MM")}</div>
         <div>{dateformat(eventEndDate, "mm/dd/yyyy, H:MM")}</div>
@@ -51,12 +51,12 @@ class UnconnectedEventCard extends Component {
   };
 }
 
-let mapStateToProps = state => {
-  return {
-    hosts: state.hosts
-  };
-};
+// let mapStateToProps = state => {
+//   return {
+//     hosts: state.hosts
+//   };
+// };
 
-let EventCard = connect(mapStateToProps)(UnconnectedEventCard);
+let EventCard = connect()(UnconnectedEventCard);
 
 export default EventCard;

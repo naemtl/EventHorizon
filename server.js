@@ -529,6 +529,26 @@ app.post("/search-location", upload.none(), (req, res) => {
     });
 });
 
+app.post("/save-event", upload.none(), (req, res) => {
+  console.log("save-event endpoint hit");
+  let { userId, eventId } = req.body;
+  console.log("NEW EVENT SAVE", eventId);
+  dbo
+    .collection("users")
+    .updateOne(
+      { _id: ObjectID(userId) },
+      { $push: { savedEvents: eventId } },
+      (err, user) => {
+        if (err || user === null) {
+          console.log("Error, could not save ", err);
+          res.json({ success: false });
+          return;
+        }
+        res.json({ success: true });
+      }
+    );
+});
+
 // Your endpoints go before this line
 
 app.all("/*", (req, res, next) => {
