@@ -306,6 +306,7 @@ app.post("/render-events", (req, res) => {
   dbo
     .collection("eventListings")
     .find({})
+    .sort({ startDateTime: 1 })
     .toArray((err, events) => {
       if (err) {
         console.log("Error getting event listings: ", err);

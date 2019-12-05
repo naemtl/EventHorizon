@@ -26,19 +26,22 @@ class UnconnectedAllEvents extends Component {
     this.setState({ events: parsed.events });
   };
 
+  // only display events that are upcoming, events that have passed will be displayed for 24h before being filtered out of the display.
+
+  getUpcomingEvents = () => {
+    let upcomingEvents = this.state.events.filter(event => {
+      return parseInt(event.startDateTime) > Date.now() - 86400000;
+    });
+    return upcomingEvents.map(event => {
+      return <EventCard event={event} />;
+    });
+  };
+
   // TODO: pass entire user object here when you can.
   // store all users who own events in the store and access them <div>{event.date}</div><div>{event.time}</div>
 
   render = () => {
-    return (
-      <div className="flex flex-wrap">
-        {this.state.events.map(event => {
-          console.log("STATE: ", this.state);
-
-          return <EventCard event={event} />;
-        })}
-      </div>
-    );
+    return <div className="flex flex-wrap">{this.getUpcomingEvents()}</div>;
   };
 }
 

@@ -41,8 +41,7 @@ class UnconnectedEventCard extends Component {
           </Link>
         </div>*/}
         <div>{this.props.event.description}</div>
-        <div>{dateformat(eventStartDate, "mm/dd/yyyy, H:MM")}</div>
-        <div>{dateformat(eventEndDate, "mm/dd/yyyy, H:MM")}</div>
+        <div>{dateformat(eventStartDate, "ddd, mmm dS yyyy")}</div>
         <div>{this.props.event.location}</div>
         <div>{this.props.event.city}</div>
         <div>{this.props.event.categories.join(", ")}</div>
