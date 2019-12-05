@@ -180,7 +180,6 @@ class UnconnectedUserProfile extends Component {
           <div>
             <div>{this.props.user.username}</div>
             <div>{this.props.user.email}</div>
-            <div>{this.props.user.accountType}</div>
             <div>My preferred categories:</div>
             <div>{this.props.user.myCategories.join(", ")}</div>
             <div>

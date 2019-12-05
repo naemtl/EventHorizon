@@ -12,7 +12,6 @@ class UnconnectedSignup extends Component {
       email: "",
       province: "Quebec",
       avatar: undefined,
-      accountType: "",
       myCategories: []
     };
   }
@@ -39,11 +38,6 @@ class UnconnectedSignup extends Component {
   avatarChangeHandler = event => {
     console.log("new avatar file: ", event.target.files[0]);
     this.setState({ avatar: event.target.files[0] });
-  };
-
-  accountTypeHandler = event => {
-    console.log("new account type: ", event.target.value);
-    this.setState({ accountType: event.target.value });
   };
 
   categoryChangeHandler = event => {
@@ -75,7 +69,6 @@ class UnconnectedSignup extends Component {
     data.append("province", this.state.province);
     data.append("img", this.state.avatar);
     data.append("myCategories", JSON.stringify(this.state.myCategories));
-    data.append("accountType", this.state.accountType);
     console.log("Singup FormData: ", data);
     let response = await fetch("/signup", {
       method: "POST",
@@ -150,25 +143,6 @@ class UnconnectedSignup extends Component {
             id="signAvatar"
             type="file"
             onChange={this.avatarChangeHandler}
-          />
-          <span>Account Type: </span>
-          <label htmlFor="standardAccountType">Standard</label>
-          <input
-            id="standardAccountType"
-            type="radio"
-            value="Standard"
-            name="account-type"
-            onClick={this.accountTypeHandler}
-            required
-          />
-          <label htmlFor="businessAccountType">Business</label>
-          <input
-            id="businessAccountType"
-            type="radio"
-            value="Business"
-            name="account-type"
-            onClick={this.accountTypeHandler}
-            required
           />
           <div>Select prefered categories</div>
           {/* TAGS */}

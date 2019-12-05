@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import EventCard from "./EventCard.jsx";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 
 class UnconnectedSearchEvents extends Component {
   constructor(props) {
@@ -8,6 +10,7 @@ class UnconnectedSearchEvents extends Component {
     this.state = {
       titleSearch: "",
       locationSearch: "",
+      dateSearch: null,
       results: []
     };
   }
@@ -36,6 +39,7 @@ class UnconnectedSearchEvents extends Component {
       this.setState({
         titleSearch: "",
         locationSearch: "",
+        dateSearch: null,
         results: parsed.events
       });
       return;
@@ -66,8 +70,39 @@ class UnconnectedSearchEvents extends Component {
       this.setState({
         titleSearch: "",
         locationSearch: "",
+        dateSearch: null,
         results: parsed.events
       });
+      return;
+    }
+    window.alert("Could not complete your search");
+  };
+
+  dateSearchChangeHandler = date => {
+    console.log("new input value: ", date);
+    console.log("date input after getTime", date.getTime());
+
+    this.setState({ dateSearch: date.getTime() });
+  };
+
+  dateSearchSubmit = async event => {
+    event.preventDefault();
+    if (this.state.dateSearch === null) {
+      window.alert("Please enter a valid search query");
+      return;
+    }
+    let data = new FormData();
+    data.append("searchQuery", this.state.dateSearch);
+    let response = await fetch("/search-date", {
+      method: "POST",
+      body: data
+    });
+    let responseBody = await response.text();
+    let parsed = JSON.parse(responseBody);
+    console.log("parsed resp from date-search endpoint", parsed);
+    if (parsed.success) {
+      console.log("events from datesearch: ", parsed.specificEvents);
+      this.setState({ dateSearch: parsed.specificEvents });
       return;
     }
     window.alert("Could not complete your search");
@@ -104,6 +139,15 @@ class UnconnectedSearchEvents extends Component {
               type="text"
               onChange={this.locationSearchChangeHandler}
               value={this.state.locationSearch}
+            />
+            <input type="submit" />
+          </form>
+          <form onSubmit={this.dateSearchSubmit}>
+            <label htmlFor="dateSearch">Search by date</label>
+            <DatePicker
+              selected={this.state.dateSearch}
+              onChange={this.dateSearchChangeHandler}
+              dateFormat="MMM d, yyyy"
             />
             <input type="submit" />
           </form>

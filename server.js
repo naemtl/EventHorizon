@@ -59,14 +59,7 @@ setInterval(() => {
 app.post("/signup", upload.single("img"), (req, res) => {
   console.log("signup endpoint hit", req.body);
   let file = req.file;
-  let {
-    username,
-    password,
-    email,
-    province,
-    myCategories,
-    accountType
-  } = req.body;
+  let { username, password, email, province, myCategories } = req.body;
   let frontendPath;
   if (file !== undefined) {
     frontendPath = "/uploads/" + file.filename;
@@ -80,8 +73,7 @@ app.post("/signup", upload.single("img"), (req, res) => {
     username === undefined ||
     password === undefined ||
     email === undefined ||
-    province === undefined ||
-    accountType === undefined
+    province === undefined
   ) {
     res.json({ success: false }); // same as res.send(JSON.stringify({ success: false })
     return;
@@ -106,7 +98,6 @@ app.post("/signup", upload.single("img"), (req, res) => {
         password,
         email,
         province,
-        accountType,
         isAdmin: false,
         isBanned: false,
         avatar: frontendPath,
@@ -139,7 +130,6 @@ app.post("/signup", upload.single("img"), (req, res) => {
                   password,
                   email,
                   province,
-                  accountType,
                   isAdmin: false,
                   isBanned: false,
                   avatar: frontendPath,
@@ -256,6 +246,8 @@ app.post("/new-event", upload.single("img"), (req, res) => {
     categories
   } = req.body;
   categories = JSON.parse(categories);
+  startDateTime = parseInt(startDateTime);
+  endDateTime = parseInt(endDateTime);
   let frontendPath;
   if (file !== undefined) {
     frontendPath = "/uploads/" + file.filename;
@@ -263,13 +255,13 @@ app.post("/new-event", upload.single("img"), (req, res) => {
     frontendPath = "/images/default-banner.png";
   }
   if (
-    title === undefined ||
-    hostId === undefined ||
-    description === undefined ||
-    startDateTime === undefined ||
-    endDateTime === undefined ||
-    city === undefined ||
-    location === undefined
+    title === "" ||
+    hostId === "" ||
+    description === "" ||
+    startDateTime === "" ||
+    endDateTime === "" ||
+    city === "" ||
+    location === ""
   ) {
     res.json({ success: false });
     return;
@@ -486,7 +478,7 @@ app.post("/search-title", upload.none(), (req, res) => {
     .find({ title: searchQuery })
     .toArray((err, events) => {
       if (err) {
-        console.log("error retrieving events from title search");
+        console.log("error retrieving events from title search", err);
         res.json({ success: false });
         return;
       }
@@ -509,6 +501,30 @@ app.post("/search-location", upload.none(), (req, res) => {
       }
       console.log("events array from location search: ", events);
       res.json({ success: true, events });
+    });
+});
+
+app.post("/search-date", upload.none(), (req, res) => {
+  // TODO: FIX ME
+  console.log("Search date endpoint hit");
+  let searchQuery = parseInt(req.body.searchQuery);
+  dbo
+    .collection("eventListings")
+    .find({})
+    .toArray((err, events) => {
+      let specificEvents = events.filter(event => {
+        return (
+          event.startDateTime > searchQuery ||
+          event.endDateTime < searchQuery + 86400000
+        );
+      });
+      if (err) {
+        console.log("error retrieving events from date search");
+        res.json({ success: false });
+        return;
+      }
+      console.log("events array from date search: ", specificEvents);
+      res.json({ success: true, specificEvents });
     });
 });
 
@@ -575,8 +591,9 @@ app.post("/update-event", upload.single("img"), (req, res) => {
     categories
   } = req.body;
   categories = JSON.parse(categories);
+  startDateTime = parseInt(startDateTime);
+  endDateTime = parseInt(endDateTime);
 
-  console.log("REQBODY OF EDITSINGLE", req.body);
   dbo.collection("eventListings").findOneAndUpdate(
     { _id: ObjectID(eventId) },
     {
