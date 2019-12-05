@@ -14,19 +14,19 @@ class UnconnectedSingleListing extends Component {
       endDateTime: new Date(parseInt(this.props.event.endDateTime)),
       city: this.props.event.city,
       location: this.props.event.location,
-      banner: this.props.event.banner,
+      banner: undefined,
       categories: this.props.event.categories
     };
   }
 
   componentWillMount = async () => {
-    console.log([
-      "DATE OBJECTS: ",
-      new Date(parseInt(this.props.event.startDateTime)),
-      new Date(parseInt(this.props.event.endDateTime)),
-      this.props.event.startDateTime,
-      this.props.event.endDateTime
-    ]);
+    // console.log([
+    //   "DATE OBJECTS: ",
+    //   new Date(parseInt(this.props.event.startDateTime)),
+    //   new Date(parseInt(this.props.event.endDateTime)),
+    //   this.props.event.startDateTime,
+    //   this.props.event.endDateTime
+    // ]);
     //this.getEventHost();
   };
 
@@ -111,7 +111,11 @@ class UnconnectedSingleListing extends Component {
     data.append("endDateTime", this.state.endDateTime);
     data.append("city", this.state.city);
     data.append("location", this.state.location);
-    data.append("img", this.state.banner);
+    if (this.state.banner !== undefined) {
+      data.append("img", this.state.banner);
+    } else {
+      data.append("currentBanner", this.props.event.banner);
+    }
     data.append("categories", JSON.stringify(this.state.categories));
     let response = await fetch("/update-event", {
       method: "POST",
