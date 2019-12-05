@@ -574,20 +574,23 @@ app.post("/update-event", upload.single("img"), (req, res) => {
     location,
     categories
   } = req.body;
+  categories = JSON.parse(categories);
 
   console.log("REQBODY OF EDITSINGLE", req.body);
   dbo.collection("eventListings").findOneAndUpdate(
     { _id: ObjectID(eventId) },
     {
-      $set: title,
-      hostId,
-      description,
-      startDateTime,
-      endDateTime,
-      city,
-      location,
-      frontendPath,
-      categories
+      $set: {
+        title,
+        hostId,
+        description,
+        startDateTime,
+        endDateTime,
+        city,
+        location,
+        banner: frontendPath,
+        categories
+      }
     },
     { returnOriginal: false },
     (err, event) => {
@@ -596,7 +599,12 @@ app.post("/update-event", upload.single("img"), (req, res) => {
         res.json({ success: false });
         return;
       }
-      res.json({ success: true, event });
+      console.log("sending updated event", event);
+      let updatedEvent = event.value;
+      // updatedEvent.categories = JSON.parse(updatedEvent.categories);
+      console.log("updatedEvent Categories", updatedEvent.categories);
+
+      res.json({ success: true, event: updatedEvent });
       return;
     }
   );

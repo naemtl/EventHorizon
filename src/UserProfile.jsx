@@ -63,13 +63,17 @@ class UnconnectedUserProfile extends Component {
         <div>{this.state.viewedUser.username}</div>
         <div>{this.state.viewedUser.province}</div>
         <div>{this.state.viewedUser.email}</div>
-        <div>Send a message to this user</div>
-        <div>
-          <button onClick={this.followUser}>Follow user</button>
-        </div>
-        <div>
-          <button onClick={this.blockUser}>Block user</button>
-        </div>
+        {this.props.loggedIn && (
+          <div>
+            <div>Send a message to this user</div>
+            <div>
+              <button onClick={this.followUser}>Follow user</button>
+            </div>
+            <div>
+              <button onClick={this.blockUser}>Block user</button>
+            </div>
+          </div>
+        )}
       </div>
     );
   };
@@ -77,6 +81,7 @@ class UnconnectedUserProfile extends Component {
 
 let mapStateToProps = state => {
   return {
+    isLoggedIn: state.loggedIn,
     user: state.user
   };
 };

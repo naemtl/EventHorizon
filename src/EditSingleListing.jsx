@@ -63,11 +63,11 @@ class UnconnectedSingleListing extends Component {
   };
   startDateTimeChangeHandler = date => {
     console.log("new input value: ", date);
-    this.setState({ startDateTime: date.getTime() });
+    this.setState({ startDateTime: date });
   };
   endDateTimeChangeHandler = date => {
     console.log("new input value: ", date);
-    this.setState({ endDateTime: date.getTime() });
+    this.setState({ endDateTime: date });
   };
   cityChangeHandler = event => {
     console.log("new input value: ", event.target.value);
@@ -107,8 +107,8 @@ class UnconnectedSingleListing extends Component {
     data.append("title", this.state.title);
     data.append("hostId", this.props.user._id);
     data.append("description", this.state.description);
-    data.append("startDateTime", this.state.startDateTime);
-    data.append("endDateTime", this.state.endDateTime);
+    data.append("startDateTime", this.state.startDateTime.getTime());
+    data.append("endDateTime", this.state.endDateTime.getTime());
     data.append("city", this.state.city);
     data.append("location", this.state.location);
     if (this.state.banner !== undefined) {
@@ -129,19 +129,22 @@ class UnconnectedSingleListing extends Component {
       return;
     }
     window.alert("Event updated.");
-    this.setState({
-      title: parsed.event.title,
-      description: parsed.event.description,
-      startDateTime: new Date(parseInt(this.props.event.startDateTime)),
-      endDateTime: new Date(parseInt(this.props.event.endDateTime)),
-      city: parsed.event.city,
-      location: parsed.event.location,
-      banner: parsed.event.frontendPath,
-      categories: parsed.event.categories
-    });
+    // this.setState({
+    //   title: parsed.event.title,
+    //   description: parsed.event.description,
+    //   startDateTime: new Date(parseInt(this.props.event.startDateTime)),
+    //   endDateTime: new Date(parseInt(this.props.event.endDateTime)),
+    //   city: parsed.event.city,
+    //   location: parsed.event.location,
+    //   banner: parsed.event.banner,
+    //   categories: parsed.event.categories
+    // });
+    this.props.getUpdatedEvent(parsed.event);
   };
 
   render = () => {
+    console.log("STATEEEE", this.state);
+
     // if (this.state.eventHost === undefined) {
     //   console.log("Loading block");
 

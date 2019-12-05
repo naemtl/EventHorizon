@@ -21,6 +21,11 @@ class UnconnectedEventCard extends Component {
   //   this.setState({ eventHost: eventHost });
   // };
   render = () => {
+    console.log(
+      "this.props.event.categories AFTER UPDATE IN EVENT CARD",
+      this.props.event.categories
+    );
+
     let eventStartDate = new Date(parseInt(this.props.event.startDateTime));
     let eventEndDate = new Date(parseInt(this.props.event.endDateTime));
     return (
@@ -41,7 +46,7 @@ class UnconnectedEventCard extends Component {
           </Link>
         </div>*/}
         <div>{this.props.event.description}</div>
-        <div>{dateformat(eventStartDate, "ddd, mmm dS yyyy")}</div>
+        <div>{dateformat(eventStartDate, "mm.dd.yyyy")}</div>
         <div>{this.props.event.location}</div>
         <div>{this.props.event.city}</div>
         <div>{this.props.event.categories.join(", ")}</div>

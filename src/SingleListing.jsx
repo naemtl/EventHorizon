@@ -138,10 +138,19 @@ class UnconnectedSingleListing extends Component {
     }
   };
 
+  getUpdatedEvent = updatedEvent => {
+    this.setState({ ...this.state, event: updatedEvent });
+  };
+
   render = () => {
     let eventControls = undefined;
     if (this.state.displayEventControls) {
-      eventControls = <EditSingleListing event={this.state.event} />;
+      eventControls = (
+        <EditSingleListing
+          event={this.state.event}
+          getUpdatedEvent={this.getUpdatedEvent}
+        />
+      );
     }
     if (this.state.eventHost === undefined) {
       console.log("Loading block");
