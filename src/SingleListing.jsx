@@ -126,15 +126,17 @@ class UnconnectedSingleListing extends Component {
   };
 
   displayEditButton = () => {
-    if (
-      this.props.isLoggedIn &&
-      this.props.user._id === this.state.eventHost._id
-    ) {
-      return (
-        <div>
-          <button onClick={this.displayEventControls}>Edit event</button>
-        </div>
-      );
+    if (this.props.isLoggedIn) {
+      if (
+        this.props.user._id === this.state.eventHost._id ||
+        this.props.user.isAdmin
+      ) {
+        return (
+          <div>
+            <button onClick={this.displayEventControls}>Edit event</button>
+          </div>
+        );
+      }
     }
   };
 
