@@ -566,8 +566,9 @@ app.post("/search-date", upload.none(), (req, res) => {
           searchQuery + 86400000
         ]);
         return (
+          // TODO: IMPROVE CONDITION FOR DATE RESULTS
           event.startDateTime > searchQuery &&
-          event.endDateTime < searchQuery + 86400000
+          event.endDateTime < searchQuery + 126400000
         );
       });
       if (err) {

@@ -84,12 +84,6 @@ class UnconnectedSearchEvents extends Component {
 
     this.setState({ dateSearch: date.getTime() });
   };
-  // dateSearchChangeHandler = event => {
-  //   console.log("new input value: ", event.target.value);
-  //   // console.log("date input after getTime", date.getTime());
-
-  //   this.setState({ dateSearch: event.target.value });
-  // };
 
   dateSearchSubmit = async event => {
     event.preventDefault();
@@ -108,7 +102,7 @@ class UnconnectedSearchEvents extends Component {
     console.log("parsed resp from date-search endpoint", parsed);
     if (parsed.success) {
       console.log("events from datesearch: ", parsed.specificEvents);
-      this.setState({ dateSearch: parsed.specificEvents });
+      this.setState({ results: parsed.specificEvents });
       return;
     }
     window.alert("Could not complete your search");
@@ -153,17 +147,13 @@ class UnconnectedSearchEvents extends Component {
             <DatePicker
               selected={this.state.dateSearch}
               onChange={this.dateSearchChangeHandler}
+              placeholderText="Start date"
               dateFormat="MMM d, yyyy"
             />
-            {/*<input
-              type="date"
-              value={this.state.dateSearch}
-              onChange={this.dateSearchChangeHandler}
-            />*/}
             <input type="submit" />
           </form>
         </div>
-        {this.displayResults()}
+        <div className="flex flex-wrap">{this.displayResults()}</div>
       </div>
     );
   };
