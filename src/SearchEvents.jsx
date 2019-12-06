@@ -80,10 +80,16 @@ class UnconnectedSearchEvents extends Component {
 
   dateSearchChangeHandler = date => {
     console.log("new input value: ", date);
-    console.log("date input after getTime", date.getTime());
+    // console.log("date input after getTime", date.getTime());
 
     this.setState({ dateSearch: date.getTime() });
   };
+  // dateSearchChangeHandler = event => {
+  //   console.log("new input value: ", event.target.value);
+  //   // console.log("date input after getTime", date.getTime());
+
+  //   this.setState({ dateSearch: event.target.value });
+  // };
 
   dateSearchSubmit = async event => {
     event.preventDefault();
@@ -149,6 +155,11 @@ class UnconnectedSearchEvents extends Component {
               onChange={this.dateSearchChangeHandler}
               dateFormat="MMM d, yyyy"
             />
+            {/*<input
+              type="date"
+              value={this.state.dateSearch}
+              onChange={this.dateSearchChangeHandler}
+            />*/}
             <input type="submit" />
           </form>
         </div>

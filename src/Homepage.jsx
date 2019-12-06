@@ -2,9 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import FeaturedEvents from "./FeaturedEvents.jsx";
-import AllEvents from "./AllEvents.jsx";
-import StaffPicks from "./StaffPicks.jsx";
-import EventsByGenre from "./EventsByGenre.jsx";
+import LatestEvents from "./LatestEvents.jsx";
 
 class UnconnectedHomepage extends Component {
   constructor(props) {
@@ -16,16 +14,15 @@ class UnconnectedHomepage extends Component {
       <div>
         <h1>Event Horizon</h1>
         <div>
-          <h3>Featured events</h3>
+          <h3>Featured</h3>
           <div>
-            <AllEvents />
+            <FeaturedEvents />
+          </div>
+          <h3>Latest</h3>
+          <div>
+            <LatestEvents />
           </div>
           {/*
-            <Link to={"/event/"}></Link>
-          <h3>Staff picks</h3>
-          <div>
-            <StaffPicks />
-          </div>
           <h3>Browse by genre</h3>
           <div>
             <EventByGenre />
@@ -36,6 +33,13 @@ class UnconnectedHomepage extends Component {
   };
 }
 
-let Homepage = connect()(UnconnectedHomepage);
+let mapStateToProps = state => {
+  return {
+    isLoggedIn: state.loggedIn,
+    user: state.user
+  };
+};
+
+let Homepage = connect(mapStateToProps)(UnconnectedHomepage);
 
 export default Homepage;

@@ -292,8 +292,8 @@ app.post("/new-event", upload.single("img"), (req, res) => {
     });
 });
 
-app.post("/render-events", (req, res) => {
-  console.log("render-events endpoint hit");
+app.post("/render-latest-events", (req, res) => {
+  console.log("render-latest-events endpoint hit");
 
   dbo
     .collection("eventListings")
@@ -301,10 +301,14 @@ app.post("/render-events", (req, res) => {
     .sort({ startDateTime: 1 })
     .toArray((err, events) => {
       if (err) {
-        console.log("Error getting event listings: ", err);
-        return res.json({ success: false });
+        console.log("Error getting latest event listings: ", err);
+        res.json({ success: false });
+        return;
       }
-      let userIds = events.map(event => {
+      let notFeaturedEvents = events.filter(event => {
+        return !event.isFeatured;
+      });
+      let userIds = notFeaturedEvents.map(event => {
         return event.hostId;
       });
       dbo
@@ -317,12 +321,53 @@ app.post("/render-events", (req, res) => {
               err
             );
             res.json({ success: false });
+            return;
           }
           let hosts = users.filter(user => {
             return userIds.includes(user._id.toString());
           });
 
-          return res.json({ success: true, events, hosts });
+          res.json({ success: true, notFeaturedEvents, hosts });
+        });
+    });
+});
+
+app.post("/render-featured-events", (req, res) => {
+  console.log("render-featured-events endpoint hit");
+  dbo
+    .collection("eventListings")
+    .find({})
+    .sort({ startDateTime: 1 })
+    .toArray((err, events) => {
+      if (err) {
+        console.log("Error getting featured event listings: ", err);
+        res.json({ success: false });
+        return;
+      }
+      let featuredEvents = events.filter(event => {
+        return event.isFeatured;
+      });
+      console.log("FEATURED EVENTS", featuredEvents);
+
+      let userIds = featuredEvents.map(event => {
+        return event.hostId;
+      });
+      dbo
+        .collection("users")
+        .find({})
+        .toArray((err, users) => {
+          if (err) {
+            console.log(
+              "error getting users from event listings endpoint: ",
+              err
+            );
+            res.json({ success: false });
+            return;
+          }
+          let hosts = users.filter(user => {
+            return userIds.includes(user._id.toString());
+          });
+          res.json({ success: true, featuredEvents, hosts });
         });
     });
 });
@@ -513,8 +558,15 @@ app.post("/search-date", upload.none(), (req, res) => {
     .find({})
     .toArray((err, events) => {
       let specificEvents = events.filter(event => {
+        console.log([
+          "LOGGING TIME VALUES: ",
+          event.startDateTime,
+          searchQuery,
+          event.endDateTime,
+          searchQuery + 86400000
+        ]);
         return (
-          event.startDateTime > searchQuery ||
+          event.startDateTime > searchQuery &&
           event.endDateTime < searchQuery + 86400000
         );
       });

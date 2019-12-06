@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import EventCard from "./EventCard.jsx";
 
-class UnconnectedAllEvents extends Component {
+class UnconnectedLatestEvents extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -12,18 +12,18 @@ class UnconnectedAllEvents extends Component {
   }
 
   componentDidMount = async () => {
-    let response = await fetch("/render-events", {
+    let response = await fetch("/render-latest-events", {
       method: "POST"
     });
     let responseBody = await response.text();
     let parsed = JSON.parse(responseBody);
-    console.log("parsed res from render-events endpoint", parsed);
+    console.log("parsed res from render-latest-events endpoint", parsed);
     if (!parsed.success) {
       window.alert("Could not render events");
       return;
     }
     this.props.dispatch({ type: "get-hosts", hosts: parsed.hosts });
-    this.setState({ events: parsed.events });
+    this.setState({ events: parsed.notFeaturedEvents });
   };
 
   // only display events that are upcoming, events that have passed will be displayed for 24h before being filtered out of the display.
@@ -51,6 +51,6 @@ let mapStateToProps = state => {
   };
 };
 
-let AllEvents = connect(mapStateToProps)(UnconnectedAllEvents);
+let LatestEvents = connect(mapStateToProps)(UnconnectedLatestEvents);
 
-export default AllEvents;
+export default LatestEvents;
