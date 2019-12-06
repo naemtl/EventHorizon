@@ -520,7 +520,7 @@ app.post("/search-title", upload.none(), (req, res) => {
   let searchQuery = new RegExp(req.body.searchQuery);
   dbo
     .collection("eventListings")
-    .find({ title: searchQuery })
+    .find({ title: { $regex: searchQuery, $options: "?i" } })
     .toArray((err, events) => {
       if (err) {
         console.log("error retrieving events from title search", err);
@@ -537,7 +537,7 @@ app.post("/search-location", upload.none(), (req, res) => {
   let searchQuery = new RegExp(req.body.searchQuery);
   dbo
     .collection("eventListings")
-    .find({ location: searchQuery })
+    .find({ location: { $regex: searchQuery, $options: "?i" } })
     .toArray((err, events) => {
       if (err) {
         console.log("error retrieving events from location search");
@@ -578,6 +578,25 @@ app.post("/search-date", upload.none(), (req, res) => {
       }
       console.log("events array from date search: ", specificEvents);
       res.json({ success: true, specificEvents });
+    });
+});
+
+app.post("/sort-category", upload.none(), (req, res) => {
+  console.log("sort-category endpoint hit");
+  let category = req.body.category;
+  category = category.replace("-", "/").replace("%20", " ");
+  dbo
+    .collection("eventListings")
+    .find({ categories: { $regex: new RegExp(category), $options: "?i" } })
+    .toArray((err, events) => {
+      console.log("SORT CAT EVENTS", events);
+
+      if (err || events === null) {
+        console.log("Error getting categorized events");
+        res.json({ success: false });
+        return;
+      }
+      res.json({ success: true, events });
     });
 });
 

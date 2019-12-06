@@ -10,6 +10,7 @@ import UserProfile from "./UserProfile.jsx";
 import UserDashboard from "./UserDashboard.jsx";
 import SingleListing from "./SingleListing.jsx";
 import SearchEvents from "./SearchEvents.jsx";
+import EventsByCategory from "./EventsByCategory.jsx";
 
 class UnconnectedApp extends Component {
   constructor(props) {
@@ -59,6 +60,11 @@ class UnconnectedApp extends Component {
     return <SingleListing id={eventId} />;
   };
 
+  renderEventsByCategory = routerData => {
+    let category = routerData.match.params.cat;
+    return <EventsByCategory category={category} />;
+  };
+
   render = () => {
     return (
       <>
@@ -88,6 +94,11 @@ class UnconnectedApp extends Component {
           />
           <Route path="/my-dashboard" exact={true} component={UserDashboard} />
           <Route path="/search" exact={true} component={SearchEvents} />
+          <Route
+            path="/category/:cat"
+            exact={true}
+            render={this.renderEventsByCategory}
+          />
         </BrowserRouter>
       </>
     );

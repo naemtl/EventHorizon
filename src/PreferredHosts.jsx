@@ -9,14 +9,8 @@ class UnconnectedMyEvents extends Component {
   render = () => {
     return (
       <div>
-        <h3>Events I'm Hosting</h3>
-        <div>
-          <EventsImHosting />
-        </div>
-        <h3>My Saved Events</h3>
-        <div>
-          <MySavedEvents />
-        </div>
+        <h3>Hosts I'm Following</h3>
+        <div>{/* <FollowedUsers /> */}</div>
       </div>
     );
   };
