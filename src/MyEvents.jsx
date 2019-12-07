@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
+import EventsImHosting from "./EventsImHosting.jsx";
+//import SavedEvents from "./SavedEvents";
 
 class UnconnectedMyEvents extends Component {
   constructor(props) {
@@ -13,10 +15,10 @@ class UnconnectedMyEvents extends Component {
         <div>
           <EventsImHosting />
         </div>
-        <h3>My Saved Events</h3>
+        {/* <h3>My Saved Events</h3>
         <div>
-          <MySavedEvents />
-        </div>
+          <SavedEvents />
+        </div> */}
       </div>
     );
   };

@@ -22,11 +22,6 @@ class UnconnectedHomepage extends Component {
           <div>
             <LatestEvents />
           </div>
-          {/*
-          <h3>Browse by genre</h3>
-          <div>
-            <EventByGenre />
-          </div> */}
         </div>
       </div>
     );

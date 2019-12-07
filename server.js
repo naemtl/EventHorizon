@@ -699,6 +699,26 @@ app.post("/update-event", upload.single("img"), (req, res) => {
   );
 });
 
+app.post("/hosting-event", upload.none(), (req, res) => {
+  console.log("hosting event endpoint hit");
+  let userId = req.body.userId;
+  console.log("HOST USERID", userId);
+
+  dbo
+    .collection("eventListings")
+    .find({ hostId: userId })
+    .toArray((err, events) => {
+      if (err || events === null) {
+        console.log("Error getting events I am hosting");
+        res.send({ success: false });
+        return;
+      }
+      console.log("HOSTING EVENTS", events);
+
+      res.send({ success: true, events });
+    });
+});
+
 // Your endpoints go before this line
 
 app.all("/*", (req, res, next) => {

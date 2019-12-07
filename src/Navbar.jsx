@@ -44,6 +44,7 @@ class UnconnectedNavbar extends Component {
                 {this.props.user.username}
               </div>
             </Link>
+            <Link to="/my-events">My Events</Link>
             <button onClick={this.logout}>Log out</button>
             <Link to="/create-event">Create Event</Link>
           </div>

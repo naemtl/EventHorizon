@@ -10,6 +10,7 @@ import UserProfile from "./UserProfile.jsx";
 import UserDashboard from "./UserDashboard.jsx";
 import SingleListing from "./SingleListing.jsx";
 import SearchEvents from "./SearchEvents.jsx";
+import MyEvents from "./MyEvents.jsx";
 import EventsByCategory from "./EventsByCategory.jsx";
 
 class UnconnectedApp extends Component {
@@ -99,6 +100,7 @@ class UnconnectedApp extends Component {
             exact={true}
             render={this.renderEventsByCategory}
           />
+          <Route path="/my-events" exact={true} component={MyEvents} />
         </BrowserRouter>
       </>
     );
