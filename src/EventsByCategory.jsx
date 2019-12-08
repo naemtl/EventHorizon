@@ -10,7 +10,15 @@ class UnconnectedSearchEvents extends Component {
     };
   }
 
-  componentWillMount = async () => {
+  componentDidMount = () => {
+    this.eventsByCategory();
+  };
+
+  componentDidUpdate = () => {
+    this.eventsByCategory();
+  };
+
+  eventsByCategory = async () => {
     let data = new FormData();
     data.append("category", this.props.category);
     let response = await fetch("/sort-category", {
@@ -20,11 +28,12 @@ class UnconnectedSearchEvents extends Component {
     let responseBody = await response.text();
     let parsed = JSON.parse(responseBody);
     console.log("parsed resp from sort-category endpoint: ", parsed);
-    if (parsed.success) {
+    if (parsed.success && parsed.events.length !== this.state.results.length) {
       this.setState({ results: parsed.events });
       return;
+    } else {
+      window.alert("Could not render events with desired category");
     }
-    window.alert("Could not render events with desired category");
   };
 
   displayResults = () => {

@@ -517,10 +517,10 @@ app.post("/block-user", upload.none(), (req, res) => {
 
 app.post("/search-title", upload.none(), (req, res) => {
   console.log("Search title endpoint hit");
-  let searchQuery = new RegExp(req.body.searchQuery);
+  let searchQuery = req.body.searchQuery;
   dbo
     .collection("eventListings")
-    .find({ title: { $regex: searchQuery, $options: "?i" } })
+    .find({ title: { $regex: new RegExp(searchQuery), $options: "?i" } })
     .toArray((err, events) => {
       if (err) {
         console.log("error retrieving events from title search", err);
@@ -534,10 +534,10 @@ app.post("/search-title", upload.none(), (req, res) => {
 
 app.post("/search-location", upload.none(), (req, res) => {
   console.log("Search location endpoint hit");
-  let searchQuery = new RegExp(req.body.searchQuery);
+  let searchQuery = req.body.searchQuery;
   dbo
     .collection("eventListings")
-    .find({ location: { $regex: searchQuery, $options: "?i" } })
+    .find({ location: { $regex: new RegExp(searchQuery), $options: "?i" } })
     .toArray((err, events) => {
       if (err) {
         console.log("error retrieving events from location search");
@@ -717,6 +717,37 @@ app.post("/hosting-event", upload.none(), (req, res) => {
 
       res.send({ success: true, events });
     });
+});
+
+app.post("/saved-events", upload.none(), (req, res) => {
+  console.log("saved events endpoint hit");
+  let userId = req.body.userId;
+  console.log("USERID", userId);
+  dbo.collection("users").findOne({ _id: ObjectID(userId) }, (err, user) => {
+    if (err || user === null) {
+      console.log("Error getting user to check saved events");
+      res.send({ success: false });
+      return;
+    }
+    console.log("THE USER", user);
+
+    let usersSavedEvents = user.savedEvents;
+    console.log("MY SAVED EVENTS: ", usersSavedEvents);
+    dbo
+      .collection("eventListings")
+      .find({
+        _id: { $in: user.savedEvents.map(eventId => ObjectID(eventId)) }
+      })
+      .toArray((err, events) => {
+        if (err) {
+          console.log("Error getting events from user's savedEvents array");
+          res.send({ success: false });
+          return;
+        }
+        console.log("result of saved events search: ", events);
+        res.json({ success: true, events });
+      });
+  });
 });
 
 // Your endpoints go before this line

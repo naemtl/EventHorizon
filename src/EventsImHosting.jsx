@@ -9,7 +9,7 @@ class UnconnectEventsImHosting extends Component {
       events: []
     };
   }
-  componentWillMount = async () => {
+  componentDidMount = async () => {
     let data = new FormData();
     console.log("user from props", this.props.user);
 

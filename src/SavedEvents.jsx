@@ -10,7 +10,7 @@ class UnconnectSavedEvents extends Component {
     };
   }
 
-  componentWillMount = async () => {
+  componentDidMount = async () => {
     let data = new FormData();
     data.append("userId", this.props.user._id);
     let response = await fetch("/saved-events", {
@@ -28,10 +28,12 @@ class UnconnectSavedEvents extends Component {
   };
 
   render = () => {
+    console.log("SAVED EVENTS STATE", this.state.events);
+
     return (
-      <div>
+      <div className="flex flex-wrap">
         {this.state.events.map(event => {
-          <EventCard event={event} />;
+          return <EventCard event={event} />;
         })}
       </div>
     );
