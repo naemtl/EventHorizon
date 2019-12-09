@@ -45,6 +45,7 @@ class UnconnectedNavbar extends Component {
               </div>
             </Link>
             <Link to="/my-events">My Events</Link>
+            <Link to="/preferred-hosts">Preferred Hosts</Link>
             <button onClick={this.logout}>Log out</button>
             <Link to="/create-event">Create Event</Link>
           </div>

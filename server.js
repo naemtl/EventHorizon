@@ -750,6 +750,22 @@ app.post("/saved-events", upload.none(), (req, res) => {
   });
 });
 
+app.post("/followed-hosts", upload.none(), (req, res) => {
+  console.log("followed-hosts endpoint hit");
+  let userId = req.body.userId;
+  console.log("user requesting list of hosts: ", userId);
+  dbo.collection("users").findOne({ _id: ObjectID(userId) }, (err, user) => {
+    if (err || user === null) {
+      console.log("Error getting user in followed-hosts endpoint", user);
+      res.json({ success: false });
+      return;
+    }
+    console.log("getting user's preferred hosts: ", user.followUser);
+
+    res.send(JSON.stringify({ success: true, hosts: user.followUser }));
+  });
+});
+
 // Your endpoints go before this line
 
 app.all("/*", (req, res, next) => {

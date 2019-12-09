@@ -11,6 +11,7 @@ import UserDashboard from "./UserDashboard.jsx";
 import SingleListing from "./SingleListing.jsx";
 import SearchEvents from "./SearchEvents.jsx";
 import MyEvents from "./MyEvents.jsx";
+import PreferredHosts from "./PreferredHosts.jsx";
 import EventsByCategory from "./EventsByCategory.jsx";
 
 class UnconnectedApp extends Component {
@@ -101,6 +102,11 @@ class UnconnectedApp extends Component {
             render={this.renderEventsByCategory}
           />
           <Route path="/my-events" exact={true} component={MyEvents} />
+          <Route
+            path="/preferred-hosts"
+            exact={true}
+            component={PreferredHosts}
+          />
         </BrowserRouter>
       </>
     );

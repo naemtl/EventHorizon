@@ -23,10 +23,12 @@ class UnconnectedUserProfile extends Component {
     this.setState({ viewedUser: parsed.user });
   };
 
+  //TODO: fix buttons to become unfollow user if user is followed, and unblock user if user is blocked. Also, if a user is blocked they are automatically removed from followUser list if they exist there, and cannot be followed unless unblocked
+
   followUser = async () => {
     let data = new FormData();
     data.append("userId", this.props.user._id);
-    data.append("followUser", this.state.viewedUser.username);
+    data.append("followUser", this.state.viewedUser._id);
     let response = await fetch("/follow-user", {
       method: "POST",
       body: data
@@ -34,7 +36,7 @@ class UnconnectedUserProfile extends Component {
     let responseBody = await response.text();
     let parsed = JSON.parse(responseBody);
     if (parsed.success) {
-      window.alert("You are now following " + this.state.viewedUser.username);
+      window.alert("You are now following " + this.state.viewedUser._id);
       return;
     }
     window.alert("Error");
@@ -63,7 +65,7 @@ class UnconnectedUserProfile extends Component {
         <div>{this.state.viewedUser.username}</div>
         <div>{this.state.viewedUser.province}</div>
         <div>{this.state.viewedUser.email}</div>
-        {this.props.loggedIn && (
+        {this.props.isLoggedIn && (
           <div>
             <div>Send a message to this user</div>
             <div>
