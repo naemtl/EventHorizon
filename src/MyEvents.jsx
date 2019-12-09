@@ -11,11 +11,11 @@ class UnconnectedMyEvents extends Component {
   render = () => {
     return (
       <div>
-        <h3>Events I'm Hosting</h3>
+        <h2>Events I'm Hosting</h2>
         <div>
           <EventsImHosting />
         </div>
-        <h3>My Saved Events</h3>
+        <h2>My Saved Events</h2>
         <div>
           <SavedEvents />
         </div>

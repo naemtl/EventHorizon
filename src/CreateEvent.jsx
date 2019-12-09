@@ -106,7 +106,7 @@ class UnconnectedCreateEvent extends Component {
     if (this.props.user) {
       return (
         <div>
-          <h3>Create Event</h3>
+          <h2>Create Event</h2>
           <form onSubmit={this.handleSubmit}>
             <label htmlFor="eventTitle">Title</label>
             <input

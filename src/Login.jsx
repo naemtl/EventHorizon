@@ -43,7 +43,6 @@ class UnconnectedLogin extends Component {
 
     this.setState({ username: "", password: "", user: parsed.user });
     window.alert("Log-in successful");
-    console.log("Log-in successful");
     this.props.dispatch({ type: "login-success", user: this.state.user });
     this.props.history.push("/");
   };

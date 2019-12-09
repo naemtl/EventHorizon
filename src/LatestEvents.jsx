@@ -12,6 +12,7 @@ class UnconnectedLatestEvents extends Component {
   }
 
   componentDidMount = async () => {
+    console.log("thisprops.user from latest events", this.props.user);
     let response = await fetch("/render-latest-events", {
       method: "POST"
     });
@@ -36,9 +37,6 @@ class UnconnectedLatestEvents extends Component {
       return <EventCard event={event} />;
     });
   };
-
-  // TODO: pass entire user object here when you can.
-  // store all users who own events in the store and access them <div>{event.date}</div><div>{event.time}</div>
 
   render = () => {
     return <div className="flex flex-wrap">{this.getUpcomingEvents()}</div>;

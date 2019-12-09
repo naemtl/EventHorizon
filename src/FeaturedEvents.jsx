@@ -37,9 +37,6 @@ class UnconnectedLatestEvents extends Component {
     });
   };
 
-  // TODO: pass entire user object here when you can.
-  // store all users who own events in the store and access them <div>{event.date}</div><div>{event.time}</div>
-
   render = () => {
     return <div className="flex flex-wrap">{this.getUpcomingEvents()}</div>;
   };

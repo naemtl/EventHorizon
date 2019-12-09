@@ -392,15 +392,12 @@ app.post("/render-user", upload.none(), (req, res) => {
 
   let userId = req.body._id;
   dbo.collection("users").findOne({ _id: ObjectID(userId) }, (err, user) => {
-    if (err) {
-      console.log("Error in render-user");
-      return res.json({ success: false });
+    if (err || user === null) {
+      console.log(["Error in render-user", err, user]);
+      res.json({ success: false });
+      return;
     }
-    if (user === null || user === undefined) {
-      console.log("user not found");
-      return res.json({ success: false });
-    }
-    return res.json({ success: true, user });
+    res.json({ success: true, user });
   });
 });
 
@@ -477,10 +474,29 @@ app.post("/update-email", upload.none(), (req, res) => {
     });
 });
 
+app.post("/unfollow-user", upload.none(), (req, res) => {
+  console.log("unfollow-user endpoint hit");
+  let userId = req.body._id;
+  let newUnfollowUser = req.body.followUserId;
+  console.log("NEW UNFOLLOW", newUnfollowUser);
+  dbo
+    .collection("users")
+    .updateOne(
+      { _id: ObjectID(userId) },
+      { $pull: { followUser: newUnfollowUser } },
+      (err, user) => {
+        if (err || user === null) {
+          return res.json({ success: false, err });
+        }
+        return res.json({ success: true });
+      }
+    );
+});
+
 app.post("/follow-user", upload.none(), (req, res) => {
   console.log("follow-user endpoint hit");
-  let userId = req.body.userId;
-  let newFollowUser = req.body.followUser;
+  let userId = req.body._id;
+  let newFollowUser = req.body.followUserId;
   console.log("NEW FOLLOW", newFollowUser);
   dbo
     .collection("users")
@@ -498,14 +514,36 @@ app.post("/follow-user", upload.none(), (req, res) => {
 
 app.post("/block-user", upload.none(), (req, res) => {
   console.log("block-user endpoint hit");
-  let userId = req.body.userId;
-  let newBlockUser = req.body.blockUser;
+  let userId = req.body._id;
+  let newBlockUser = req.body.blockUserId;
   console.log("NEW BLOCK", newBlockUser);
+  dbo.collection("users").updateOne(
+    { _id: ObjectID(userId) },
+    {
+      $push: { blockUser: newBlockUser },
+      $pull: {
+        followUser: newBlockUser
+      }
+    },
+    (err, user) => {
+      if (err || user === null) {
+        return res.json({ success: false, err });
+      }
+      return res.json({ success: true });
+    }
+  );
+});
+
+app.post("/unblock-user", upload.none(), (req, res) => {
+  console.log("unblock-user endpoint hit");
+  let userId = req.body._id;
+  let newUnblockUser = req.body.blockUserId;
+  console.log("NEW UNBLOCK", newUnblockUser);
   dbo
     .collection("users")
     .updateOne(
       { _id: ObjectID(userId) },
-      { $push: { blockUser: newBlockUser } },
+      { $pull: { blockUser: newUnblockUser } },
       (err, user) => {
         if (err || user === null) {
           return res.json({ success: false, err });
@@ -550,7 +588,6 @@ app.post("/search-location", upload.none(), (req, res) => {
 });
 
 app.post("/search-date", upload.none(), (req, res) => {
-  // TODO: FIX ME
   console.log("Search date endpoint hit");
   let searchQuery = parseInt(req.body.searchQuery);
   dbo
@@ -723,31 +760,45 @@ app.post("/saved-events", upload.none(), (req, res) => {
   console.log("saved events endpoint hit");
   let userId = req.body.userId;
   console.log("USERID", userId);
-  dbo.collection("users").findOne({ _id: ObjectID(userId) }, (err, user) => {
-    if (err || user === null) {
-      console.log("Error getting user to check saved events");
-      res.send({ success: false });
-      return;
-    }
-    console.log("THE USER", user);
+  dbo.collection("users").findOne(
+    {
+      _id: ObjectID(userId)
+    },
+    (err, user) => {
+      if (err || user === null) {
+        console.log("Error getting user to check saved events");
+        res.send({
+          success: false
+        });
+        return;
+      }
+      console.log("THE USER", user);
 
-    let usersSavedEvents = user.savedEvents;
-    console.log("MY SAVED EVENTS: ", usersSavedEvents);
-    dbo
-      .collection("eventListings")
-      .find({
-        _id: { $in: user.savedEvents.map(eventId => ObjectID(eventId)) }
-      })
-      .toArray((err, events) => {
-        if (err) {
-          console.log("Error getting events from user's savedEvents array");
-          res.send({ success: false });
-          return;
-        }
-        console.log("result of saved events search: ", events);
-        res.json({ success: true, events });
-      });
-  });
+      let usersSavedEvents = user.savedEvents;
+      console.log("MY SAVED EVENTS: ", usersSavedEvents);
+      dbo
+        .collection("eventListings")
+        .find({
+          _id: {
+            $in: user.savedEvents.map(eventId => ObjectID(eventId))
+          }
+        })
+        .toArray((err, events) => {
+          if (err) {
+            console.log("Error getting events from user's savedEvents array");
+            res.send({
+              success: false
+            });
+            return;
+          }
+          console.log("result of saved events search: ", events);
+          res.json({
+            success: true,
+            events
+          });
+        });
+    }
+  );
 });
 
 app.post("/followed-hosts", upload.none(), (req, res) => {

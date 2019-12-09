@@ -23,24 +23,6 @@ class UnconnectedApp extends Component {
     this.autoLogin();
   };
 
-  // componentDidUpdate = async prevProps => {
-  //   let response = await fetch("/event-ids", {
-  //     method: "POST"
-  //   });
-  //   let responseBody = await response.text();
-  //   let parsed = JSON.parse(responseBody);
-  //   console.log("PARSED body from /event-ids: ", parsed);
-  //   if (
-  //     (parsed.success &&
-  //       this.props.eventIds.length !== prevProps.eventIds.length) ||
-  //     this.props.eventIds === 0
-  //   ) {
-  //     this.props.dispatch({ type: "get-eventIds", eventIds: parsed.eventIds });
-  //     return;
-  //   }
-  //   console.log("Unsuccessful attempt at getting event ids from db/server");
-  // };
-
   autoLogin = async () => {
     let response = await fetch("/auto-login", {
       method: "POST"
@@ -48,6 +30,7 @@ class UnconnectedApp extends Component {
     let responseBody = await response.text();
     let parsed = JSON.parse(responseBody);
     if (parsed.success) {
+      console.log("AUTO-LOGIN PARSEDUSER", parsed.user);
       this.props.dispatch({ type: "login-success", user: parsed.user });
     }
   };

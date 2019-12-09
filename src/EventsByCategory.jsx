@@ -56,7 +56,7 @@ class UnconnectedSearchEvents extends Component {
   render = () => {
     return (
       <div>
-        <h3>{this.displayCategoryHeader()}</h3>
+        <h2>{this.displayCategoryHeader()}</h2>
         <div className="flex flex-wrap">{this.displayResults()}</div>
       </div>
     );

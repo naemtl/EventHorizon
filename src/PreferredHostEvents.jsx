@@ -6,12 +6,10 @@ class UnconnectedPreferredHostEvents extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      events: []
+      events: [],
+      username: ""
     };
   }
-
-  // TODO: I'm reusing a component down here: hosting-event. Should I?
-  // I need to get the host's id and their username, the latter to display on this page.
 
   componentDidMount = async () => {
     await this.getHostUsername();
@@ -20,19 +18,26 @@ class UnconnectedPreferredHostEvents extends Component {
 
   getHostUsername = async () => {
     let data = new FormData();
-    data.append("userId", this.props.host);
-    let response = await fetch("", {
+    data.append("_id", this.props.hostId);
+    let response = await fetch("/render-user", {
       method: "POST",
       body: data
     });
     let responseBody = await response.text();
     let parsed = JSON.parse(responseBody);
+    console.log("Parsed resp from render-username: ", parsed);
+
+    if (parsed.success) {
+      this.setState({ username: parsed.user.username });
+      return;
+    }
+    window.alert("Could not get followed host's username");
   };
 
   getHostEvents = async () => {
     let data = new FormData();
-    //console.log("host! :", this.props.host);
-    data.append("userId", this.props.host);
+    //console.log("host! :", this.props.hostId);
+    data.append("userId", this.props.hostId);
     let response = await fetch("/hosting-event", {
       method: "POST",
       body: data
@@ -50,9 +55,12 @@ class UnconnectedPreferredHostEvents extends Component {
   render = () => {
     return (
       <div>
-        {this.state.events.map(event => {
-          return <EventCard event={event} />;
-        })}
+        <h3>{this.state.username}</h3>
+        <div className="flex flex-wrap">
+          {this.state.events.map(event => {
+            return <EventCard event={event} />;
+          })}
+        </div>
       </div>
     );
   };

@@ -14,11 +14,11 @@ class UnconnectedHomepage extends Component {
       <div>
         <h1>Event Horizon</h1>
         <div>
-          <h3>Featured</h3>
+          <h2>Featured</h2>
           <div>
             <FeaturedEvents />
           </div>
-          <h3>Latest</h3>
+          <h2>Latest</h2>
           <div>
             <LatestEvents />
           </div>
