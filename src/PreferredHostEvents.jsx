@@ -14,6 +14,22 @@ class UnconnectedPreferredHostEvents extends Component {
   // I need to get the host's id and their username, the latter to display on this page.
 
   componentDidMount = async () => {
+    await this.getHostUsername();
+    this.getHostEvents();
+  };
+
+  getHostUsername = async () => {
+    let data = new FormData();
+    data.append("userId", this.props.host);
+    let response = await fetch("", {
+      method: "POST",
+      body: data
+    });
+    let responseBody = await response.text();
+    let parsed = JSON.parse(responseBody);
+  };
+
+  getHostEvents = async () => {
     let data = new FormData();
     //console.log("host! :", this.props.host);
     data.append("userId", this.props.host);

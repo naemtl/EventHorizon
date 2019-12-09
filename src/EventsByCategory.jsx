@@ -14,8 +14,10 @@ class UnconnectedSearchEvents extends Component {
     this.eventsByCategory();
   };
 
-  componentDidUpdate = () => {
-    this.eventsByCategory();
+  componentDidUpdate = prevProps => {
+    if (prevProps.category !== this.props.category) {
+      this.eventsByCategory();
+    }
   };
 
   eventsByCategory = async () => {
@@ -28,7 +30,7 @@ class UnconnectedSearchEvents extends Component {
     let responseBody = await response.text();
     let parsed = JSON.parse(responseBody);
     console.log("parsed resp from sort-category endpoint: ", parsed);
-    if (parsed.success && parsed.events.length !== this.state.results.length) {
+    if (parsed.success) {
       this.setState({ results: parsed.events });
       return;
     } else {
