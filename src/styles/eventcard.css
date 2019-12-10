@@ -1,0 +1,120 @@
+/* .eventcard-padding {
+  padding: 12px;
+} */
+
+.eventcard-grid-item {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 12px;
+}
+
+.eventcard-grid-item a {
+  text-decoration: none;
+}
+
+.eventcard-item-content {
+  position: relative;
+  overflow: hidden;
+  padding: 4px;
+  border: 1px solid #666;
+}
+
+.eventcard-item-frame {
+  display: block;
+  position: relative;
+  overflow: hidden;
+  /* height: 0; */
+  padding-bottom: 56.25%;
+}
+
+.eventcard-item-img {
+  object-fit: cover;
+  height: 100%;
+}
+
+.eventcard-item-header {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-flex-wrap: wrap;
+  flex-wrap: wrap;
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+  justify-content: space-between;
+  margin-top: 4px;
+  padding: 8px;
+}
+
+.eventcard-item-title {
+  -webkit-flex-basis: 100%;
+  flex-basis: 100%;
+  margin-top: 8px;
+  font-size: 22px;
+  font-weight: 700;
+  line-height: 24px;
+}
+
+.eventcard-item-footer {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-flex-wrap: wrap;
+  flex-wrap: wrap;
+  max-height: 64px;
+  overflow: hidden;
+  margin-bottom: 4px;
+  margin-top: 32px;
+  padding: 0 8px;
+}
+
+/* MEDIA QUERIES */
+
+@media (min-width: 768px) {
+  .eventcard-grid-item {
+    width: 50%;
+    min-width: 50%;
+  }
+
+  .eventcard-item-content {
+    height: 100%;
+    padding: 8px 8px 40px 8px;
+  }
+
+  .eventcard-item-footer {
+    position: absolute;
+    bottom: 8px;
+    left: 0;
+    margin: 0;
+    padding: 0 12px;
+  }
+}
+
+.eventcard-tag {
+  display: block;
+  margin: 2px;
+  padding: 6px 8px;
+  border: 1px solid #4c4c4c;
+  color: #ccc;
+  text-decoration: none;
+}
+
+@media (min-width: 1024px) {
+  .eventcard-grid-item {
+    width: calc(100% / 3);
+    min-width: calc(100% / 3);
+  }
+}
+
+@media (min-width: 1190px) {
+  .eventcard-grid-item {
+    width: 25%;
+    min-width: 25%;
+  }
+}
+
+@media (min-width: 1500px) {
+  .eventcard-grid-item {
+    width: 20%;
+    min-width: 20%;
+  }
+}

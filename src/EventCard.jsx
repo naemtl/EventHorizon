@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import * as dateformat from "dateformat";
+import "./styles/eventcard.css";
 // converts 'require syntax' to importable library
 
 class UnconnectedEventCard extends Component {
@@ -18,32 +19,38 @@ class UnconnectedEventCard extends Component {
     let eventStartDate = new Date(parseInt(this.props.event.startDateTime));
     let eventEndDate = new Date(parseInt(this.props.event.endDateTime));
     return (
-      <div className="card-padding">
-        <div>
+      <div className="eventcard-padding eventcard-grid-item">
+        <div className="eventcard-item-content">
           <Link to={"/event/" + this.props.event._id}>
-            <img
-              src={this.props.event.banner}
-              alt="this.props.event banner"
-              width="100px"
-            />
+            <div className="eventcard-item-frame">
+              <img
+                className="eventcard-item-img"
+                src={this.props.event.banner}
+                alt="this.props.event banner"
+                width="100px"
+              />
+            </div>
+            <div className="eventcard-item-header">
+              <span>{dateformat(eventStartDate, "dd.mm.yy")}</span>
+              <span>{this.props.event.city}</span>
+              <div className="eventcard-item-title">
+                {this.props.event.title}
+              </div>
+            </div>
           </Link>
-        </div>
-        <div>{this.props.event.title}</div>
-        <div>{this.props.event.description}</div>
-        <div>{dateformat(eventStartDate, "mm.dd.yyyy")}</div>
-        <div>{this.props.event.location}</div>
-        <div>{this.props.event.city}</div>
-        <div>
-          {this.props.event.categories.map(cat => {
-            console.log("CAT", cat);
-            return (
-              <Link to={"/category/" + cat.toLowerCase().replace("/", "-")}>
-                <span className="event-card-categories">
+          <div className="eventcard-item-footer">
+            {this.props.event.categories.map(cat => {
+              console.log("CAT", cat);
+              return (
+                <Link
+                  className="eventcard-tag"
+                  to={"/category/" + cat.toLowerCase().replace("/", "-")}
+                >
                   {cat.toUpperCase()}
-                </span>
-              </Link>
-            );
-          })}
+                </Link>
+              );
+            })}
+          </div>
         </div>
       </div>
     );

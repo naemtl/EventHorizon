@@ -144,7 +144,7 @@ class UnconnectedSignup extends Component {
             type="file"
             onChange={this.avatarChangeHandler}
           />
-          <div>Select prefered categories</div>
+          <div>Select preferred categories</div>
           {/* TAGS */}
           <div>Music related events</div>
           <div className="flex">

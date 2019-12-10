@@ -14,6 +14,8 @@ import MyEvents from "./MyEvents.jsx";
 import PreferredHosts from "./PreferredHosts.jsx";
 import EventsByCategory from "./EventsByCategory.jsx";
 
+import "./styles/navbar.css";
+
 class UnconnectedApp extends Component {
   constructor(props) {
     super(props);

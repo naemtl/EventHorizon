@@ -160,13 +160,13 @@ class UnconnectedUserProfile extends Component {
   };
 
   getSavedEvents = () => {
+    //FIX ME
     if (this.props.user.savedEvents.length !== 0) {
       return (
         <div>
           {this.props.user.savedEvents.map(event => {
             <EventCard event={event} />;
           })}
-          FIX ME
         </div>
       );
     }

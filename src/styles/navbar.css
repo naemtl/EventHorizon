@@ -1,0 +1,8 @@
+.navbar {
+  border-bottom: 1px solid white;
+}
+
+.navbar-logo-text {
+  text-decoration: none;
+  font-size: 2vw;
+}

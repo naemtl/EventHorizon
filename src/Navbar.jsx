@@ -27,9 +27,12 @@ class UnconnectedNavbar extends Component {
 
   render = () => {
     return (
-      <nav className="flex space-between">
-        <Link to="/">
+      <nav className="flex space-between navbar">
+        <Link to="/" className={"navbar-logo-text"}>
           <img src="/images/logo.png" alt="EventHorizon logo" height="50px" />
+          <span>
+            <strong>Event Horizon</strong>
+          </span>
         </Link>
         {!this.props.isLoggedIn && <Link to="/login">Log in</Link>}
         {this.props.isLoggedIn && (

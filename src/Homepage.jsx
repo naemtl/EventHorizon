@@ -12,13 +12,12 @@ class UnconnectedHomepage extends Component {
   render = () => {
     return (
       <div>
-        <h1>Event Horizon</h1>
         <div>
-          <h2>Featured</h2>
+          <h2>Featured Listings</h2>
           <div>
             <FeaturedEvents />
           </div>
-          <h2>Latest</h2>
+          <h2>Coming Up</h2>
           <div>
             <LatestEvents />
           </div>

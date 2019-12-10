@@ -34,7 +34,3 @@ body {
 .space-between {
   justify-content: space-between;
 }
-
-.card-padding {
-  padding: 12px;
-}
