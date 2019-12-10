@@ -34,7 +34,7 @@ class UnconnectedMyEvents extends Component {
         <div>
           {this.state.followedHosts.map(host => {
             return (
-              <div>
+              <div className="collection">
                 <PreferredHostEvents hostId={host} />
               </div>
             );

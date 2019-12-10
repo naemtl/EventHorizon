@@ -13,13 +13,17 @@ class UnconnectedHomepage extends Component {
     return (
       <div>
         <div>
-          <h2>Featured Listings</h2>
-          <div>
-            <FeaturedEvents />
+          <div className="collection">
+            <h2>Featured Listings</h2>
+            <div>
+              <FeaturedEvents />
+            </div>
           </div>
-          <h2>Coming Up</h2>
-          <div>
-            <LatestEvents />
+          <div className="collection">
+            <h2>Coming Up</h2>
+            <div>
+              <LatestEvents />
+            </div>
           </div>
         </div>
       </div>

@@ -6,3 +6,8 @@ body {
 a {
   color: white;
 }
+
+.collection {
+  padding-bottom: 26px;
+  margin-bottom: 26px;
+}

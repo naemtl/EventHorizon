@@ -29,7 +29,11 @@ class UnconnectedNavbar extends Component {
     return (
       <nav className="flex space-between navbar">
         <Link to="/" className={"navbar-logo-text"}>
-          <img src="/images/logo.png" alt="EventHorizon logo" height="50px" />
+          <img
+            src="/images/logo-wh.png"
+            alt="EventHorizon logo"
+            height="50px"
+          />
           <span>
             <strong>Event Horizon</strong>
           </span>
