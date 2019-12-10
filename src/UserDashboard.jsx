@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { Redirect } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
 import EventCard from "./EventCard.jsx";
 
 class UnconnectedUserProfile extends Component {
@@ -11,9 +11,29 @@ class UnconnectedUserProfile extends Component {
       newUsername: "",
       newPassword: "",
       confirmNewPassword: "",
-      newEmail: ""
+      newEmail: "",
+      followedUsers: []
     };
   }
+
+  componentDidMount = async () => {
+    let data = new FormData();
+    data.append("followedUsers", this.props.user.followUser);
+    console.log("followedUsers", this.props.user.followUser);
+
+    let response = await fetch("/render-followed-users", {
+      method: "POST",
+      body: data
+    });
+    let responseBody = await response.text();
+    let parsed = JSON.parse(responseBody);
+    console.log("parsed res from render-followed-users", parsed);
+    if (parsed.success) {
+      this.setState({ followedUsers: parsed.users });
+      return;
+    }
+    window.alert("Could not get followed users list");
+  };
 
   renderUser = async () => {
     let dataRenderUser = new FormData();
@@ -159,18 +179,18 @@ class UnconnectedUserProfile extends Component {
     console.log("Error from update-email endpoint", parsed.err);
   };
 
-  getSavedEvents = () => {
+  getFollowedUsers = () => {
     //FIX ME
-    if (this.props.user.savedEvents.length !== 0) {
-      return (
-        <div>
-          {this.props.user.savedEvents.map(event => {
-            <EventCard event={event} />;
-          })}
-        </div>
-      );
+    if (this.state.followedUsers.length !== 0) {
+      return this.state.followedUsers.map(user => {
+        return (
+          <div className="dashboard-follow-list-item">
+            <Link to={"/user/" + user._id}>{user.username}</Link>
+          </div>
+        );
+      });
     }
-    return <div>You have no saved events</div>;
+    return <div>You are not following anyone yet!</div>;
   };
 
   render = () => {
@@ -192,7 +212,6 @@ class UnconnectedUserProfile extends Component {
                 <div>{user}</div>;
               })}
             </div>
-            {this.getSavedEvents()}
           </div>
           <div>Change avatar</div>
           <form onSubmit={this.newAvatarSubmitHandler}>
@@ -235,6 +254,10 @@ class UnconnectedUserProfile extends Component {
             />
             <input type="submit" />
           </form>
+          <div className="dashboard-follow-list-container">
+            <h2>Following</h2>
+            {this.getFollowedUsers()}
+          </div>
         </div>
       );
     } else {

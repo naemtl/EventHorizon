@@ -5,6 +5,7 @@ import React from "react";
 import { Provider } from "react-redux";
 import store from "./store.js";
 
+import "normalize.css";
 import "./styles/global.css";
 
 import reloadMagic from "./reload-magic-client.js"; // automatic reload

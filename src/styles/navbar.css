@@ -1,8 +1,15 @@
 .navbar {
   border-bottom: 1px solid white;
+  padding: 10px;
 }
 
 .navbar-logo-text {
   text-decoration: none;
-  font-size: 2vw;
+  font-size: 2.5vw;
+  display: flex;
+  align-items: center;
+}
+
+.navbar-logo-text span {
+  padding-left: 10px;
 }

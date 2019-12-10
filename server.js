@@ -401,6 +401,24 @@ app.post("/render-user", upload.none(), (req, res) => {
   });
 });
 
+app.post("/render-followed-users", upload.none(), (req, res) => {
+  console.log("render followed users hit");
+  let followedUsers = req.body.followedUsers.split(",");
+  console.log("FOLLOWEDUSERS", followedUsers);
+
+  dbo
+    .collection("users")
+    .find({ _id: { $in: followedUsers.map(userId => ObjectID(userId)) } })
+    .toArray((err, users) => {
+      if (err || users === null) {
+        console.log(["Error in render-user", err, users]);
+        res.json({ success: false });
+        return;
+      }
+      res.json({ success: true, users });
+    });
+});
+
 app.post("/update-avatar", upload.single("img"), (req, res) => {
   console.log("update-avatar endpoint hit");
   let file = req.file;

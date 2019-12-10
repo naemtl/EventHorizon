@@ -3,6 +3,8 @@ import { connect } from "react-redux";
 import { Redirect } from "react-router-dom";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import Select from "react-select";
+import { options, customStyles } from "./ReactSelectConfig.js";
 
 class UnconnectedCreateEvent extends Component {
   constructor(props) {
@@ -61,6 +63,20 @@ class UnconnectedCreateEvent extends Component {
       });
   };
 
+  // REACT-SELECT
+
+  handleSelectChange = selectedOptions => {
+    let newSelections = [];
+    if (selectedOptions !== null) {
+      newSelections = selectedOptions.map(option => {
+        return option.value;
+      });
+    }
+    console.log("Options selected: ", selectedOptions);
+    this.setState({ categories: newSelections });
+    console.log("Options selected: ", newSelections);
+  };
+
   handleSubmit = async event => {
     event.preventDefault();
     if (this.state.startDateTime > this.state.endDateTime) {
@@ -77,7 +93,10 @@ class UnconnectedCreateEvent extends Component {
     data.append("city", this.state.city);
     data.append("location", this.state.location);
     data.append("img", this.state.banner);
-    data.append("categories", JSON.stringify(this.state.categories));
+    data.append(
+      "categories",
+      JSON.stringify(this.state.categories.slice(0, 3))
+    );
     let response = await fetch("/new-event", {
       method: "POST",
       body: data
@@ -166,6 +185,13 @@ class UnconnectedCreateEvent extends Component {
             />
             <div>Select event categories</div>
             {/* TAGS */}
+            <Select
+              onChange={this.handleSelectChange}
+              styles={customStyles}
+              options={options}
+              isMulti="true"
+              placeholder="Select up to three categories"
+            />
             <div>Music related</div>
             <div className="flex">
               <label htmlFor="ambientNewAge">Ambient/New Age</label>

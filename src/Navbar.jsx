@@ -34,9 +34,7 @@ class UnconnectedNavbar extends Component {
             alt="EventHorizon logo"
             height="50px"
           />
-          <span>
-            <strong>Event Horizon</strong>
-          </span>
+          <span>Event Horizon</span>
         </Link>
         {!this.props.isLoggedIn && <Link to="/login">Log in</Link>}
         {this.props.isLoggedIn && (

@@ -19,19 +19,6 @@ class UnconnectedSingleListing extends Component {
     };
   }
 
-  //   getEventHost = () => {
-  //     console.log("THIS PROPS HOSTS", this.props.hosts);
-  //     console.log("THIS STATE EVENT", this.state.event);
-
-  //     let eventHost = this.props.hosts.find(host => {
-  //       console.log("value of host and event: ", this.state.event, host);
-
-  //       return this.state.event.hostId === host._id;
-  //     });
-  //     console.log("Value of eventHost: ", eventHost);
-  //     this.setState({ eventHost: eventHost });
-  //   };
-
   getUpdatedUser = async data => {
     let userResponse = await fetch("/render-user", {
       method: "POST",
