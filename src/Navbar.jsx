@@ -28,6 +28,59 @@ class UnconnectedNavbar extends Component {
 
   render = () => {
     return (
+      /* <nav>
+        <ul className="navbar menu">
+          <li className="logo">
+            <Link to="/" className={"navbar-logo-text"}>
+              <img
+                src="/images/logo-wh.png"
+                alt="EventHorizon logo"
+                height="50px"
+              />
+              <span>Event Horizon</span>
+            </Link>
+          </li>
+          <Link to="/search">
+            <FiSearch className="navbar-icon" />
+          </Link>
+          {!this.props.isLoggedIn && (
+            <li className="item button">
+              <Link to="/login">Log in</Link>{" "}
+            </li>
+          )}
+          {this.props.isLoggedIn && (
+            <div className="navbar_logged-in">
+              <li className="item">
+                <Link to={"/my-dashboard"}>
+                  <div>
+                    <img
+                      src={this.props.user.avatar}
+                      alt="user avatar"
+                      width="40px"
+                    />
+                    {this.props.user.username}
+                  </div>
+                </Link>
+              </li>
+              <li className="item">
+                <Link to="/my-events">My Events</Link>
+              </li>
+              <li className="item">
+                <Link to="/preferred-hosts">Preferred Hosts</Link>
+              </li>
+              <li className="item">
+                <Link to="/create-event">Create Event</Link>
+              </li>
+              <li className="item">
+                <button onClick={this.logout}>Log out</button>
+              </li>
+              <li className="toggle">
+                <i className="fas fa-bars"></i>
+              </li>
+            </div>
+          )}
+        </ul>
+      </nav>*/
       <nav className="navbar">
         <Link to="/" className={"navbar-logo-text"}>
           <img
