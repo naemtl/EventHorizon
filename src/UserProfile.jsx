@@ -148,7 +148,7 @@ class UnconnectedUserProfile extends Component {
           <div>
             <div>Send a message to this user</div>
             <div>{this.showFollowUserButton()}</div>
-            <div>{this.showBlockUserButton()}</div>
+            {/* <div>{this.showBlockUserButton()}</div> */}
           </div>
         )}
       </div>

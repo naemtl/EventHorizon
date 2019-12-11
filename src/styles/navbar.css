@@ -1,5 +1,5 @@
 .navbar {
-  padding: 10px;
+  padding: 15px 10px;
   height: 44px;
   background-color: #000;
   display: -webkit-box;
@@ -13,13 +13,90 @@
   justify-content: space-between;
 }
 
+.navbar-left-child {
+  display: flex;
+}
+
+.navbar-right-child {
+  display: flex;
+  align-items: center;
+}
+
 .navbar_logged-in {
   display: flex;
   align-items: center;
 }
 
-.navbar-icon {
+.navbar-button {
+  background: transparent;
+  border: none;
+  color: white;
+  display: flex;
+  align-items: center;
+}
+.navbar-button.focus,
+.navbar-button:focus {
+  outline: 0;
+  box-shadow: none !important;
+}
+
+.navbar-dropdown {
+  position: relative;
+}
+
+.navbar-dropdown-content:before,
+.navbar-dropdown-content:after {
+  content: "";
+  position: absolute;
+  right: 33px;
+  top: -10px;
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-width: 1px 10px 10px 10px;
+  border-color: transparent transparent #000 transparent;
+  z-index: 9999;
+}
+
+.navbar-dropdown-content:before {
+  top: -12px;
+  border-bottom-color: white;
+}
+
+.navbar-dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: black;
+  border: 1px solid white;
+  min-width: 160px;
+  z-index: 1000;
+  top: 55px;
+  right: 0;
+  left: auto;
+}
+
+.navbar-dropdown-content a {
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+}
+
+.dropdown-content a:hover {
+  background-color: rgb(69, 68, 68);
+}
+
+.show {
+  display: block;
+}
+
+.navbar-icon-search {
   font-size: 20px;
+  padding-right: 10px;
+}
+
+.navbar-icon-arrowdown {
+  padding-left: 2px;
+  font-size: 15px;
 }
 
 .navbar-logo-text {
@@ -32,95 +109,3 @@
 .navbar-logo-text span {
   padding-left: 10px;
 }
-
-/* Mobile menu */
-/* .menu {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  align-items: center;
-}
-.toggle {
-  order: 1;
-}
-.item.button {
-  order: 2;
-}
-.item {
-  width: 100%;
-  text-align: center;
-  order: 3;
-  display: none;
-}
-.item.active {
-  display: block;
-} */
-
-/* Tablet menu */
-/* @media all and (min-width: 600px) {
-  .menu {
-    justify-content: center;
-  }
-  .logo {
-    flex: 1;
-  }
-  .toggle {
-    flex: 1;
-    text-align: right;
-  }
-  .item.button {
-    width: auto;
-    order: 1;
-    display: block;
-  }
-  .toggle {
-    order: 2;
-  }
-  .button.secondary {
-    border: 0;
-  }
-  .button a {
-    padding: 7.5px 15px;
-    background: teal;
-    border: 1px #006d6d solid;
-  }
-  .button.secondary a {
-    background: transparent;
-  }
-  .button a:hover {
-    text-decoration: none;
-  }
-  .button:not(.secondary) a:hover {
-    background: #006d6d;
-    border-color: #005959;
-  }
-  .button.secondary a:hover {
-    color: #ddd;
-  }
-} */
-
-/* Desktop menu */
-/* @media all and (min-width: 900px) {
-    .item {
-        display: block;
-        width: auto;
-    }
-    .toggle {
-        display: none;
-    }
-    .logo {
-        order: 0;
-    }
-    .item {
-        order: 1;
-    }
-    .button {
-        order: 2;
-    }
-    .menu li {
-        padding: 15px 10px;
-    }
-    .menu li.button {
-        padding-right: 0;
-    }
-} */
