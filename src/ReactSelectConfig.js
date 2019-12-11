@@ -3,14 +3,31 @@ const options = [
   { value: "alternativeRock", label: "Alternative Rock" },
   { value: "avantGarde", label: "Avant Garde" },
   { value: "classical", label: "Classical" },
+  { value: "blackMetal", label: "Black Metal" },
+  { value: "blues", label: "Blues" },
+  { value: "country", label: "Country" },
   { value: "dance", label: "Dance" },
+  { value: "deathMetal", label: "Death Metal" },
+  { value: "doomMetal", label: "Doom Metal" },
+  { value: "folk", label: "Folk" },
+  { value: "grunge", label: "grunge" },
   { value: "hipHop", label: "Hip-Hop" },
   { value: "house", label: "House" },
   { value: "industial", label: "Industrial" },
   { value: "jazz", label: "Jazz" },
   { value: "metal", label: "Metal" },
+  { value: "newAge", label: "New Age" },
+  { value: "newWave", label: "New Wave" },
   { value: "noise", label: "Noise" },
-  { value: "pop", label: "Pop" }
+  { value: "pop", label: "Pop" },
+  { value: "postPunk", label: "Post Punk" },
+  { value: "punk", label: "Punk" },
+  { value: "rave", label: "Rave" },
+  { value: "rock", label: "Rock" },
+  { value: "rnb", label: "R&B" },
+  { value: "soul", label: "Soul" },
+  { value: "synthPop", label: "Synth Pop" },
+  { value: "techno", label: "Techno" }
 ];
 
 const customStyles = {

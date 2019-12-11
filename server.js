@@ -59,14 +59,13 @@ setInterval(() => {
 app.post("/signup", upload.single("img"), (req, res) => {
   console.log("signup endpoint hit", req.body);
   let file = req.file;
-  let { username, password, email, province, myCategories } = req.body;
+  let { username, password, email, province } = req.body;
   let frontendPath;
   if (file !== undefined) {
     frontendPath = "/uploads/" + file.filename;
   } else {
     frontendPath = "/images/default-avatar.png";
   }
-  myCategories = JSON.parse(myCategories);
 
   // if any field is missing, signup failed
   if (
@@ -103,8 +102,7 @@ app.post("/signup", upload.single("img"), (req, res) => {
         avatar: frontendPath,
         blockUser: [],
         followUser: [],
-        savedEvents: [],
-        myCategories
+        savedEvents: []
       },
       (err, doc) => {
         let sid = generateSID();
@@ -135,8 +133,7 @@ app.post("/signup", upload.single("img"), (req, res) => {
                   avatar: frontendPath,
                   blockUser: [],
                   followUser: [],
-                  savedEvents: [],
-                  myCategories
+                  savedEvents: []
                 }
               })
             );
