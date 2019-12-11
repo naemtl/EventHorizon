@@ -71,9 +71,6 @@ class UnconnectedLogin extends Component {
           />
           <input type="submit" />
         </form>
-        <Link to="/signup">
-          <button>Sign up</button>
-        </Link>
       </div>
     );
   };

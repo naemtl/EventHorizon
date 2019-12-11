@@ -90,7 +90,12 @@ class UnconnectedNavbar extends Component {
           />
           <span>Event Horizon</span>
         </Link>
-        {!this.props.isLoggedIn && <Link to="/login">Log in</Link>}
+        {!this.props.isLoggedIn && (
+          <div>
+            <Link to="/login">Log in</Link>
+            <Link to="/signup">Sign up</Link>
+          </div>
+        )}
         {this.props.isLoggedIn && (
           <div className="navbar_logged-in">
             <Link to={"/my-dashboard"}>
