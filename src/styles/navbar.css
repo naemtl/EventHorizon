@@ -1,6 +1,25 @@
 .navbar {
-  border-bottom: 1px solid white;
   padding: 10px;
+  height: 44px;
+  background-color: #000;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+  align-items: center;
+  border-bottom: 1px solid #fff;
+  z-index: 10000;
+  justify-content: space-between;
+}
+
+.navbar_logged-in {
+  display: flex;
+  align-items: center;
+}
+
+.navbar-icon {
+  font-size: 20px;
 }
 
 .navbar-logo-text {

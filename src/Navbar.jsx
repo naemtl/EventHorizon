@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Link, withRouter } from "react-router-dom";
+import { FiSearch } from "react-icons/fi";
 
 class UnconnectedNavbar extends Component {
   constructor(props) {
@@ -27,7 +28,7 @@ class UnconnectedNavbar extends Component {
 
   render = () => {
     return (
-      <nav className="flex space-between navbar">
+      <nav className="navbar">
         <Link to="/" className={"navbar-logo-text"}>
           <img
             src="/images/logo-wh.png"
@@ -38,7 +39,7 @@ class UnconnectedNavbar extends Component {
         </Link>
         {!this.props.isLoggedIn && <Link to="/login">Log in</Link>}
         {this.props.isLoggedIn && (
-          <div className="flex space-between">
+          <div className="navbar_logged-in">
             <Link to={"/my-dashboard"}>
               <div>
                 <img
@@ -55,7 +56,9 @@ class UnconnectedNavbar extends Component {
             <Link to="/create-event">Create Event</Link>
           </div>
         )}
-        <Link to="/search">Search</Link>
+        <Link to="/search">
+          <FiSearch className="navbar-icon" />
+        </Link>
       </nav>
     );
   };

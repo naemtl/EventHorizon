@@ -31,7 +31,10 @@ class UnconnectedLatestEvents extends Component {
 
   getUpcomingEvents = () => {
     let upcomingEvents = this.state.events.filter(event => {
-      return parseInt(event.startDateTime) > Date.now() - 86400000;
+      return (
+        parseInt(event.startDateTime) > Date.now() - 86400000 &&
+        parseInt(event.endDateTime) < Date.now() + 604800000
+      );
     });
     return upcomingEvents.map(event => {
       return <EventCard event={event} />;
