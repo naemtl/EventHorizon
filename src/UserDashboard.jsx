@@ -3,6 +3,8 @@ import { connect } from "react-redux";
 import { Link, Redirect } from "react-router-dom";
 import EventCard from "./EventCard.jsx";
 
+import "./styles/dashboard.css";
+
 class UnconnectedUserProfile extends Component {
   constructor(props) {
     super(props);
@@ -196,47 +198,40 @@ class UnconnectedUserProfile extends Component {
   render = () => {
     if (this.props.user) {
       return (
-        <div>
+        <div className="dashboard-container">
           <div>
-            <div>{this.props.user.username}</div>
-            <div>{this.props.user.email}</div>
-            <div>My preferred categories:</div>
-            <div>{this.props.user.myCategories.join(", ")}</div>
-            <div>
-              {this.props.user.blockUser.map(user => {
-                <div>{user}</div>;
-              })}
-            </div>
-            <div>
-              {this.props.user.followUser.map(user => {
-                <div>{user}</div>;
-              })}
-            </div>
+            <div>Username: {this.props.user.username}</div>
+            <div>E-mail: {this.props.user.email}</div>
           </div>
-          <div>Change avatar</div>
+          <h2>Account settings</h2>
           <form onSubmit={this.newAvatarSubmitHandler}>
             <input type="file" onChange={this.newAvatarChangeHandler} />
             <input type="submit" />
           </form>
-          <div>Change username</div>
-          <form onSubmit={this.newUsernameSubmitHandler}>
+          <form
+            className="dashboard-username"
+            onSubmit={this.newUsernameSubmitHandler}
+          >
             <input
               type="text"
               onChange={this.newUsernameChangeHandler}
               value={this.state.newUsername}
-              placeholder="Enter a new username"
+              placeholder="Update username"
             />
             <input type="submit" />
           </form>
-          <div>Change password</div>
-          <form onSubmit={this.newPasswordSubmitHandler}>
+          <form
+            className="dashboard-password"
+            onSubmit={this.newPasswordSubmitHandler}
+          >
             <input
               type="password"
               onChange={this.newPasswordChangeHandler}
               value={this.state.newPassword}
-              placeholder="Enter a new password"
+              placeholder="Update password"
             />
             <input
+              // className="dashboard-password"
               type="password"
               onChange={this.confirmNewPasswordChangeHandler}
               value={this.state.confirmNewPassword}
@@ -244,13 +239,15 @@ class UnconnectedUserProfile extends Component {
             />
             <input type="submit" />
           </form>
-          <div>Change email</div>
-          <form onSubmit={this.newEmailSubmitHandler}>
+          <form
+            className="dashboard-email"
+            onSubmit={this.newEmailSubmitHandler}
+          >
             <input
               type="email"
               onChange={this.newEmailChangeHandler}
               value={this.state.newEmail}
-              placeholder="Enter a new email"
+              placeholder="Update e-mail"
             />
             <input type="submit" />
           </form>

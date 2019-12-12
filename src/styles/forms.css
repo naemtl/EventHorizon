@@ -11,3 +11,8 @@
 .input-location {
   width: 100%;
 }
+
+label {
+  font-size: 0;
+  display: none;
+}

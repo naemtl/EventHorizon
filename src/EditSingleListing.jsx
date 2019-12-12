@@ -4,6 +4,8 @@ import DatePicker from "react-datepicker";
 import { Redirect } from "react-router-dom";
 import "react-datepicker/dist/react-datepicker.css";
 
+import "./styles/forms.css";
+
 class UnconnectedSingleListing extends Component {
   constructor(props) {
     super(props);

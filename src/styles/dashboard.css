@@ -1,0 +1,16 @@
+.dashboard-container {
+  margin: 0px auto;
+  max-width: 560px;
+}
+
+.dashboard-username,
+.dashboard-password,
+.dashboard-email {
+  display: flex;
+}
+
+.dashboard-username input,
+.dashboard-password input,
+.dashboard-email input {
+  flex-grow: 1;
+}

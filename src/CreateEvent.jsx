@@ -131,6 +131,7 @@ class UnconnectedCreateEvent extends Component {
           <form onSubmit={this.handleSubmit}>
             <label htmlFor="eventTitle">Title</label>
             <input
+              placeholder="Title"
               className="input-title"
               type="text"
               id="eventTitle"
@@ -139,6 +140,7 @@ class UnconnectedCreateEvent extends Component {
             />
             <label htmlFor="eventDesc">Description</label>
             <textarea
+              placeholder="Description"
               className="input-desc"
               rows="10"
               cols="20"
@@ -148,6 +150,7 @@ class UnconnectedCreateEvent extends Component {
             />
             <label htmlFor="startDateTime">Start date</label>
             <DatePicker
+              placeholderText="Start date/time"
               className="input-date"
               selected={this.state.startDateTime}
               onChange={this.startDateTimeChangeHandler}
@@ -160,6 +163,7 @@ class UnconnectedCreateEvent extends Component {
             />
             <label htmlFor="endDateTime">End date</label>
             <DatePicker
+              placeholderText="End date/time"
               className="input-date"
               selected={this.state.endDateTime}
               onChange={this.endDateTimeChangeHandler}
@@ -171,6 +175,7 @@ class UnconnectedCreateEvent extends Component {
             />
             <label htmlFor="city">City</label>
             <input
+              placeholder="City"
               className="input-city"
               type="text"
               id="city"
@@ -179,6 +184,7 @@ class UnconnectedCreateEvent extends Component {
             />
             <label htmlFor="location">Location</label>
             <input
+              placeholder="Location"
               className="input-location"
               type="text"
               id="location"
