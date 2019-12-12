@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import EventCard from "./EventCard.jsx";
+import { options } from "./ReactSelectConfig.js";
 
 class UnconnectedSearchEvents extends Component {
   constructor(props) {
@@ -23,6 +24,7 @@ class UnconnectedSearchEvents extends Component {
   eventsByCategory = async () => {
     let data = new FormData();
     data.append("category", this.props.category);
+    data.append("options", JSON.stringify(options));
     let response = await fetch("/sort-category", {
       method: "POST",
       body: data
@@ -48,8 +50,12 @@ class UnconnectedSearchEvents extends Component {
   };
 
   displayCategoryHeader = () => {
-    let reformated = this.props.category.replace("-", "/").toUpperCase();
+    let chosenCategory = options.filter(option => {
+      return option.value === this.props.category;
+    });
+    console.log("chosenCategory", chosenCategory);
 
+    let reformated = chosenCategory[0].label;
     return reformated;
   };
 

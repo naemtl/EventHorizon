@@ -14,6 +14,17 @@ class UnconnectedNavbar extends Component {
     };
   }
 
+  componentDidMount = () => {
+    document.addEventListener("click", event => {
+      let isClickInside =
+        document.getElementById("nav-drop").contains(event.target) ||
+        document.getElementById("navbar-hidden-button").contains(event.target);
+      if (!isClickInside) {
+        this.closeMenu();
+      }
+    });
+  };
+
   handleClickOutside = () => {
     this.closeMenu();
   };
@@ -86,7 +97,11 @@ class UnconnectedNavbar extends Component {
                 Preferred hosts
               </Link>
               <div className="navbar-dropdown">
-                <button onClick={this.toggleDropdown} className="navbar-button">
+                <button
+                  onClick={this.toggleDropdown}
+                  className="navbar-button"
+                  id="navbar-hidden-button"
+                >
                   <img
                     className="navbar-item"
                     src={this.props.user.avatar}

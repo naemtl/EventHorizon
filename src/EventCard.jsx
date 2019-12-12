@@ -42,11 +42,8 @@ class UnconnectedEventCard extends Component {
             {this.props.event.categories.map(cat => {
               console.log("CAT", cat);
               return (
-                <Link
-                  className="eventcard-tag"
-                  to={"/category/" + cat.toLowerCase().replace("/", "-")}
-                >
-                  {cat.toUpperCase()}
+                <Link className="eventcard-tag" to={"/category/" + cat.value}>
+                  {cat.label.toUpperCase()}
                 </Link>
               );
             })}

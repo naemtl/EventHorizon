@@ -71,7 +71,7 @@ class UnconnectedCreateEvent extends Component {
     let newSelections = [];
     if (selectedOptions !== null) {
       newSelections = selectedOptions.map(option => {
-        return option.value;
+        return option;
       });
     }
     console.log("Options selected: ", selectedOptions);

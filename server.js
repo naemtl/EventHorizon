@@ -636,10 +636,17 @@ app.post("/search-date", upload.none(), (req, res) => {
 app.post("/sort-category", upload.none(), (req, res) => {
   console.log("sort-category endpoint hit");
   let category = req.body.category;
-  category = category.replace("-", "/").replace("%20", " ");
+  let options = req.body.options;
+  let parsedOptions = JSON.parse(options);
+  let chosenCategory = parsedOptions.filter(option => {
+    return option.value === category;
+  });
+  let reformated = chosenCategory[0];
   dbo
     .collection("eventListings")
-    .find({ categories: { $regex: new RegExp(category), $options: "?i" } })
+    .find({
+      categories: reformated
+    })
     .toArray((err, events) => {
       console.log("SORT CAT EVENTS", events);
 
