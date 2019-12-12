@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import DatePicker from "react-datepicker";
 import { Redirect } from "react-router-dom";
+import Select from "react-select";
+import { options, customStyles } from "./ReactSelectConfig.js";
 import "react-datepicker/dist/react-datepicker.css";
 
 import "./styles/forms.css";
@@ -59,18 +61,32 @@ class UnconnectedSingleListing extends Component {
     console.log("new input value: ", event.target.files[0]);
     this.setState({ banner: event.target.files[0] });
   };
-  categoryChangeHandler = event => {
-    console.log("new categories: ", event.target.name);
-    if (this.state.categories.includes(event.target.name)) {
-      this.setState({
-        categories: this.state.categories.filter(cat => {
-          return cat !== event.target.name;
-        })
+  // categoryChangeHandler = event => {
+  //   console.log("new categories: ", event.target.name);
+  //   if (this.state.categories.includes(event.target.name)) {
+  //     this.setState({
+  //       categories: this.state.categories.filter(cat => {
+  //         return cat !== event.target.name;
+  //       })
+  //     });
+  //   } else
+  //     this.setState({
+  //       categories: this.state.categories.concat(event.target.name)
+  //     });
+  // };
+
+  // REACT-SELECT
+
+  handleSelectChange = selectedOptions => {
+    let newSelections = [];
+    if (selectedOptions !== null) {
+      newSelections = selectedOptions.map(option => {
+        return option;
       });
-    } else
-      this.setState({
-        categories: this.state.categories.concat(event.target.name)
-      });
+    }
+    console.log("Options selected: ", selectedOptions);
+    this.setState({ categories: newSelections });
+    console.log("Options selected: ", newSelections);
   };
 
   handleSubmit = async event => {
@@ -94,7 +110,10 @@ class UnconnectedSingleListing extends Component {
     } else {
       data.append("currentBanner", this.props.event.banner);
     }
-    data.append("categories", JSON.stringify(this.state.categories));
+    data.append(
+      "categories",
+      JSON.stringify(this.state.categories.slice(0, 3))
+    );
     let response = await fetch("/update-event", {
       method: "POST",
       body: data
@@ -111,8 +130,6 @@ class UnconnectedSingleListing extends Component {
   };
 
   render = () => {
-    console.log("STATEEEE", this.state);
-
     // if (this.state.eventHost === undefined) {
     //   console.log("Loading block");
 
@@ -182,123 +199,15 @@ class UnconnectedSingleListing extends Component {
                 id="banner"
                 onChange={this.bannerChangeHandler}
               />
-              <div>Select event categories</div>
               {/* TAGS */}
-              <div>Music related</div>
-              <div className="flex">
-                <label htmlFor="ambientNewAge">Ambient/New Age</label>
-                <input
-                  name="Ambient/New Age"
-                  type="checkbox"
-                  id="ambientNewAge"
-                  checked={this.state.categories.includes("Ambient/New Age")}
-                  onChange={this.categoryChangeHandler}
-                />
-                <label htmlFor="altRockPunk">Alt Rock/Punk</label>
-                <input
-                  name="Alt Rock/Punk"
-                  type="checkbox"
-                  id="altRockPunk"
-                  checked={this.state.categories.includes("Alt Rock/Punk")}
-                  onChange={this.categoryChangeHandler}
-                />
-                <label htmlFor="avantGarde">Avant Garde</label>
-                <input
-                  name="Avant Garde"
-                  type="checkbox"
-                  id="avantGarde"
-                  checked={this.state.categories.includes("Avant Garde")}
-                  onChange={this.categoryChangeHandler}
-                />
-                <label htmlFor="classical">Classical</label>
-                <input
-                  name="Classical"
-                  type="checkbox"
-                  id="classical"
-                  checked={this.state.categories.includes("Classical")}
-                  onChange={this.categoryChangeHandler}
-                />
-                <label htmlFor="dance">Dance</label>
-                <input
-                  name="Dance"
-                  type="checkbox"
-                  id="dance"
-                  checked={this.state.categories.includes("Dance")}
-                  onChange={this.categoryChangeHandler}
-                />
-                <label htmlFor="hipHopRnB">Hip-Hop/R'n'B</label>
-                <input
-                  name="Hip-Hop/R'n'B"
-                  type="checkbox"
-                  id="hipHopRnB"
-                  checked={this.state.categories.includes("Hip-Hop/R'n'B")}
-                  onChange={this.categoryChangeHandler}
-                />
-                <label htmlFor="houseTechno">House/Techno</label>
-                <input
-                  name="House/Techno"
-                  type="checkbox"
-                  id="houseTechno"
-                  checked={this.state.categories.includes("House/Techno")}
-                  onChange={this.categoryChangeHandler}
-                />
-                <label htmlFor="industrialNoise">Industrial/Noise</label>
-                <input
-                  name="Industrial/Noise"
-                  type="checkbox"
-                  id="industrialNoise"
-                  checked={this.state.categories.includes("Industrial/Noise")}
-                  onChange={this.categoryChangeHandler}
-                />
-                <label htmlFor="jazzSoul">Jazz/Soul</label>
-                <input
-                  name="Jazz/Soul"
-                  type="checkbox"
-                  id="jazzSoul"
-                  checked={this.state.categories.includes("Jazz/Soul")}
-                  onChange={this.categoryChangeHandler}
-                />
-                <label htmlFor="metal">Metal</label>
-                <input
-                  name="Metal"
-                  type="checkbox"
-                  id="metal"
-                  checked={this.state.categories.includes("Metal")}
-                  onChange={this.categoryChangeHandler}
-                />
-                <label htmlFor="pop">Pop</label>
-                <input
-                  name="Pop"
-                  type="checkbox"
-                  id="pop"
-                  checked={this.state.categories.includes("Pop")}
-                  onChange={this.categoryChangeHandler}
-                />
-                <label htmlFor="postPunk">Post Punk/New Wave</label>
-                <input
-                  name="Post Punk/New Wave"
-                  type="checkbox"
-                  id="postPunk"
-                  checked={this.state.categories.includes("Post Punk/New Wave")}
-                  onChange={this.categoryChangeHandler}
-                />
-                <label htmlFor="rave">Rave</label>
-                <input
-                  name="Rave"
-                  type="checkbox"
-                  id="rave"
-                  checked={this.state.categories.includes("Rave")}
-                  onChange={this.categoryChangeHandler}
-                />
-                <label htmlFor="rockfolk">Rock/Folk</label>
-                <input
-                  name="Rock/Folk"
-                  type="checkbox"
-                  id="rockFolk"
-                  checked={this.state.categories.includes("Rock/Folk")}
-                  onChange={this.categoryChangeHandler}
-                />
-              </div>
+              <Select
+                value={this.state.categories}
+                onChange={this.handleSelectChange}
+                styles={customStyles}
+                options={options}
+                isMulti="true"
+                placeholder="Select up to three categories"
+              />
               <input type="submit" />
             </form>
           </div>

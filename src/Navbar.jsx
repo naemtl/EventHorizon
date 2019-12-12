@@ -117,6 +117,22 @@ class UnconnectedNavbar extends Component {
                   <div className="navbar-dropdown-item">
                     Signed in as {this.props.user.username}
                   </div>
+
+                  {/* fake burger */}
+                  <div className="navbar-hamburger">
+                    <Link className="navbar-dropdown-item" to="/create-event">
+                      Create event
+                    </Link>
+                    <Link className="navbar-dropdown-item" to="/my-events">
+                      My events
+                    </Link>
+                    <Link
+                      className="navbar-dropdown-item"
+                      to="/preferred-hosts"
+                    >
+                      Preferred hosts
+                    </Link>
+                  </div>
                   <Link className="navbar-dropdown-item" to={"/my-dashboard"}>
                     My dashboard
                   </Link>

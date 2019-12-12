@@ -198,7 +198,6 @@ class UnconnectedCreateEvent extends Component {
               id="banner"
               onChange={this.bannerChangeHandler}
             />
-            <div>Select event categories</div>
             {/* TAGS */}
             <Select
               onChange={this.handleSelectChange}

@@ -34,8 +34,7 @@
 }
 
 .navbar-item-link {
-  font-size: 14px;
-  text-decoration: none;
+  display: none;
 }
 
 .navbar-button {
@@ -62,7 +61,7 @@
   position: absolute;
   background-color: black;
   border: 1px solid white;
-  min-width: 160px;
+  min-width: 260px;
   z-index: 1000;
   top: 55px;
   right: 0;
@@ -104,6 +103,10 @@
   border-bottom-color: white;
 }
 
+.navbar-hamburger a {
+  display: block;
+}
+
 .show {
   display: block;
 }
@@ -127,4 +130,39 @@
 
 .navbar-logo-text span {
   padding-left: 10px;
+}
+
+/* DESKTOP STUFF */
+
+@media (min-width: 768px) {
+  .navbar-hamburger a {
+    display: none;
+  }
+
+  .navbar-item-link {
+    display: unset;
+    font-size: 14px;
+    text-decoration: none;
+  }
+
+  .navbar-dropdown-content {
+    min-width: 160px;
+  }
+}
+@media (min-width: 500px) {
+  .navbar-dropdown-content {
+    min-width: 160px;
+  }
+}
+
+@media (min-width: 768px) {
+  .navbar-hamburger a {
+    display: none;
+  }
+
+  .navbar-item-link {
+    display: unset;
+    font-size: 14px;
+    text-decoration: none;
+  }
 }
