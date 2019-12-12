@@ -13,7 +13,7 @@ const options = [
   { value: "grunge", label: "grunge" },
   { value: "hipHop", label: "Hip-Hop" },
   { value: "house", label: "House" },
-  { value: "industial", label: "Industrial" },
+  { value: "industrial", label: "Industrial" },
   { value: "jazz", label: "Jazz" },
   { value: "metal", label: "Metal" },
   { value: "newAge", label: "New Age" },

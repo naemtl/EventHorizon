@@ -14,7 +14,7 @@ class UnconnectedNavbar extends Component {
     };
   }
 
-  handleClickOutside = event => {
+  handleClickOutside = () => {
     this.closeMenu();
   };
 
@@ -59,20 +59,36 @@ class UnconnectedNavbar extends Component {
         </div>
         <div className="navbar-right-child">
           <Link to="/search">
-            <FiSearch className="navbar-icon-search" />
+            <FiSearch className="navbar-icon-search navbar-item" />
           </Link>
           {!this.props.isLoggedIn && (
             <div className="navbar_logged-out">
-              <Link to="/login">Log in</Link>
-              <Link to="/signup">Sign up</Link>
+              <Link className="navbar-item navbar-item-link" to="/login">
+                Log in
+              </Link>
+              <Link className="navbar-item navbar-item-link" to="/signup">
+                Sign up
+              </Link>
             </div>
           )}
           {this.props.isLoggedIn && (
             <div className="navbar_logged-in navbar-dropdown">
-              <Link to="/create-event">Create Event</Link>
+              <Link className="navbar-item navbar-item-link" to="/create-event">
+                Create event
+              </Link>
+              <Link className="navbar-item navbar-item-link" to="/my-events">
+                My events
+              </Link>
+              <Link
+                className="navbar-item navbar-item-link"
+                to="/preferred-hosts"
+              >
+                Preferred hosts
+              </Link>
               <div className="navbar-dropdown">
                 <button onClick={this.toggleDropdown} className="navbar-button">
                   <img
+                    className="navbar-item"
                     src={this.props.user.avatar}
                     alt="user avatar"
                     width="40px"
@@ -83,11 +99,16 @@ class UnconnectedNavbar extends Component {
                   id="nav-drop"
                   className={"navbar-dropdown-content " + this.state.showMenu}
                 >
-                  <span>Signed in as {this.props.user.username}</span>
-                  <Link to={"/my-dashboard"}>My Dashboard</Link>
-                  <Link to="/my-events">My Events</Link>
-                  <Link to="/preferred-hosts">Preferred Hosts</Link>
-                  <button className="navbar-button" onClick={this.logout}>
+                  <div className="navbar-dropdown-item">
+                    Signed in as {this.props.user.username}
+                  </div>
+                  <Link className="navbar-dropdown-item" to={"/my-dashboard"}>
+                    My dashboard
+                  </Link>
+                  <button
+                    className="navbar-button navbar-dropdown-item"
+                    onClick={this.logout}
+                  >
                     Log out
                   </button>
                 </div>
