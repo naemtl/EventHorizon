@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import EventCard from "./EventCard.jsx";
 import { options } from "./ReactSelectConfig.js";
 
-class UnconnectedSearchEvents extends Component {
+class UnconnectedEventsByCategory extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -61,7 +61,7 @@ class UnconnectedSearchEvents extends Component {
 
   render = () => {
     return (
-      <div>
+      <div className="container">
         <h2>{this.displayCategoryHeader()}</h2>
         <div className="ehorizon-grid">{this.displayResults()}</div>
       </div>
@@ -69,6 +69,6 @@ class UnconnectedSearchEvents extends Component {
   };
 }
 
-let SearchEvents = connect()(UnconnectedSearchEvents);
+let EventsByCategory = connect()(UnconnectedEventsByCategory);
 
-export default SearchEvents;
+export default EventsByCategory;

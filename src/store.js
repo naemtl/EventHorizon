@@ -4,7 +4,8 @@ let initialState = {
   loggedIn: false,
   user: undefined,
   hosts: [],
-  eventIds: []
+  eventIds: [],
+  autologinDone: false
 };
 
 let reducer = (state, action) => {
@@ -20,6 +21,12 @@ let reducer = (state, action) => {
       ...state,
       loggedIn: false,
       user: undefined
+    };
+  }
+  if (action.type === "autologin-done") {
+    return {
+      ...state,
+      autologinDone: true
     };
   }
   if (action.type === "update-user") {

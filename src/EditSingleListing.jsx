@@ -145,29 +145,31 @@ class UnconnectedSingleListing extends Component {
                 value={this.state.description}
                 onChange={this.descChangeHandler}
               />
-              <label htmlFor="startDateTime">Start date</label>
-              <DatePicker
-                className="form-text-input"
-                selected={this.state.startDateTime}
-                onChange={this.startDateTimeChangeHandler}
-                showTimeSelect
-                minDate={new Date()}
-                timeFormat="HH:mm"
-                timeIntervals={30}
-                timeCaption="time"
-                dateFormat="MMM d, yyyy H:mm"
-              />
-              <label htmlFor="endDateTime">End date</label>
-              <DatePicker
-                className="form-text-input"
-                selected={this.state.endDateTime}
-                onChange={this.endDateTimeChangeHandler}
-                showTimeSelect
-                timeFormat="HH:mm"
-                timeIntervals={30}
-                timeCaption="time"
-                dateFormat="MMM d, yyyy H:mm"
-              />
+              <div className="form-input-space-between">
+                <label htmlFor="startDateTime">Start date</label>
+                <DatePicker
+                  className="form-text-input form-date-input"
+                  selected={this.state.startDateTime}
+                  onChange={this.startDateTimeChangeHandler}
+                  showTimeSelect
+                  minDate={new Date()}
+                  timeFormat="HH:mm"
+                  timeIntervals={30}
+                  timeCaption="time"
+                  dateFormat="MMM d, yyyy H:mm"
+                />
+                <label htmlFor="endDateTime">End date</label>
+                <DatePicker
+                  className="form-text-input form-date-input"
+                  selected={this.state.endDateTime}
+                  onChange={this.endDateTimeChangeHandler}
+                  showTimeSelect
+                  timeFormat="HH:mm"
+                  timeIntervals={30}
+                  timeCaption="time"
+                  dateFormat="MMM d, yyyy H:mm"
+                />
+              </div>
               <label htmlFor="city">City</label>
               <input
                 className="form-text-input"

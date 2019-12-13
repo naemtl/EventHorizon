@@ -35,6 +35,7 @@ class UnconnectedApp extends Component {
       console.log("AUTO-LOGIN PARSEDUSER", parsed.user);
       this.props.dispatch({ type: "login-success", user: parsed.user });
     }
+    this.props.dispatch({ type: "autologin-done" });
   };
 
   renderUserProfile = routerData => {

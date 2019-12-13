@@ -40,7 +40,8 @@ const customStyles = {
   menu: (provided, state) => ({
     ...provided,
     maxHeight: 152,
-    overflow: "auto"
+    overflow: "auto",
+    backgroundColor: "black"
   }),
   container: (provided, state) => ({
     ...provided,
@@ -49,23 +50,37 @@ const customStyles = {
   }),
   option: (provided, state) => ({
     ...provided,
-    borderBottom: "1px dotted pink",
-    color: state.isSelected ? "grey" : "black",
+    border: "1px solid rgba(255, 255, 255, 0.3)",
+    color: state.isSelected ? "grey" : "white",
     padding: 20,
     width: "100%",
-    maxWidth: 560
+    maxWidth: 560,
+    backgroundColor: "black",
+    "&:hover": {
+      backgroundColor: "rgba(255, 255, 255, 0.3)"
+    }
   }),
-  // control: () => ({
-  //   // none of react-select's styles are passed to <Control />
-  //   width: 400,
-  //   maxHeight: 200
-  // }),
+  control: (provided, state) => ({
+    // none of react-select's styles are passed to <Control />
+    ...provided,
+    backgroundColor: "black",
+    border: "1px solid rgba(255, 255, 255, 0.3)",
+    borderRadius: "none",
+    boxShadow: "none",
+    "&:hover": {
+      border: "1px solid rgba(255, 255, 255, 0.3)"
+    }
+  }),
   singleValue: (provided, state) => {
     const opacity = state.isDisabled ? 0.5 : 1;
     const transition = "opacity 300ms";
 
     return { ...provided, opacity, transition };
-  }
+  },
+  multiValue: (provided, state) => ({
+    ...provided,
+    backgroundColor: "#A2A2A2"
+  })
 };
 
 export { customStyles, options };

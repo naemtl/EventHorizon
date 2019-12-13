@@ -60,6 +60,15 @@ button:focus {
   opacity: 1; /* Firefox */
 }
 
+.form-input-space-between {
+  display: flex;
+  justify-content: space-between;
+}
+
+.form-date-input {
+  padding-right: 100px;
+}
+
 .form-submit-button {
   width: 100%;
   margin: 12px 0;
