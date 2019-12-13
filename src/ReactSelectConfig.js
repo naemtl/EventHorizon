@@ -44,14 +44,16 @@ const customStyles = {
   }),
   container: (provided, state) => ({
     ...provided,
-    width: 400
+    width: "100%",
+    maxWidth: 560
   }),
   option: (provided, state) => ({
     ...provided,
     borderBottom: "1px dotted pink",
     color: state.isSelected ? "grey" : "black",
     padding: 20,
-    width: 400
+    width: "100%",
+    maxWidth: 560
   }),
   // control: () => ({
   //   // none of react-select's styles are passed to <Control />

@@ -10,7 +10,7 @@ class UnconnectedMyEvents extends Component {
   }
   render = () => {
     return (
-      <div>
+      <div className="container">
         <div className="collection">
           <h2>Events I'm Hosting</h2>
           <div>

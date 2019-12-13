@@ -42,7 +42,7 @@ class UnconnectedLatestEvents extends Component {
   };
 
   render = () => {
-    return <div className="flex flex-wrap">{this.getUpcomingEvents()}</div>;
+    return <div className="ehorizon-grid">{this.getUpcomingEvents()}</div>;
   };
 }
 

@@ -29,7 +29,7 @@ class UnconnectedMyEvents extends Component {
 
   render = () => {
     return (
-      <div>
+      <div className="container">
         <h2>Hosts I'm Following</h2>
         <div>
           {this.state.followedHosts.map(host => {

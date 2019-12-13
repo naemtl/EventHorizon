@@ -6,8 +6,6 @@ import Select from "react-select";
 import { options, customStyles } from "./ReactSelectConfig.js";
 import "react-datepicker/dist/react-datepicker.css";
 
-import "./styles/forms.css";
-
 class UnconnectedSingleListing extends Component {
   constructor(props) {
     super(props);
@@ -145,6 +143,7 @@ class UnconnectedSingleListing extends Component {
             <form onSubmit={this.handleSubmit}>
               <label htmlFor="eventTitle">Title</label>
               <input
+                className="form-text-input"
                 type="text"
                 id="eventTitle"
                 value={this.state.title}
@@ -152,6 +151,7 @@ class UnconnectedSingleListing extends Component {
               />
               <label htmlFor="eventDesc">Description</label>
               <textarea
+                className="form-text-input"
                 rows="10"
                 cols="20"
                 id="eventDesc"
@@ -160,6 +160,7 @@ class UnconnectedSingleListing extends Component {
               />
               <label htmlFor="startDateTime">Start date</label>
               <DatePicker
+                className="form-text-input"
                 selected={this.state.startDateTime}
                 onChange={this.startDateTimeChangeHandler}
                 showTimeSelect
@@ -171,6 +172,7 @@ class UnconnectedSingleListing extends Component {
               />
               <label htmlFor="endDateTime">End date</label>
               <DatePicker
+                className="form-text-input"
                 selected={this.state.endDateTime}
                 onChange={this.endDateTimeChangeHandler}
                 showTimeSelect
@@ -181,6 +183,7 @@ class UnconnectedSingleListing extends Component {
               />
               <label htmlFor="city">City</label>
               <input
+                className="form-text-input"
                 type="text"
                 id="city"
                 value={this.state.city}
@@ -188,6 +191,7 @@ class UnconnectedSingleListing extends Component {
               />
               <label htmlFor="location">Location</label>
               <input
+                className="form-text-input"
                 type="text"
                 id="location"
                 value={this.state.location}
@@ -195,6 +199,7 @@ class UnconnectedSingleListing extends Component {
               />
               <label htmlFor="banner">Banner</label>
               <input
+                className="form-text-input"
                 type="file"
                 id="banner"
                 onChange={this.bannerChangeHandler}

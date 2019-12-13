@@ -153,7 +153,7 @@ class UnconnectedSearchEvents extends Component {
             <input type="submit" />
           </form>
         </div>
-        <div className="flex flex-wrap">{this.displayResults()}</div>
+        <div className="ehorizon-grid">{this.displayResults()}</div>
       </div>
     );
   };

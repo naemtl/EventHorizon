@@ -59,12 +59,8 @@ class UnconnectedNavbar extends Component {
     return (
       <nav className="navbar">
         <div className="navbar-left-child">
-          <Link to="/" className={"navbar-logo-text"}>
-            <img
-              src="/images/logo-wh.png"
-              alt="EventHorizon logo"
-              height="50px"
-            />
+          <Link to="/" className={"navbar-logo-container"}>
+            <img src="/images/logo-wh.png" alt="EventHorizon logo" />
             <span>Event Horizon</span>
           </Link>
         </div>

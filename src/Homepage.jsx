@@ -11,19 +11,17 @@ class UnconnectedHomepage extends Component {
 
   render = () => {
     return (
-      <div>
-        <div>
-          <div className="collection">
-            <h2>Featured</h2>
-            <div>
-              <FeaturedEvents />
-            </div>
+      <div className="container">
+        <div className="collection">
+          <h2>Featured</h2>
+          <div>
+            <FeaturedEvents />
           </div>
-          <div className="collection">
-            <h2>Upcoming</h2>
-            <div>
-              <LatestEvents />
-            </div>
+        </div>
+        <div className="collection">
+          <h2>Upcoming</h2>
+          <div>
+            <LatestEvents />
           </div>
         </div>
       </div>

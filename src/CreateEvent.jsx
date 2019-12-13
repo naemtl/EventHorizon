@@ -6,8 +6,6 @@ import "react-datepicker/dist/react-datepicker.css";
 import Select from "react-select";
 import { options, customStyles } from "./ReactSelectConfig.js";
 
-import "./styles/forms.css";
-
 class UnconnectedCreateEvent extends Component {
   constructor(props) {
     super(props);
@@ -132,7 +130,7 @@ class UnconnectedCreateEvent extends Component {
             <label htmlFor="eventTitle">Title</label>
             <input
               placeholder="Title"
-              className="input-title"
+              className="form-text-input"
               type="text"
               id="eventTitle"
               value={this.state.title}
@@ -141,7 +139,7 @@ class UnconnectedCreateEvent extends Component {
             <label htmlFor="eventDesc">Description</label>
             <textarea
               placeholder="Description"
-              className="input-desc"
+              className="form-text-input"
               rows="10"
               cols="20"
               id="eventDesc"
@@ -151,7 +149,7 @@ class UnconnectedCreateEvent extends Component {
             <label htmlFor="startDateTime">Start date</label>
             <DatePicker
               placeholderText="Start date/time"
-              className="input-date"
+              className="form-text-input"
               selected={this.state.startDateTime}
               onChange={this.startDateTimeChangeHandler}
               showTimeSelect
@@ -164,7 +162,7 @@ class UnconnectedCreateEvent extends Component {
             <label htmlFor="endDateTime">End date</label>
             <DatePicker
               placeholderText="End date/time"
-              className="input-date"
+              className="form-text-input"
               selected={this.state.endDateTime}
               onChange={this.endDateTimeChangeHandler}
               showTimeSelect
@@ -176,7 +174,7 @@ class UnconnectedCreateEvent extends Component {
             <label htmlFor="city">City</label>
             <input
               placeholder="City"
-              className="input-city"
+              className="form-text-input"
               type="text"
               id="city"
               value={this.state.city}
@@ -185,7 +183,7 @@ class UnconnectedCreateEvent extends Component {
             <label htmlFor="location">Location</label>
             <input
               placeholder="Location"
-              className="input-location"
+              className="form-text-input"
               type="text"
               id="location"
               value={this.state.location}
@@ -193,7 +191,7 @@ class UnconnectedCreateEvent extends Component {
             />
             <label htmlFor="banner">Banner</label>
             <input
-              className="input-banner"
+              className="form-text-input"
               type="file"
               id="banner"
               onChange={this.bannerChangeHandler}
@@ -206,7 +204,7 @@ class UnconnectedCreateEvent extends Component {
               isMulti="true"
               placeholder="Select up to three categories"
             />
-            <input type="submit" />
+            <input className="form-submit-button" type="submit" />
           </form>
         </div>
       );

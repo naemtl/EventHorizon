@@ -23,14 +23,6 @@ body {
   background-color: white;
 }
 
-.flex {
-  display: flex;
-}
-
-.flex-wrap {
-  flex-wrap: wrap;
-}
-
 .space-between {
   justify-content: space-between;
 }

@@ -63,7 +63,7 @@ class UnconnectedSearchEvents extends Component {
     return (
       <div>
         <h2>{this.displayCategoryHeader()}</h2>
-        <div className="flex flex-wrap">{this.displayResults()}</div>
+        <div className="ehorizon-grid">{this.displayResults()}</div>
       </div>
     );
   };

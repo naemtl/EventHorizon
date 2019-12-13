@@ -31,7 +31,7 @@ class UnconnectSavedEvents extends Component {
     console.log("SAVED EVENTS STATE", this.state.events);
 
     return (
-      <div className="flex flex-wrap">
+      <div className="ehorizon-grid">
         {this.state.events.map(event => {
           return <EventCard event={event} />;
         })}

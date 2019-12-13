@@ -7,7 +7,58 @@ a {
   color: white;
 }
 
+.container {
+  padding: 0 24px;
+}
+
+.ehorizon-grid {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-flex-wrap: wrap;
+  flex-wrap: wrap;
+  margin-left: -12px;
+  margin-right: -12px;
+}
+
 .collection {
   padding-bottom: 26px;
   margin-bottom: 26px;
+}
+
+input:focus,
+select:focus,
+textarea:focus,
+button:focus {
+  outline: none;
+}
+
+/* FORM STYLING */
+
+.form-container {
+  margin: 0px auto;
+  max-width: 560px;
+  padding: 0 20px;
+}
+
+.form-text-input {
+  width: 100%;
+  background-color: transparent;
+  padding: 10px 0 10px 10px;
+  margin-bottom: 10px;
+  resize: none;
+  border: none;
+  border: solid 1px rgba(255, 255, 255, 0.3);
+  color: white;
+  box-sizing: border-box;
+}
+
+.form-text-input:hover::placeholder {
+  color: white;
+  opacity: 1; /* Firefox */
+}
+
+label {
+  font-size: 0;
+  display: none;
 }

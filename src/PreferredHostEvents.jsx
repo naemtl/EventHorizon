@@ -56,7 +56,7 @@ class UnconnectedPreferredHostEvents extends Component {
     return (
       <div>
         <h3>{this.state.username}</h3>
-        <div className="flex flex-wrap">
+        <div className="ehorizon-grid">
           {this.state.events.map(event => {
             return <EventCard event={event} />;
           })}
