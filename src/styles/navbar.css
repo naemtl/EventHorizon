@@ -1,4 +1,8 @@
 .navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
   padding: 15px;
   height: 44px;
   background-color: #000;
@@ -29,12 +33,16 @@
 
 .navbar-item {
   padding-left: 15px;
-  /* padding: 0 5px; */
-  /* border-left: 1px solid white; */
 }
 
 .navbar-item-link {
   display: none;
+}
+
+.navbar-signup,
+.navbar-login {
+  display: unset;
+  text-decoration: none;
 }
 
 .navbar-button {

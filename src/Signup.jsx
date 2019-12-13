@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { withRouter, Redirect } from "react-router-dom";
 
+import "./styles/signup-login.css";
+
 class UnconnectedSignup extends Component {
   constructor(props) {
     super(props);
@@ -79,58 +81,60 @@ class UnconnectedSignup extends Component {
       return <Redirect to="/" />;
     }
     return (
-      <div>
-        <h2>Sign up below</h2>
-        <form onSubmit={this.handleSubmit}>
-          <label htmlFor="signUsername">Username</label>
-          <input
-            id="signUsername"
-            type="text"
-            value={this.state.username}
-            onChange={this.usernameChangeHandler}
-            required
-          />
-          <label htmlFor="signPassword">Password</label>
-          <input
-            id="signPassword"
-            type="password"
-            value={this.state.password}
-            onChange={this.passwordChangeHandler}
-            placeholder="Enter a password"
-            required
-          />
-          <input
-            id="signPassword"
-            type="password"
-            value={this.state.confirmPassword}
-            onChange={this.confirmPasswordChangeHandler}
-            placeholder="Confirm password"
-            required
-          />
-          <label htmlFor="signEmail">Email</label>
-          <input
-            id="signEmail"
-            type="email"
-            value={this.state.email}
-            onChange={this.emailChangeHandler}
-            required
-          />
-          <label htmlFor="signProvince">Province</label>
-          <input
-            id="signProvince"
-            type="text"
-            value={this.state.province}
-            required
-            disabled
-          />
-          <label for="signAvatar">Avatar</label>
-          <input
-            id="signAvatar"
-            type="file"
-            onChange={this.avatarChangeHandler}
-          />
-          <input type="submit" />
-        </form>
+      <div className="header-margin">
+        <div className="logsign-container">
+          <h2>Sign up below</h2>
+          <form onSubmit={this.handleSubmit}>
+            <label htmlFor="signUsername">Username</label>
+            <input
+              id="signUsername"
+              type="text"
+              value={this.state.username}
+              onChange={this.usernameChangeHandler}
+              required
+            />
+            <label htmlFor="signPassword">Password</label>
+            <input
+              id="signPassword"
+              type="password"
+              value={this.state.password}
+              onChange={this.passwordChangeHandler}
+              placeholder="Enter a password"
+              required
+            />
+            <input
+              id="signPassword"
+              type="password"
+              value={this.state.confirmPassword}
+              onChange={this.confirmPasswordChangeHandler}
+              placeholder="Confirm password"
+              required
+            />
+            <label htmlFor="signEmail">Email</label>
+            <input
+              id="signEmail"
+              type="email"
+              value={this.state.email}
+              onChange={this.emailChangeHandler}
+              required
+            />
+            <label htmlFor="signProvince">Province</label>
+            <input
+              id="signProvince"
+              type="text"
+              value={this.state.province}
+              required
+              disabled
+            />
+            <label for="signAvatar">Avatar</label>
+            <input
+              id="signAvatar"
+              type="file"
+              onChange={this.avatarChangeHandler}
+            />
+            <input type="submit" />
+          </form>
+        </div>
       </div>
     );
   };

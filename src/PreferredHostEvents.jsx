@@ -53,6 +53,9 @@ class UnconnectedPreferredHostEvents extends Component {
   };
 
   render = () => {
+    if (!this.props.autologinDone) {
+      return <h4>Loading...</h4>;
+    }
     return (
       <div>
         <h3>{this.state.username}</h3>
@@ -66,6 +69,14 @@ class UnconnectedPreferredHostEvents extends Component {
   };
 }
 
-let PreferredHostEvents = connect()(UnconnectedPreferredHostEvents);
+let mapStateToProps = state => {
+  return {
+    autologinDone: state.autologinDone
+  };
+};
+
+let PreferredHostEvents = connect(mapStateToProps)(
+  UnconnectedPreferredHostEvents
+);
 
 export default PreferredHostEvents;

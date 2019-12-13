@@ -11,7 +11,7 @@ class UnconnectedHomepage extends Component {
 
   render = () => {
     return (
-      <div className="container">
+      <div className="container header-margin">
         <div className="collection">
           <h2>Featured</h2>
           <div>

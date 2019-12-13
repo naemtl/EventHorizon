@@ -11,6 +11,10 @@ a {
   padding: 0 24px;
 }
 
+.header-margin {
+  margin-top: 100px;
+}
+
 .ehorizon-grid {
   display: -webkit-box;
   display: -webkit-flex;
@@ -20,13 +24,6 @@ a {
   margin-left: -12px;
   margin-right: -12px;
 }
-
-/* TODO: collection delete? */
-
-/* .collection {
-  padding-bottom: 26px;
-  margin-bottom: 26px;
-} */
 
 input:focus,
 select:focus,

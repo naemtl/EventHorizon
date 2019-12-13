@@ -115,18 +115,16 @@ class UnconnectedSingleListing extends Component {
   };
 
   render = () => {
-    // if (this.state.eventHost === undefined) {
-    //   console.log("Loading block");
-
-    //   return <div>Loading...</div>;
-    // }
+    if (!this.props.autologinDone) {
+      return <h4>Loading...</h4>;
+    }
     if (this.props.isLoggedIn) {
       if (
         this.props.user._id === this.props.event.hostId ||
         this.props.user.isAdmin
       ) {
         return (
-          <div className="">
+          <div>
             <form onSubmit={this.handleSubmit}>
               <label htmlFor="eventTitle">Title</label>
               <input
@@ -216,7 +214,8 @@ let mapStateToProps = state => {
   return {
     isLoggedIn: state.loggedIn,
     hosts: state.hosts,
-    user: state.user
+    user: state.user,
+    autologinDone: state.autologinDone
   };
 };
 let SingleListing = connect(mapStateToProps)(UnconnectedSingleListing);

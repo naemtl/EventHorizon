@@ -15,14 +15,18 @@ class UnconnectedNavbar extends Component {
   }
 
   componentDidMount = () => {
-    document.addEventListener("click", event => {
-      let isClickInside =
-        document.getElementById("nav-drop").contains(event.target) ||
-        document.getElementById("navbar-hidden-button").contains(event.target);
-      if (!isClickInside) {
-        this.closeMenu();
-      }
-    });
+    if (this.props.isLoggedIn) {
+      document.addEventListener("click", event => {
+        let isClickInside =
+          document.getElementById("nav-drop").contains(event.target) ||
+          document
+            .getElementById("navbar-hidden-button")
+            .contains(event.target);
+        if (!isClickInside) {
+          this.closeMenu();
+        }
+      });
+    }
   };
 
   handleClickOutside = () => {
@@ -70,10 +74,16 @@ class UnconnectedNavbar extends Component {
           </Link>
           {!this.props.isLoggedIn && (
             <div className="navbar_logged-out">
-              <Link className="navbar-item navbar-item-link" to="/login">
+              <Link
+                className="navbar-item navbar-item-link navbar-login"
+                to="/login"
+              >
                 Log in
               </Link>
-              <Link className="navbar-item navbar-item-link" to="/signup">
+              <Link
+                className="navbar-item navbar-item-link navbar-signup"
+                to="/signup"
+              >
                 Sign up
               </Link>
             </div>

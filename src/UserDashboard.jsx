@@ -19,6 +19,9 @@ class UnconnectedUserProfile extends Component {
   }
 
   componentDidMount = async () => {
+    if (this.props.user.followUser.length === 0) {
+      return;
+    }
     let data = new FormData();
     data.append("followedUsers", this.props.user.followUser);
     console.log("followedUsers", this.props.user.followUser);
@@ -196,9 +199,16 @@ class UnconnectedUserProfile extends Component {
   };
 
   render = () => {
+    if (!this.props.autologinDone) {
+      return (
+        <div className="dashboard-container header-margin">
+          <h4>Loading...</h4>
+        </div>
+      );
+    }
     if (this.props.user) {
       return (
-        <div className="dashboard-container">
+        <div className="dashboard-container header-margin">
           <div>
             <div>Username: {this.props.user.username}</div>
             <div>E-mail: {this.props.user.email}</div>
@@ -265,7 +275,8 @@ class UnconnectedUserProfile extends Component {
 
 let mapStateToProps = state => {
   return {
-    user: state.user
+    user: state.user,
+    autologinDone: state.autologinDone
   };
 };
 

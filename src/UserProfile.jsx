@@ -140,7 +140,7 @@ class UnconnectedUserProfile extends Component {
 
   render = () => {
     return (
-      <div>
+      <div className="profile-container header-margin">
         <div>{this.state.viewedUser.username}</div>
         <div>{this.state.viewedUser.province}</div>
         <div>{this.state.viewedUser.email}</div>

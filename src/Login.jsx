@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Link, withRouter, Redirect } from "react-router-dom";
 
+import "./styles/signup-login.css";
+
 class UnconnectedLogin extends Component {
   constructor(props) {
     super(props);
@@ -52,25 +54,27 @@ class UnconnectedLogin extends Component {
       return <Redirect to="/" />;
     }
     return (
-      <div>
-        <h2>Log in below</h2>
-        <form onSubmit={this.handleSubmit}>
-          <label htmlFor="logUsername">Username</label>
-          <input
-            id="logUsername"
-            type="text"
-            value={this.state.username}
-            onChange={this.handleUsernameChange}
-          />
-          <label htmlFor="logPassword">Password</label>
-          <input
-            id="logPassword"
-            type="password"
-            value={this.state.password}
-            onChange={this.handlePasswordChange}
-          />
-          <input type="submit" />
-        </form>
+      <div className="header-margin">
+        <div className="logsign-container">
+          <h2>Log in below</h2>
+          <form onSubmit={this.handleSubmit}>
+            <label htmlFor="logUsername">Username</label>
+            <input
+              id="logUsername"
+              type="text"
+              value={this.state.username}
+              onChange={this.handleUsernameChange}
+            />
+            <label htmlFor="logPassword">Password</label>
+            <input
+              id="logPassword"
+              type="password"
+              value={this.state.password}
+              onChange={this.handlePasswordChange}
+            />
+            <input type="submit" />
+          </form>
+        </div>
       </div>
     );
   };

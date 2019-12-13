@@ -123,94 +123,102 @@ class UnconnectedCreateEvent extends Component {
 
   render = () => {
     if (!this.props.autologinDone) {
-      return <h4>Loading...</h4>;
+      return (
+        <div className="header-margin">
+          <div className="form-container">
+            <h4>Loading...</h4>
+          </div>
+        </div>
+      );
     }
     if (this.props.user) {
       return (
-        <div className="form-container">
-          <h2>Create Event</h2>
-          <form onSubmit={this.handleSubmit}>
-            <label htmlFor="eventTitle">Title</label>
-            <input
-              placeholder="Title"
-              className="form-text-input"
-              type="text"
-              id="eventTitle"
-              value={this.state.title}
-              onChange={this.titleChangeHandler}
-            />
-            <label htmlFor="eventDesc">Description</label>
-            <textarea
-              placeholder="Description"
-              className="form-text-input"
-              rows="10"
-              cols="20"
-              id="eventDesc"
-              value={this.state.description}
-              onChange={this.descChangeHandler}
-            />
-            <div className="form-input-space-between">
-              <label htmlFor="startDateTime">Start date</label>
-              <DatePicker
-                placeholderText="Start date/time"
-                className="form-text-input form-date-input"
-                selected={this.state.startDateTime}
-                onChange={this.startDateTimeChangeHandler}
-                showTimeSelect
-                minDate={new Date()}
-                timeFormat="HH:mm"
-                timeIntervals={30}
-                timeCaption="time"
-                dateFormat="MMM d, yyyy H:mm"
+        <div className="header-margin">
+          <div className="form-container">
+            <h2>Create Event</h2>
+            <form onSubmit={this.handleSubmit}>
+              <label htmlFor="eventTitle">Title</label>
+              <input
+                placeholder="Title"
+                className="form-text-input"
+                type="text"
+                id="eventTitle"
+                value={this.state.title}
+                onChange={this.titleChangeHandler}
               />
-              <label htmlFor="endDateTime">End date</label>
-              <DatePicker
-                placeholderText="End date/time"
-                className="form-text-input form-date-input"
-                selected={this.state.endDateTime}
-                onChange={this.endDateTimeChangeHandler}
-                showTimeSelect
-                timeFormat="HH:mm"
-                timeIntervals={30}
-                timeCaption="time"
-                dateFormat="MMM d, yyyy H:mm"
+              <label htmlFor="eventDesc">Description</label>
+              <textarea
+                placeholder="Description"
+                className="form-text-input"
+                rows="10"
+                cols="20"
+                id="eventDesc"
+                value={this.state.description}
+                onChange={this.descChangeHandler}
               />
-            </div>
-            <label htmlFor="city">City</label>
-            <input
-              placeholder="City"
-              className="form-text-input"
-              type="text"
-              id="city"
-              value={this.state.city}
-              onChange={this.cityChangeHandler}
-            />
-            <label htmlFor="location">Location</label>
-            <input
-              placeholder="Location"
-              className="form-text-input"
-              type="text"
-              id="location"
-              value={this.state.location}
-              onChange={this.locationChangeHandler}
-            />
-            <label htmlFor="banner">Banner</label>
-            <input
-              className="form-text-input"
-              type="file"
-              id="banner"
-              onChange={this.bannerChangeHandler}
-            />
-            {/* TAGS */}
-            <Select
-              onChange={this.handleSelectChange}
-              styles={customStyles}
-              options={options}
-              isMulti="true"
-              placeholder="Select up to three categories"
-            />
-            <input className="form-submit-button" type="submit" />
-          </form>
+              <div className="form-input-space-between">
+                <label htmlFor="startDateTime">Start date</label>
+                <DatePicker
+                  placeholderText="Start date/time"
+                  className="form-text-input form-date-input"
+                  selected={this.state.startDateTime}
+                  onChange={this.startDateTimeChangeHandler}
+                  showTimeSelect
+                  minDate={new Date()}
+                  timeFormat="HH:mm"
+                  timeIntervals={30}
+                  timeCaption="time"
+                  dateFormat="MMM d, yyyy H:mm"
+                />
+                <label htmlFor="endDateTime">End date</label>
+                <DatePicker
+                  placeholderText="End date/time"
+                  className="form-text-input form-date-input"
+                  selected={this.state.endDateTime}
+                  onChange={this.endDateTimeChangeHandler}
+                  showTimeSelect
+                  timeFormat="HH:mm"
+                  timeIntervals={30}
+                  timeCaption="time"
+                  dateFormat="MMM d, yyyy H:mm"
+                />
+              </div>
+              <label htmlFor="city">City</label>
+              <input
+                placeholder="City"
+                className="form-text-input"
+                type="text"
+                id="city"
+                value={this.state.city}
+                onChange={this.cityChangeHandler}
+              />
+              <label htmlFor="location">Location</label>
+              <input
+                placeholder="Location"
+                className="form-text-input"
+                type="text"
+                id="location"
+                value={this.state.location}
+                onChange={this.locationChangeHandler}
+              />
+              <label htmlFor="banner">Banner</label>
+              <input
+                className="form-text-input"
+                type="file"
+                id="banner"
+                onChange={this.bannerChangeHandler}
+              />
+              {/* TAGS */}
+              <Select
+                onChange={this.handleSelectChange}
+                styles={customStyles}
+                options={options}
+                isMulti="true"
+                placeholder="Select up to three categories"
+              />
+              <input className="form-submit-button" type="submit" />
+            </form>
+          </div>
         </div>
       );
     } else {

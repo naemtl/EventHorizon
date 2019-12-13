@@ -123,7 +123,7 @@ class UnconnectedSearchEvents extends Component {
 
   render = () => {
     return (
-      <div className="container">
+      <div className="container header-margin">
         <h2>Search Events</h2>
         <div className="search-forms-container">
           <form className="search-form" onSubmit={this.titleSearchSubmit}>

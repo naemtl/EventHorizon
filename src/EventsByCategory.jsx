@@ -61,7 +61,7 @@ class UnconnectedEventsByCategory extends Component {
 
   render = () => {
     return (
-      <div className="container">
+      <div className="container header-margin">
         <h2>{this.displayCategoryHeader()}</h2>
         <div className="ehorizon-grid">{this.displayResults()}</div>
       </div>

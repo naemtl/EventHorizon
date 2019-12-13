@@ -168,30 +168,32 @@ class UnconnectedSingleListing extends Component {
       return <div>Loading...</div>;
     }
     return (
-      <div className="single-listing-container">
-        <div className="single-listing-head">
-          <img
-            className="single-listing-banner"
-            src={this.state.event.banner}
-            alt="event banner"
-          />
-          <h3 className="single-listing-title listing-info">
-            {this.state.event.title}
-          </h3>
-          {this.showSaveEventButton()}
-          {this.displayEditButton()}
-        </div>
-        <div className="single-listing-host listing-info">
-          Hosted by{" "}
-          <Link to={"/user/" + this.state.event.hostId}>
-            {this.state.eventHost.username}
-          </Link>
-        </div>
+      <div className="header-margin">
+        <div className="single-listing-container">
+          <div className="single-listing-head">
+            <img
+              className="single-listing-banner"
+              src={this.state.event.banner}
+              alt="event banner"
+            />
+            <h3 className="single-listing-title listing-info">
+              {this.state.event.title}
+            </h3>
+            {this.showSaveEventButton()}
+            {this.displayEditButton()}
+          </div>
+          <div className="single-listing-host listing-info">
+            Hosted by{" "}
+            <Link to={"/user/" + this.state.event.hostId}>
+              {this.state.eventHost.username}
+            </Link>
+          </div>
 
-        <div className="single-listing-desc listing-info">
-          {this.state.event.description}
+          <div className="single-listing-desc listing-info">
+            {this.state.event.description}
+          </div>
+          {eventControls}
         </div>
-        {eventControls}
       </div>
     );
   };

@@ -28,8 +28,15 @@ class UnconnectedMyEvents extends Component {
   };
 
   render = () => {
+    if (!this.props.autologinDone) {
+      return (
+        <div className="container header-margin">
+          <h4>Loading...</h4>
+        </div>
+      );
+    }
     return (
-      <div className="container">
+      <div className="container header-margin">
         <h2>Hosts I'm Following</h2>
         <div>
           {this.state.followedHosts.map(host => {
@@ -48,6 +55,7 @@ class UnconnectedMyEvents extends Component {
 let mapStateToProps = state => {
   return {
     isLoggedIn: state.loggedIn,
+    autologinDone: state.autologinDone,
     user: state.user
   };
 };
