@@ -26,8 +26,7 @@ class UnconnectedEventCard extends Component {
               <img
                 className="eventcard-item-img"
                 src={this.props.event.banner}
-                alt="this.props.event banner"
-                width="100px"
+                alt="event banner"
               />
             </div>
             <div className="eventcard-item-header">

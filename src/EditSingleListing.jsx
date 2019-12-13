@@ -59,19 +59,6 @@ class UnconnectedSingleListing extends Component {
     console.log("new input value: ", event.target.files[0]);
     this.setState({ banner: event.target.files[0] });
   };
-  // categoryChangeHandler = event => {
-  //   console.log("new categories: ", event.target.name);
-  //   if (this.state.categories.includes(event.target.name)) {
-  //     this.setState({
-  //       categories: this.state.categories.filter(cat => {
-  //         return cat !== event.target.name;
-  //       })
-  //     });
-  //   } else
-  //     this.setState({
-  //       categories: this.state.categories.concat(event.target.name)
-  //     });
-  // };
 
   // REACT-SELECT
 
@@ -139,7 +126,7 @@ class UnconnectedSingleListing extends Component {
         this.props.user.isAdmin
       ) {
         return (
-          <div>
+          <div className="">
             <form onSubmit={this.handleSubmit}>
               <label htmlFor="eventTitle">Title</label>
               <input
@@ -213,7 +200,7 @@ class UnconnectedSingleListing extends Component {
                 isMulti="true"
                 placeholder="Select up to three categories"
               />
-              <input type="submit" />
+              <input className="form-submit-button" type="submit" />
             </form>
           </div>
         );

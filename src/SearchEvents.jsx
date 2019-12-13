@@ -4,6 +4,8 @@ import EventCard from "./EventCard.jsx";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
+import "./styles/search.css";
+
 class UnconnectedSearchEvents extends Component {
   constructor(props) {
     super(props);
@@ -114,45 +116,53 @@ class UnconnectedSearchEvents extends Component {
         return <EventCard event={event} />;
       });
     }
-    return <div>What are you looking for?</div>;
+    return (
+      <div className="search-result-placeholder">What are you looking for?</div>
+    );
   };
 
   render = () => {
     return (
-      <div>
+      <div className="container">
         <h2>Search Events</h2>
-        <div>
-          <form onSubmit={this.titleSearchSubmit}>
+        <div className="search-forms-container">
+          <form className="search-form" onSubmit={this.titleSearchSubmit}>
             <label htmlFor="searchTitle">Search by title</label>
             <input
+              className="form-text-input"
+              placeholder="Title"
               id="searchTitle"
               type="text"
               onChange={this.titleSearchChangeHandler}
               value={this.state.titleSearch}
             />
-            <input type="submit" />
+            <input className="search-button" type="submit" value="Search" />
           </form>
-          <form onSubmit={this.locationSearchSubmit}>
+          <form className="search-form" onSubmit={this.locationSearchSubmit}>
             <label htmlFor="searchLocation">Search by location</label>
             <input
+              className="form-text-input"
+              placeholder="Location"
               id="searchLocation"
               type="text"
               onChange={this.locationSearchChangeHandler}
               value={this.state.locationSearch}
             />
-            <input type="submit" />
+            <input className="search-button" type="submit" value="Search" />
           </form>
-          <form onSubmit={this.dateSearchSubmit}>
+          <form className="search-form" onSubmit={this.dateSearchSubmit}>
             <label htmlFor="dateSearch">Search by date</label>
             <DatePicker
+              className="form-text-input"
               selected={this.state.dateSearch}
               onChange={this.dateSearchChangeHandler}
               placeholderText="Start date"
               dateFormat="MMM d, yyyy"
             />
-            <input type="submit" />
+            <input className="search-button" type="submit" value="Search" />
           </form>
         </div>
+        {this.state.results.length !== 0 ? <h2>Results</h2> : ""}
         <div className="ehorizon-grid">{this.displayResults()}</div>
       </div>
     );

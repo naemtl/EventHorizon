@@ -68,8 +68,8 @@
 }
 
 .eventcard-tag:hover {
-  /* background-color: #4c4c4c; */
-  color: #fff;
+  background-color: #4c4c4c;
+  /* color: #fff; */
 }
 
 .eventcard-grid-item {

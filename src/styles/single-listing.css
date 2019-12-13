@@ -1,0 +1,46 @@
+.single-listing-container {
+  margin: 0px auto;
+  max-width: 560px;
+  padding: 0 20px;
+}
+
+.listing-info {
+  padding-bottom: 10px;
+}
+
+.single-listing-head {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.single-listing-banner {
+  margin: 20px 0;
+  flex-basis: 100%;
+}
+
+.single-listing-title {
+  margin: 0;
+}
+
+.single-listing-desc {
+}
+
+.single-listing-button {
+  background: transparent;
+  border: none;
+  color: white;
+  display: flex;
+  align-items: center;
+  padding: unset;
+  cursor: pointer;
+}
+
+.single-listing-button:focus {
+  outline: 0;
+  box-shadow: none !important;
+}
+
+.single-listing-button:hover {
+  text-decoration: underline;
+}

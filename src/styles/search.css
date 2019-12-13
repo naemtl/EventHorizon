@@ -1,0 +1,34 @@
+.search-result-placeholder {
+  margin-left: 12px;
+}
+
+.search-forms-container {
+  max-width: 560px;
+}
+
+.search-form {
+  display: flex;
+}
+
+.search-button {
+  padding: 9px 24px;
+  margin-bottom: 10px;
+  font-weight: 700;
+  font-size: 14px;
+  line-height: 16px;
+  background-color: #fff;
+  color: #000;
+  border: 1px solid #fff;
+  text-decoration: none;
+  -webkit-transition: color 0.1s;
+  -moz-transition: color 0.1s;
+  -ms-transition: color 0.1s;
+  -o-transition: color 0.1s;
+  transition: color 0.1s;
+  cursor: pointer;
+}
+
+.search-button:hover {
+  background-color: #ccc;
+  border-color: #ccc;
+}

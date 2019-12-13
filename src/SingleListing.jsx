@@ -3,6 +3,8 @@ import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import EditSingleListing from "./EditSingleListing.jsx";
 
+import "./styles/single-listing.css";
+
 class UnconnectedSingleListing extends Component {
   constructor(props) {
     super(props);
@@ -58,16 +60,19 @@ class UnconnectedSingleListing extends Component {
     ) {
       if (this.props.user.savedEvents.includes(this.state.event._id)) {
         return (
-          <div>
-            <button onClick={this.discardSavedEvent}>Discard event</button>
-          </div>
+          <button
+            className="single-listing-button"
+            onClick={this.discardSavedEvent}
+          >
+            Discard
+          </button>
         );
       }
       console.log("After save button");
       return (
-        <div>
-          <button onClick={this.saveEvent}>Save event</button>
-        </div>
+        <button className="single-listing-button" onClick={this.saveEvent}>
+          Save
+        </button>
       );
     }
   };
@@ -132,9 +137,12 @@ class UnconnectedSingleListing extends Component {
         this.props.user.isAdmin
       ) {
         return (
-          <div>
-            <button onClick={this.displayEventControls}>Edit event</button>
-          </div>
+          <button
+            className="single-listing-button"
+            onClick={this.displayEventControls}
+          >
+            Edit
+          </button>
         );
       }
     }
@@ -160,16 +168,29 @@ class UnconnectedSingleListing extends Component {
       return <div>Loading...</div>;
     }
     return (
-      <div>
-        <div>
+      <div className="single-listing-container">
+        <div className="single-listing-head">
+          <img
+            className="single-listing-banner"
+            src={this.state.event.banner}
+            alt="event banner"
+          />
+          <h3 className="single-listing-title listing-info">
+            {this.state.event.title}
+          </h3>
+          {this.showSaveEventButton()}
+          {this.displayEditButton()}
+        </div>
+        <div className="single-listing-host listing-info">
+          Hosted by{" "}
           <Link to={"/user/" + this.state.event.hostId}>
             {this.state.eventHost.username}
           </Link>
         </div>
-        <div>{this.state.event.title}</div>
-        <div>{this.state.event.description}</div>
-        {this.showSaveEventButton()}
-        {this.displayEditButton()}
+
+        <div className="single-listing-desc listing-info">
+          {this.state.event.description}
+        </div>
         {eventControls}
       </div>
     );
