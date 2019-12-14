@@ -46,7 +46,11 @@ class UnconnectedEventsByCategory extends Component {
         return <EventCard event={event} />;
       });
     }
-    return <div>No events of this nature at this time</div>;
+    return (
+      <div className="no-events-message">
+        No events of this nature at this time
+      </div>
+    );
   };
 
   displayCategoryHeader = () => {

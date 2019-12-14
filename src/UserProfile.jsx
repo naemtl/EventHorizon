@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 
+import "./styles/profile.css";
+
 class UnconnectedUserProfile extends Component {
   constructor(props) {
     super(props);

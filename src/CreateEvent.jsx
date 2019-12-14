@@ -203,7 +203,7 @@ class UnconnectedCreateEvent extends Component {
               />
               <label htmlFor="banner">Banner</label>
               <input
-                className="form-text-input"
+                className="form-text-input event-banner-input"
                 type="file"
                 id="banner"
                 onChange={this.bannerChangeHandler}

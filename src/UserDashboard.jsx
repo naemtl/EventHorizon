@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Link, Redirect } from "react-router-dom";
-import EventCard from "./EventCard.jsx";
+// import Dropzone from "react-dropzone";
 
 import "./styles/dashboard.css";
 
@@ -214,6 +214,7 @@ class UnconnectedUserProfile extends Component {
             <div>E-mail: {this.props.user.email}</div>
           </div>
           <h2>Account settings</h2>
+          {/*FIXME: <Dropzone /> */}
           <label
             className="dashboard-avatar-label"
             for="dashboard-avatar-label"
