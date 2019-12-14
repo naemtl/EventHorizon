@@ -82,11 +82,13 @@ class UnconnectedSignup extends Component {
     }
     return (
       <div className="header-margin">
-        <div className="logsign-container">
+        <div className="form-container">
           <h2>Sign up below</h2>
           <form onSubmit={this.handleSubmit}>
             <label htmlFor="signUsername">Username</label>
             <input
+              className="form-text-input"
+              placeholder="Username"
               id="signUsername"
               type="text"
               value={this.state.username}
@@ -95,6 +97,7 @@ class UnconnectedSignup extends Component {
             />
             <label htmlFor="signPassword">Password</label>
             <input
+              className="form-text-input"
               id="signPassword"
               type="password"
               value={this.state.password}
@@ -103,6 +106,7 @@ class UnconnectedSignup extends Component {
               required
             />
             <input
+              className="form-text-input"
               id="signPassword"
               type="password"
               value={this.state.confirmPassword}
@@ -112,6 +116,8 @@ class UnconnectedSignup extends Component {
             />
             <label htmlFor="signEmail">Email</label>
             <input
+              className="form-text-input"
+              placeholder="E-mail"
               id="signEmail"
               type="email"
               value={this.state.email}
@@ -120,19 +126,22 @@ class UnconnectedSignup extends Component {
             />
             <label htmlFor="signProvince">Province</label>
             <input
+              className="form-text-input"
+              placeholder="Province"
               id="signProvince"
               type="text"
               value={this.state.province}
               required
               disabled
             />
-            <label for="signAvatar">Avatar</label>
+            {/* <label for="signAvatar">Avatar</label>
             <input
+              className="form-text-input"
               id="signAvatar"
               type="file"
               onChange={this.avatarChangeHandler}
-            />
-            <input type="submit" />
+            /> */}
+            <input className="form-submit-button" type="submit" />
           </form>
         </div>
       </div>

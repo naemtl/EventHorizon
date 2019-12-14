@@ -4,8 +4,45 @@
   padding: 0 20px;
 }
 
+.dashboard-avatar,
 .dashboard-username,
 .dashboard-password,
 .dashboard-email {
   display: flex;
+  flex-wrap: wrap;
+}
+
+.dashboard-avatar {
+  justify-content: space-between;
+}
+
+/* label.form-text-input {
+  display: unset;
+  font-size: unset;
+  cursor: pointer;
+  color: #717171;
+  width: 50%;
+}
+
+label.form-text-input:hover {
+  color: white;
+} */
+
+.dashboard-submit-button {
+  width: auto;
+  font-weight: 700;
+  font-size: 14px;
+  line-height: 16px;
+  padding: 10px 24px;
+  margin-bottom: 10px;
+  background-color: #fff;
+  color: #000;
+  border: 1px solid #fff;
+  text-decoration: none;
+  -webkit-transition: color 0.1s;
+  -moz-transition: color 0.1s;
+  -ms-transition: color 0.1s;
+  -o-transition: color 0.1s;
+  transition: color 0.1s;
+  cursor: pointer;
 }

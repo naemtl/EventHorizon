@@ -55,11 +55,13 @@ class UnconnectedLogin extends Component {
     }
     return (
       <div className="header-margin">
-        <div className="logsign-container">
+        <div className="form-container">
           <h2>Log in below</h2>
           <form onSubmit={this.handleSubmit}>
             <label htmlFor="logUsername">Username</label>
             <input
+              className="form-text-input"
+              placeholder="Username"
               id="logUsername"
               type="text"
               value={this.state.username}
@@ -67,12 +69,14 @@ class UnconnectedLogin extends Component {
             />
             <label htmlFor="logPassword">Password</label>
             <input
+              className="form-text-input"
+              placeholder="Password"
               id="logPassword"
               type="password"
               value={this.state.password}
               onChange={this.handlePasswordChange}
             />
-            <input type="submit" />
+            <input className="form-submit-button" type="submit" />
           </form>
         </div>
       </div>

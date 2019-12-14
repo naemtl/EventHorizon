@@ -215,51 +215,58 @@ class UnconnectedUserProfile extends Component {
           </div>
           <h2>Account settings</h2>
           <form onSubmit={this.newAvatarSubmitHandler}>
-            <input type="file" onChange={this.newAvatarChangeHandler} />
-            <input type="submit" />
+            <input
+              className="form-text-input"
+              type="file"
+              onChange={this.newAvatarChangeHandler}
+            />
+            <input className="dashboard-submit-button" type="submit" />
           </form>
           <form
             className="dashboard-username"
             onSubmit={this.newUsernameSubmitHandler}
           >
             <input
+              className="form-text-input"
               type="text"
               onChange={this.newUsernameChangeHandler}
               value={this.state.newUsername}
               placeholder="Update username"
             />
-            <input type="submit" />
+            <input className="dashboard-submit-button" type="submit" />
           </form>
           <form
             className="dashboard-password"
             onSubmit={this.newPasswordSubmitHandler}
           >
             <input
+              className="form-text-input"
               type="password"
               onChange={this.newPasswordChangeHandler}
               value={this.state.newPassword}
               placeholder="Update password"
             />
             <input
-              // className="dashboard-password"
+              className="form-text-input"
               type="password"
               onChange={this.confirmNewPasswordChangeHandler}
               value={this.state.confirmNewPassword}
               placeholder="Confirm password"
             />
-            <input type="submit" />
+            <input className="dashboard-submit-button" type="submit" />
           </form>
           <form
             className="dashboard-email"
             onSubmit={this.newEmailSubmitHandler}
           >
             <input
+              className="form-text-input"
               type="email"
               onChange={this.newEmailChangeHandler}
               value={this.state.newEmail}
               placeholder="Update e-mail"
             />
-            <input type="submit" />
+            <input className="dashboard-submit-button" type="submit" />
           </form>
           <div className="dashboard-follow-list-container">
             <h2>Following</h2>
