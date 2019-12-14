@@ -34,6 +34,7 @@
     "multer": "^1.4.2",
     "normalize.css": "^8.0.1",
     "react-datepicker": "^2.10.1",
+    "react-dropzone": "^10.2.1",
     "react-icons": "^3.8.0",
     "react-onclickoutside": "^6.9.0",
     "react-redux": "^6.0.1",

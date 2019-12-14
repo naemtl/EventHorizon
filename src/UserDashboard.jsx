@@ -214,8 +214,18 @@ class UnconnectedUserProfile extends Component {
             <div>E-mail: {this.props.user.email}</div>
           </div>
           <h2>Account settings</h2>
-          <form onSubmit={this.newAvatarSubmitHandler}>
+          <label
+            className="dashboard-avatar-label"
+            for="dashboard-avatar-label"
+          >
+            Upload avatar
+          </label>
+          <form
+            className="dashboard-avatar-form"
+            onSubmit={this.newAvatarSubmitHandler}
+          >
             <input
+              id="dashboard-avatar-label"
               className="form-text-input"
               type="file"
               onChange={this.newAvatarChangeHandler}
@@ -223,11 +233,11 @@ class UnconnectedUserProfile extends Component {
             <input className="dashboard-submit-button" type="submit" />
           </form>
           <form
-            className="dashboard-username"
+            className="dashboard-username-form"
             onSubmit={this.newUsernameSubmitHandler}
           >
             <input
-              className="form-text-input"
+              className="form-text-input dashboard-input"
               type="text"
               onChange={this.newUsernameChangeHandler}
               value={this.state.newUsername}
@@ -236,18 +246,18 @@ class UnconnectedUserProfile extends Component {
             <input className="dashboard-submit-button" type="submit" />
           </form>
           <form
-            className="dashboard-password"
+            className="dashboard-password-form"
             onSubmit={this.newPasswordSubmitHandler}
           >
             <input
-              className="form-text-input"
+              className="form-text-input dashboard-input"
               type="password"
               onChange={this.newPasswordChangeHandler}
               value={this.state.newPassword}
               placeholder="Update password"
             />
             <input
-              className="form-text-input"
+              className="form-text-input dashboard-input"
               type="password"
               onChange={this.confirmNewPasswordChangeHandler}
               value={this.state.confirmNewPassword}
@@ -256,11 +266,11 @@ class UnconnectedUserProfile extends Component {
             <input className="dashboard-submit-button" type="submit" />
           </form>
           <form
-            className="dashboard-email"
+            className="dashboard-email-form"
             onSubmit={this.newEmailSubmitHandler}
           >
             <input
-              className="form-text-input"
+              className="form-text-input dashboard-input"
               type="email"
               onChange={this.newEmailChangeHandler}
               value={this.state.newEmail}

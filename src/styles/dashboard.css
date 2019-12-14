@@ -4,29 +4,33 @@
   padding: 0 20px;
 }
 
-.dashboard-avatar,
-.dashboard-username,
-.dashboard-password,
-.dashboard-email {
+.dashboard-avatar-form,
+.dashboard-username-form,
+.dashboard-password-form,
+.dashboard-email-form {
   display: flex;
   flex-wrap: wrap;
-}
-
-.dashboard-avatar {
   justify-content: space-between;
 }
 
-/* label.form-text-input {
+.dashboard-avatar-form {
+  margin-top: 10px;
+}
+
+.dashboard-avatar-label {
   display: unset;
   font-size: unset;
-  cursor: pointer;
-  color: #717171;
   width: 50%;
 }
 
-label.form-text-input:hover {
+.dashboard-avatar-form .form-text-input {
+  width: 75%;
+  color: #717171;
+}
+
+.dashboard-avatar-form .form-text-input:hover {
   color: white;
-} */
+}
 
 .dashboard-submit-button {
   width: auto;
@@ -35,9 +39,9 @@ label.form-text-input:hover {
   line-height: 16px;
   padding: 10px 24px;
   margin-bottom: 10px;
-  background-color: #fff;
+  background-color: #717171;
   color: #000;
-  border: 1px solid #fff;
+  border: 1px solid #717171;
   text-decoration: none;
   -webkit-transition: color 0.1s;
   -moz-transition: color 0.1s;
@@ -45,4 +49,14 @@ label.form-text-input:hover {
   -o-transition: color 0.1s;
   transition: color 0.1s;
   cursor: pointer;
+}
+
+.dashboard-submit-button:hover {
+  background-color: #fff;
+  color: #000;
+  border: 1px solid #fff;
+}
+
+.form-text-input.dashboard-input {
+  width: 75%;
 }
