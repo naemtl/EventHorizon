@@ -150,6 +150,7 @@ class UnconnectedSearchEvents extends Component {
   // };
 
   // OLD DATE SEARCH DO NOT DELETE
+
   dateSearchChangeHandler = date => {
     console.log("new input value: ", date);
     // console.log("date input after getTime", date.getTime());

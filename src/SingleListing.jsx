@@ -148,6 +148,8 @@ class UnconnectedSingleListing extends Component {
     }
   };
 
+  // FIXME: PASS METHOD AS PROP
+
   getUpdatedEvent = updatedEvent => {
     this.setState({ ...this.state, event: updatedEvent });
   };

@@ -27,6 +27,12 @@ class UnconnectedMyEvents extends Component {
     window.alert("Could not get followed hosts");
   };
 
+  // filterHosts = () => {
+  //   this.state.followedHosts.filter(host => {
+  //     return host === event.hostId
+  //   })
+  // }
+
   render = () => {
     if (!this.props.autologinDone) {
       return (

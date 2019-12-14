@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
+import EventCard from "./EventCard.jsx";
 
 import "./styles/profile.css";
 
@@ -14,7 +15,7 @@ class UnconnectedUserProfile extends Component {
 
   componentDidMount = async () => {
     await this.getViewedUserProfile();
-    // this.getViewedUserEvents();
+    this.getViewedUserEvents();
   };
 
   getViewedUserProfile = async () => {
@@ -35,22 +36,22 @@ class UnconnectedUserProfile extends Component {
     window.alert("Could not find user's profile");
   };
 
-  // getViewedUserEvents = async () => {
-  //   let data = new FormData();
-  //   data.append("userId", this.state.viewedUser._id);
-  //   let response = await fetch("/hosting-event", {
-  //     method: "POST",
-  //     body: data
-  //   });
-  //   let responseBody = await response.text();
-  //   let parsed = JSON.parse(responseBody);
-  //   console.log("parsed res from hosting-event endpoint: ", parsed);
-  //   if (parsed.success) {
-  //     this.setState({ events: parsed.events });
-  //     return;
-  //   }
-  //   window.alert("Could not retrieve viewed user's events");
-  // };
+  getViewedUserEvents = async () => {
+    let data = new FormData();
+    data.append("userId", this.state.viewedUser._id);
+    let response = await fetch("/hosting-event", {
+      method: "POST",
+      body: data
+    });
+    let responseBody = await response.text();
+    let parsed = JSON.parse(responseBody);
+    console.log("parsed res from hosting-event endpoint: ", parsed);
+    if (parsed.success) {
+      this.setState({ events: parsed.events });
+      return;
+    }
+    window.alert("Could not retrieve viewed user's events");
+  };
 
   showFollowUserButton = () => {
     if (
@@ -167,19 +168,37 @@ class UnconnectedUserProfile extends Component {
     this.props.dispatch({ type: "update-user", user: parsed.user });
   };
 
+  displayViewedUserEvents = () => {
+    if (this.state.events.length !== 0) {
+      return (
+        <>
+          <h3>{this.state.viewedUser.username}'s upcoming events</h3>
+          <div className="ehorizon-grid">
+            {this.state.events.map(event => {
+              return <EventCard event={event} />;
+            })}
+          </div>
+        </>
+      );
+    }
+  };
+
   render = () => {
     return (
-      <div className="profile-container header-margin">
-        <div>{this.state.viewedUser.username}</div>
-        <div>{this.state.viewedUser.province}</div>
-        <div>{this.state.viewedUser.email}</div>
-        {this.props.isLoggedIn && (
-          <div>
-            <div>Send a message to this user</div>
-            <div>{this.showFollowUserButton()}</div>
-            {/* <div>{this.showBlockUserButton()}</div> */}
-          </div>
-        )}
+      <div className="header-margin">
+        <div className="profile-info-container">
+          <div>{this.state.viewedUser.username}</div>
+          <div>{this.state.viewedUser.province}</div>
+          <div>{this.state.viewedUser.email}</div>
+          {this.props.isLoggedIn && (
+            <div>
+              <div>Send a message to this user</div>
+              <div>{this.showFollowUserButton()}</div>
+              {/* <div>{this.showBlockUserButton()}</div> */}
+            </div>
+          )}
+        </div>
+        {this.displayViewedUserEvents()}
       </div>
     );
   };
