@@ -116,3 +116,7 @@ label {
     width: auto;
   }
 }
+
+.react-datepicker-wrapper {
+  flex-basis: 100%;
+}

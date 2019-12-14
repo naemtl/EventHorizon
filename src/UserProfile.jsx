@@ -2,16 +2,23 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 
 import "./styles/profile.css";
+import { json } from "express";
 
 class UnconnectedUserProfile extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      viewedUser: {}
+      viewedUser: {},
+      events: []
     };
   }
 
   componentDidMount = async () => {
+    await this.getViewedUserProfile();
+    // this.getViewedUserEvents();
+  };
+
+  getViewedUserProfile = async () => {
     let data = new FormData();
     data.append("_id", this.props.id);
     let response = await fetch("/render-user", {
@@ -22,8 +29,29 @@ class UnconnectedUserProfile extends Component {
     let parsed = JSON.parse(responseBody);
     console.log("parsed body of render-user endpoint: ", parsed);
 
-    this.setState({ viewedUser: parsed.user });
+    if (parsed.success) {
+      this.setState({ viewedUser: parsed.user });
+      return;
+    }
+    window.alert("Could not find user's profile");
   };
+
+  // getViewedUserEvents = async () => {
+  //   let data = new FormData();
+  //   data.append("userId", this.state.viewedUser._id);
+  //   let response = await fetch("/hosting-event", {
+  //     method: "POST",
+  //     body: data
+  //   });
+  //   let responseBody = await response.text();
+  //   let parsed = JSON.parse(responseBody);
+  //   console.log("parsed res from hosting-event endpoint: ", parsed);
+  //   if (parsed.success) {
+  //     this.setState({ events: parsed.events });
+  //     return;
+  //   }
+  //   window.alert("Could not retrieve viewed user's events");
+  // };
 
   showFollowUserButton = () => {
     if (
