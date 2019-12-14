@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 
 import "./styles/profile.css";
-import { json } from "express";
 
 class UnconnectedUserProfile extends Component {
   constructor(props) {
