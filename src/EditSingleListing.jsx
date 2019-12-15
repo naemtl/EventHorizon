@@ -128,14 +128,17 @@ class UnconnectedSingleListing extends Component {
             <form onSubmit={this.handleSubmit}>
               <label htmlFor="eventTitle">Title</label>
               <input
+                placeholder="Event title"
                 className="form-text-input"
                 type="text"
                 id="eventTitle"
                 value={this.state.title}
                 onChange={this.titleChangeHandler}
+                maxLength="64"
               />
               <label htmlFor="eventDesc">Description</label>
               <textarea
+                placeholder="Event information"
                 className="form-text-input"
                 rows="10"
                 cols="20"
@@ -146,6 +149,7 @@ class UnconnectedSingleListing extends Component {
               <div className="form-input-space-between">
                 <label htmlFor="startDateTime">Start date</label>
                 <DatePicker
+                  placeholderText="Start date/time"
                   className="form-text-input form-date-input"
                   selected={this.state.startDateTime}
                   onChange={this.startDateTimeChangeHandler}
@@ -158,6 +162,7 @@ class UnconnectedSingleListing extends Component {
                 />
                 <label htmlFor="endDateTime">End date</label>
                 <DatePicker
+                  placeholderText="End date/time"
                   className="form-text-input form-date-input"
                   selected={this.state.endDateTime}
                   onChange={this.endDateTimeChangeHandler}
@@ -170,6 +175,7 @@ class UnconnectedSingleListing extends Component {
               </div>
               <label htmlFor="city">City</label>
               <input
+                placeholder="Event's city"
                 className="form-text-input"
                 type="text"
                 id="city"
@@ -178,6 +184,7 @@ class UnconnectedSingleListing extends Component {
               />
               <label htmlFor="location">Location</label>
               <input
+                placeholder="A place or address"
                 className="form-text-input"
                 type="text"
                 id="location"

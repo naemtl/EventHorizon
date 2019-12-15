@@ -27,11 +27,19 @@ class UnconnectedMyEvents extends Component {
     window.alert("Could not get followed hosts");
   };
 
-  // filterHosts = () => {
-  //   this.state.followedHosts.filter(host => {
-  //     return host === event.hostId
-  //   })
-  // }
+  displayFollowedHosts = () => {
+    if (this.state.followedHosts.length !== 0) {
+      this.state.followedHosts.map(host => {
+        return (
+          <div className="collection">
+            <PreferredHostEvents hostId={host} />
+          </div>
+        );
+      });
+    } else {
+      return <div>You are not following any hosts</div>;
+    }
+  };
 
   render = () => {
     if (!this.props.autologinDone) {
@@ -44,15 +52,7 @@ class UnconnectedMyEvents extends Component {
     return (
       <div className="container header-margin">
         <h2>Hosts I'm Following</h2>
-        <div>
-          {this.state.followedHosts.map(host => {
-            return (
-              <div className="collection">
-                <PreferredHostEvents hostId={host} />
-              </div>
-            );
-          })}
-        </div>
+        <div>{this.displayFollowedHosts()}</div>
       </div>
     );
   };

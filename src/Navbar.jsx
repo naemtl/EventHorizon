@@ -15,18 +15,18 @@ class UnconnectedNavbar extends Component {
   }
 
   componentDidMount = () => {
-    if (this.props.isLoggedIn) {
-      document.addEventListener("click", event => {
-        let isClickInside =
-          document.getElementById("nav-drop").contains(event.target) ||
-          document
-            .getElementById("navbar-hidden-button")
-            .contains(event.target);
-        if (!isClickInside) {
-          this.closeMenu();
-        }
-      });
-    }
+    document.addEventListener("click", event => {
+      let isClickInside =
+        document.getElementById("nav-drop").contains(event.target) ||
+        document.getElementById("navbar-hidden-button").contains(event.target);
+      // FIXME:
+      // let menuItemClick = document
+      //   .querySelectorAll(".navbar-dropdown-item")
+      //   .contains(event.target);
+      if (!isClickInside) {
+        this.closeMenu();
+      }
+    });
   };
 
   handleClickOutside = () => {

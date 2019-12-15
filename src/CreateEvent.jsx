@@ -139,16 +139,17 @@ class UnconnectedCreateEvent extends Component {
             <form onSubmit={this.handleSubmit}>
               <label htmlFor="eventTitle">Title</label>
               <input
-                placeholder="Title"
+                placeholder="Event title"
                 className="form-text-input"
                 type="text"
                 id="eventTitle"
                 value={this.state.title}
                 onChange={this.titleChangeHandler}
+                maxLength="64"
               />
               <label htmlFor="eventDesc">Description</label>
               <textarea
-                placeholder="Description"
+                placeholder="Event information"
                 className="form-text-input"
                 rows="10"
                 cols="20"
@@ -185,7 +186,7 @@ class UnconnectedCreateEvent extends Component {
               </div>
               <label htmlFor="city">City</label>
               <input
-                placeholder="City"
+                placeholder="Event's city"
                 className="form-text-input"
                 type="text"
                 id="city"
@@ -194,7 +195,7 @@ class UnconnectedCreateEvent extends Component {
               />
               <label htmlFor="location">Location</label>
               <input
-                placeholder="Location"
+                placeholder="A place or address"
                 className="form-text-input"
                 type="text"
                 id="location"

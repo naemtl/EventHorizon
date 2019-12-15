@@ -835,7 +835,26 @@ app.post("/followed-hosts", upload.none(), (req, res) => {
     }
     console.log("getting user's preferred hosts: ", user.followUser);
 
-    res.send(JSON.stringify({ success: true, hosts: user.followUser }));
+    let followedUserIds = user.followUser;
+    console.log("followedUserIds", followedUserIds);
+    dbo
+      .collection("eventListings")
+      .find({})
+      .toArray((err, events) => {
+        if (err || events === null) {
+          res.json({ success: false });
+          return;
+        }
+        let hostIds = events.map(event => {
+          return event.hostId;
+        });
+        console.log("HOSTIDs", hostIds);
+        let usersHostingEvents = followedUserIds.filter(userId => {
+          return hostIds.includes(userId);
+        });
+        console.log("usersHostingEvents***", usersHostingEvents);
+        res.send(JSON.stringify({ success: true, hosts: usersHostingEvents }));
+      });
   });
 });
 
