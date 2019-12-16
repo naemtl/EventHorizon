@@ -4,6 +4,7 @@ let initialState = {
   loggedIn: false,
   user: undefined,
   hosts: [],
+  followedHosts: [],
   eventIds: [],
   autologinDone: false
 };
@@ -45,6 +46,12 @@ let reducer = (state, action) => {
     return {
       ...state,
       hosts: action.hosts
+    };
+  }
+  if (action.type === "set-followed-hosts") {
+    return {
+      ...state,
+      followedHosts: action.followedHosts
     };
   }
   return state;

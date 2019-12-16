@@ -126,20 +126,41 @@ class UnconnectedNavbar extends Component {
 
                   {/* fake burger */}
                   <div className="navbar-hamburger">
-                    <Link className="navbar-dropdown-item" to="/create-event">
+                    <Link
+                      onClick={() => {
+                        this.setState({ showMenu: "" });
+                      }}
+                      className="navbar-dropdown-item"
+                      to="/create-event"
+                    >
                       Create event
                     </Link>
-                    <Link className="navbar-dropdown-item" to="/my-events">
+                    <Link
+                      onClick={() => {
+                        this.setState({ showMenu: "" });
+                      }}
+                      className="navbar-dropdown-item"
+                      to="/my-events"
+                    >
                       My events
                     </Link>
                     <Link
+                      onClick={() => {
+                        this.setState({ showMenu: "" });
+                      }}
                       className="navbar-dropdown-item"
                       to="/preferred-hosts"
                     >
                       Preferred hosts
                     </Link>
                   </div>
-                  <Link className="navbar-dropdown-item" to={"/my-dashboard"}>
+                  <Link
+                    onClick={() => {
+                      this.setState({ showMenu: "" });
+                    }}
+                    className="navbar-dropdown-item"
+                    to={"/my-dashboard"}
+                  >
                     My dashboard
                   </Link>
                   <button

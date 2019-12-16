@@ -34,6 +34,10 @@ class UnconnectedApp extends Component {
     if (parsed.success) {
       console.log("AUTO-LOGIN PARSEDUSER", parsed.user);
       this.props.dispatch({ type: "login-success", user: parsed.user });
+      this.props.dispatch({
+        type: "set-followed-hosts",
+        followedHosts: parsed.user.followUser
+      });
     }
     this.props.dispatch({ type: "autologin-done" });
   };

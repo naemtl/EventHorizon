@@ -41,17 +41,30 @@ class UnconnectedSingleListing extends Component {
     console.log("Could not get single-event");
   };
 
-  getEventHost = () => {
+  getEventHost = async () => {
     console.log("THIS PROPS HOSTS", this.props.hosts);
     console.log("THIS STATE EVENT", this.state.event);
 
-    let eventHost = this.props.hosts.find(host => {
-      console.log("value of host and event: ", this.state.event, host);
+    // here
 
-      return this.state.event.hostId === host._id;
+    let response = await fetch("/get-event-hosts", {
+      method: "POST"
     });
-    console.log("Value of eventHost: ", eventHost);
-    this.setState({ eventHost: eventHost });
+    let responseBody = await response.text();
+    let parsed = JSON.parse(responseBody);
+    console.log("parsed res from get-event-hosts", parsed);
+
+    if (parsed.success) {
+      let eventHost = parsed.hosts.find(host => {
+        console.log("value of host and event: ", this.state.event, host);
+
+        return this.state.event.hostId === host;
+      });
+      console.log("Value of eventHost: ", eventHost);
+      this.setState({ eventHost: eventHost });
+      return;
+    }
+    window.alert("Something went wrong");
   };
 
   showSaveEventButton = () => {
@@ -200,7 +213,7 @@ class UnconnectedSingleListing extends Component {
             )}
           </div>
           <div className="single-listing-desc listing-info">
-            {this.state.event.description}
+            <pre>{this.state.event.description}</pre>
           </div>
           {eventControls}
         </div>

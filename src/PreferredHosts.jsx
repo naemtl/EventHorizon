@@ -28,8 +28,10 @@ class UnconnectedMyEvents extends Component {
   };
 
   displayFollowedHosts = () => {
-    if (this.state.followedHosts.length !== 0) {
-      this.state.followedHosts.map(host => {
+    console.log("this.props.followedHosts.*****", this.props.followedHosts);
+
+    if (this.props.followedHosts.length !== 0) {
+      return this.props.followedHosts.map(host => {
         return (
           <div className="collection">
             <PreferredHostEvents hostId={host} />
@@ -62,7 +64,8 @@ let mapStateToProps = state => {
   return {
     isLoggedIn: state.loggedIn,
     autologinDone: state.autologinDone,
-    user: state.user
+    user: state.user,
+    followedHosts: state.followedHosts
   };
 };
 

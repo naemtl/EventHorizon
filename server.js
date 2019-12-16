@@ -878,6 +878,26 @@ app.post("/followed-hosts", upload.none(), (req, res) => {
   });
 });
 
+app.post("/get-event-hosts", (req, res) => {
+  console.log("get-event-hosts endpoint hit");
+  dbo
+    .collection("users")
+    .find({})
+    .toArray((err, users) => {
+      if (err || users === null) {
+        console.log("Error getting users");
+        res.send({ success: false });
+        return;
+      }
+
+      let hosts = users.map(user => {
+        return user._id;
+      });
+      console.log("EVENT HOSTS", hosts);
+      res.send({ success: true, hosts });
+    });
+});
+
 // Your endpoints go before this line
 
 app.all("/*", (req, res, next) => {
