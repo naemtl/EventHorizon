@@ -17,14 +17,15 @@
 .single-listing-banner {
   margin: 20px 0;
   flex-basis: 100%;
+  width: 100%;
 }
 
 .single-listing-title {
   margin: 0;
 }
 
-.single-listing-desc {
-}
+/* .single-listing-desc {
+} */
 
 .single-listing-button {
   background: transparent;

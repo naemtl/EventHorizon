@@ -80,6 +80,10 @@ const customStyles = {
   multiValue: (provided, state) => ({
     ...provided,
     backgroundColor: "#A2A2A2"
+  }),
+  input: (provided, state) => ({
+    ...provided,
+    color: "#fff"
   })
 };
 

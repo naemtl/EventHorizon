@@ -9,12 +9,24 @@ class UnconnectedUserProfile extends Component {
     super(props);
     this.state = {
       newAvatar: undefined,
-      newUsername: "",
-      newPassword: "",
-      confirmNewPassword: "",
-      newEmail: "",
+      newUsername: this.props.user.username,
+      newPassword: this.props.user.password,
+      confirmNewPassword: this.props.user.password,
+      newEmail: this.props.user.email,
+      newUsernameInput: "",
+      newPasswordInput: "",
+      confirmNewPasswordInput: "",
+      newEmailInput: "",
       followedUsers: []
     };
+    // this.state = {
+    //   newAvatar: undefined,
+    //   newUsername: "",
+    //   newPassword: ""''
+    //   confirmNewPassword: "",
+    //   newEmail: "",
+    //   followedUsers: []
+    // };
   }
 
   componentDidMount = async () => {
@@ -54,10 +66,10 @@ class UnconnectedUserProfile extends Component {
     );
     this.setState({
       newAvatar: undefined,
-      newUsername: "",
-      newPassword: "",
-      confirmNewPassword: "",
-      newEmail: ""
+      newUsername: parsedRenderUser.user.username,
+      newPassword: parsedRenderUser.user.password,
+      confirmNewPassword: parsedRenderUser.user.password,
+      newEmail: parsedRenderUser.user.email
     });
     console.log("PARSED USER", parsedRenderUser.user);
 
@@ -92,33 +104,33 @@ class UnconnectedUserProfile extends Component {
 
   newUsernameChangeHandler = event => {
     console.log("new username change input value: ", event.target.value);
-    this.setState({ newUsername: event.target.value });
+    this.setState({ newUsernameInput: event.target.value });
   };
 
-  newUsernameSubmitHandler = async event => {
-    event.preventDefault();
-    console.log("username change form submitted");
-    let data = new FormData();
-    data.append("userId", this.props.user._id);
-    data.append("username", this.state.newUsername);
-    let response = await fetch("/update-username", {
-      method: "POST",
-      body: data
-    });
-    let responseBody = await response.text();
-    let parsed = JSON.parse(responseBody);
-    console.log("parsed body from update-username endpoint: ", parsed);
-    if (parsed.success) {
-      this.renderUser();
-      window.alert("Username updated successfully");
-      return;
-    }
-    window.alert("Something went wrong");
-  };
+  // newUsernameSubmitHandler = async event => {
+  //   event.preventDefault();
+  //   console.log("username change form submitted");
+  //   let data = new FormData();
+  //   data.append("userId", this.props.user._id);
+  //   data.append("username", this.state.newUsername);
+  //   let response = await fetch("/update-username", {
+  //     method: "POST",
+  //     body: data
+  //   });
+  //   let responseBody = await response.text();
+  //   let parsed = JSON.parse(responseBody);
+  //   console.log("parsed body from update-username endpoint: ", parsed);
+  //   if (parsed.success) {
+  //     this.renderUser();
+  //     window.alert("Username updated successfully");
+  //     return;
+  //   }
+  //   window.alert("Something went wrong");
+  // };
 
   newPasswordChangeHandler = event => {
     console.log("new password change input value: ", event.target.value);
-    this.setState({ newPassword: event.target.value });
+    this.setState({ newPasswordInput: event.target.value });
   };
 
   confirmNewPasswordChangeHandler = event => {
@@ -126,57 +138,121 @@ class UnconnectedUserProfile extends Component {
       "new confirm password change input value: ",
       event.target.value
     );
-    this.setState({ confirmNewPassword: event.target.value });
+    this.setState({ confirmNewPasswordInput: event.target.value });
   };
 
-  newPasswordSubmitHandler = async event => {
+  // newPasswordSubmitHandler = async event => {
+  //   event.preventDefault();
+  //   console.log("password change form submitted");
+  //   if (this.state.newPassword !== this.state.confirmNewPassword) {
+  //     window.alert("Password fields do not match");
+  //     this.setState({ newPassword: "", confirmNewPassword: "" });
+  //     return;
+  //   }
+  //   let data = new FormData();
+  //   data.append("userId", this.props.user._id);
+  //   data.append("password", this.state.newPassword);
+  //   let response = await fetch("/update-password", {
+  //     method: "POST",
+  //     body: data
+  //   });
+  //   let responseBody = await response.text();
+  //   let parsed = JSON.parse(responseBody);
+  //   console.log("parsed response from update-password endpoint", parsed);
+  //   if (parsed.success) {
+  //     this.setState({ newPassword: "", confirmNewPassword: "" });
+  //     window.alert("Password updated successfully");
+  //     return;
+  //   }
+  //   window.alert("Something went wrong");
+  //   console.log("Error from update-password endpoint", parsed.err);
+  // };
+
+  newEmailChangeHandler = event => {
+    console.log("new email change input value: ", event.target.value);
+    this.setState({ newEmailInput: event.target.value });
+  };
+
+  // newEmailSubmitHandler = async event => {
+  //   event.preventDefault();
+  //   console.log("email change form submitted");
+  //   let data = new FormData();
+  //   data.append("userId", this.props.user._id);
+  //   data.append("email", this.state.newEmail);
+  //   let response = await fetch("/update-email", {
+  //     method: "POST",
+  //     body: data
+  //   });
+  //   let responseBody = await response.text();
+  //   let parsed = JSON.parse(responseBody);
+  //   console.log("parsed response from update-email endpoint", parsed);
+  //   if (parsed.success) {
+  //     this.renderUser();
+  //     window.alert("Email updated successfully");
+  //     return;
+  //   }
+  //   window.alert("Something went wrong");
+  //   console.log("Error from update-email endpoint", parsed.err);
+  // };
+
+  newUserCredentialsSubmitHandler = async event => {
     event.preventDefault();
-    console.log("password change form submitted");
+    console.log("new user credentials form submitted");
     if (this.state.newPassword !== this.state.confirmNewPassword) {
       window.alert("Password fields do not match");
       this.setState({ newPassword: "", confirmNewPassword: "" });
       return;
     }
-    let data = new FormData();
-    data.append("userId", this.props.user._id);
-    data.append("password", this.state.newPassword);
-    let response = await fetch("/update-password", {
-      method: "POST",
-      body: data
-    });
-    let responseBody = await response.text();
-    let parsed = JSON.parse(responseBody);
-    console.log("parsed response from update-password endpoint", parsed);
-    if (parsed.success) {
-      this.setState({ newPassword: "", confirmNewPassword: "" });
-      window.alert("Password updated successfully");
+    if (
+      this.state.newUsernameInput === "" &&
+      this.state.newPasswordInput === "" &&
+      this.state.newEmailInput === ""
+    ) {
+      window.alert("Update credential fields cannot be empty");
       return;
     }
-    window.alert("Something went wrong");
-    console.log("Error from update-password endpoint", parsed.err);
-  };
-
-  newEmailChangeHandler = event => {
-    console.log("new email change input value: ", event.target.value);
-    this.setState({ newEmail: event.target.value });
-  };
-
-  newEmailSubmitHandler = async event => {
-    event.preventDefault();
-    console.log("email change form submitted");
     let data = new FormData();
     data.append("userId", this.props.user._id);
-    data.append("email", this.state.newEmail);
-    let response = await fetch("/update-email", {
+    if (this.state.newUsernameInput === "") {
+      data.append("username", this.state.newUsername);
+    } else {
+      data.append("username", this.state.newUsernameInput);
+    }
+    if (this.state.newPasswordInput === "") {
+      data.append("password", this.state.newPassword);
+    } else if (
+      this.state.newPasswordInput !== this.state.confirmNewPasswordInput
+    ) {
+      window.alert("Password fields do not match");
+      this.setState({ newPasswordInput: "", confirmNewPasswordInput: "" });
+      return;
+    } else {
+      data.append("password", this.state.newPasswordInput);
+    }
+    if (this.state.newEmailInput === "") {
+      data.append("email", this.state.newEmail);
+    } else {
+      data.append("email", this.state.newEmailInput);
+    }
+    let response = await fetch("/update-user-credentials", {
       method: "POST",
       body: data
     });
     let responseBody = await response.text();
     let parsed = JSON.parse(responseBody);
-    console.log("parsed response from update-email endpoint", parsed);
+    console.log(
+      "parsed response from update-user-credentials endpoint",
+      parsed
+    );
     if (parsed.success) {
       this.renderUser();
-      window.alert("Email updated successfully");
+      this.setState({
+        newUsernameInput: "",
+        newPasswordInput: "",
+        confirmNewPasswordInput: "",
+        newEmailInput: ""
+      });
+      window.alert("User credentials updated successfully");
       return;
     }
     window.alert("Something went wrong");
@@ -234,7 +310,42 @@ class UnconnectedUserProfile extends Component {
           </form>
           <div>
             <h4>Manage credentials</h4>
+
             <form
+              className="dashboard-username-form"
+              onSubmit={this.newUserCredentialsSubmitHandler}
+            >
+              <input
+                className="form-text-input dashboard-input"
+                type="text"
+                onChange={this.newUsernameChangeHandler}
+                value={this.state.newUsernameInput}
+                placeholder="Update username"
+              />
+              <input
+                className="form-text-input dashboard-input"
+                type="password"
+                onChange={this.newPasswordChangeHandler}
+                value={this.state.newPasswordInput}
+                placeholder="Update password"
+              />
+              <input
+                className="form-text-input dashboard-input"
+                type="password"
+                onChange={this.confirmNewPasswordChangeHandler}
+                value={this.state.confirmNewPasswordInput}
+                placeholder="Confirm new password"
+              />
+              <input
+                className="form-text-input dashboard-input"
+                type="email"
+                onChange={this.newEmailChangeHandler}
+                value={this.state.newEmailInput}
+                placeholder="Update e-mail"
+              />
+              <input className="dashboard-submit-button" type="submit" />
+            </form>
+            {/*<form
               className="dashboard-username-form"
               onSubmit={this.newUsernameSubmitHandler}
             >
@@ -279,10 +390,10 @@ class UnconnectedUserProfile extends Component {
                 placeholder="Update e-mail"
               />
               <input className="dashboard-submit-button" type="submit" />
-            </form>
+            </form> */}
           </div>
           <div className="dashboard-follow-list-container">
-            <h2>Following</h2>
+            <h2>Follow list</h2>
             {this.getFollowedUsers()}
           </div>
         </div>

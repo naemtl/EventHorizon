@@ -86,9 +86,9 @@ button:focus {
   font-size: 14px;
   line-height: 16px;
   padding: 13px 24px;
-  background-color: #ccc;
+  background-color: #fff;
   color: #000;
-  border: 1px solid #ccc;
+  border: 1px solid #fff;
   text-decoration: none;
   -webkit-transition: color 0.1s;
   -moz-transition: color 0.1s;
@@ -99,8 +99,8 @@ button:focus {
 }
 
 .form-submit-button:hover {
-  background-color: #fff;
-  border-color: #fff;
+  background-color: #ccc;
+  border-color: #ccc;
 }
 
 label {

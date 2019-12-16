@@ -88,7 +88,7 @@ class UnconnectedSignup extends Component {
             <label htmlFor="signUsername">Username</label>
             <input
               className="form-text-input"
-              placeholder="Username"
+              placeholder="Enter a username"
               id="signUsername"
               type="text"
               value={this.state.username}
@@ -117,7 +117,7 @@ class UnconnectedSignup extends Component {
             <label htmlFor="signEmail">Email</label>
             <input
               className="form-text-input"
-              placeholder="E-mail"
+              placeholder="Enter a valid e-mail"
               id="signEmail"
               type="email"
               value={this.state.email}
@@ -127,7 +127,7 @@ class UnconnectedSignup extends Component {
             <label htmlFor="signProvince">Province</label>
             <input
               className="form-text-input"
-              placeholder="Province"
+              placeholder="Enter your province"
               id="signProvince"
               type="text"
               value={this.state.province}

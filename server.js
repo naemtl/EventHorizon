@@ -435,21 +435,19 @@ app.post("/update-avatar", upload.single("img"), (req, res) => {
     );
 });
 
-app.post("/update-username", upload.none(), (req, res) => {
-  console.log("update-username endpoint hit");
-  let userId = req.body.userId;
-  let username = req.body.username;
+app.post("/update-user-credentials", upload.none(), (req, res) => {
+  console.log("update-user-credentials hit");
+  let { userId, username, password, email } = req.body;
   dbo
     .collection("users")
     .updateOne(
       { _id: ObjectID(userId) },
-      { $set: { username } },
+      { $set: { username, password, email } },
       (err, user) => {
         if (err || user === null) {
           return res.json({ success: false, err });
         }
         console.log("user document on update", user);
-
         return res.json({
           success: true
         });
@@ -457,37 +455,59 @@ app.post("/update-username", upload.none(), (req, res) => {
     );
 });
 
-app.post("/update-password", upload.none(), (req, res) => {
-  console.log("update-password endpoint hit");
-  let userId = req.body.userId;
-  let password = req.body.password;
-  dbo
-    .collection("users")
-    .updateOne(
-      { _id: ObjectID(userId) },
-      { $set: { password } },
-      (err, user) => {
-        if (err || user == null) {
-          return res.json({ success: false, err });
-        }
-        return res.json({ success: true });
-      }
-    );
-});
+// app.post("/update-username", upload.none(), (req, res) => {
+//   console.log("update-username endpoint hit");
+//   let userId = req.body.userId;
+//   let username = req.body.username;
+//   dbo
+//     .collection("users")
+//     .updateOne(
+//       { _id: ObjectID(userId) },
+//       { $set: { username } },
+//       (err, user) => {
+//         if (err || user === null) {
+//           return res.json({ success: false, err });
+//         }
+//         console.log("user document on update", user);
 
-app.post("/update-email", upload.none(), (req, res) => {
-  console.log("update-email endpoint hit");
-  let userId = req.body.userId;
-  let email = req.body.email;
-  dbo
-    .collection("users")
-    .updateOne({ _id: ObjectID(userId) }, { $set: { email } }, (err, user) => {
-      if (err || user === null) {
-        return res.json({ success: false, err });
-      }
-      return res.json({ success: true });
-    });
-});
+//         return res.json({
+//           success: true
+//         });
+//       }
+//     );
+// });
+
+// app.post("/update-password", upload.none(), (req, res) => {
+//   console.log("update-password endpoint hit");
+//   let userId = req.body.userId;
+//   let password = req.body.password;
+//   dbo
+//     .collection("users")
+//     .updateOne(
+//       { _id: ObjectID(userId) },
+//       { $set: { password } },
+//       (err, user) => {
+//         if (err || user == null) {
+//           return res.json({ success: false, err });
+//         }
+//         return res.json({ success: true });
+//       }
+//     );
+// });
+
+// app.post("/update-email", upload.none(), (req, res) => {
+//   console.log("update-email endpoint hit");
+//   let userId = req.body.userId;
+//   let email = req.body.email;
+//   dbo
+//     .collection("users")
+//     .updateOne({ _id: ObjectID(userId) }, { $set: { email } }, (err, user) => {
+//       if (err || user === null) {
+//         return res.json({ success: false, err });
+//       }
+//       return res.json({ success: true });
+//     });
+// });
 
 app.post("/unfollow-user", upload.none(), (req, res) => {
   console.log("unfollow-user endpoint hit");
