@@ -213,12 +213,13 @@ class UnconnectedUserProfile extends Component {
             <div>E-mail: {this.props.user.email}</div>
           </div>
           <h2>Account settings</h2>
-          <label
+          {/*<label
             className="dashboard-avatar-label"
             for="dashboard-avatar-label"
           >
             Upload avatar
-          </label>
+          </label>*/}
+          <h4>Upload avatar</h4>
           <form
             className="dashboard-avatar-form"
             onSubmit={this.newAvatarSubmitHandler}
@@ -231,52 +232,55 @@ class UnconnectedUserProfile extends Component {
             />
             <input className="dashboard-submit-button" type="submit" />
           </form>
-          <form
-            className="dashboard-username-form"
-            onSubmit={this.newUsernameSubmitHandler}
-          >
-            <input
-              className="form-text-input dashboard-input"
-              type="text"
-              onChange={this.newUsernameChangeHandler}
-              value={this.state.newUsername}
-              placeholder="Update username"
-            />
-            <input className="dashboard-submit-button" type="submit" />
-          </form>
-          <form
-            className="dashboard-password-form"
-            onSubmit={this.newPasswordSubmitHandler}
-          >
-            <input
-              className="form-text-input dashboard-input"
-              type="password"
-              onChange={this.newPasswordChangeHandler}
-              value={this.state.newPassword}
-              placeholder="Update password"
-            />
-            <input
-              className="form-text-input dashboard-input"
-              type="password"
-              onChange={this.confirmNewPasswordChangeHandler}
-              value={this.state.confirmNewPassword}
-              placeholder="Confirm password"
-            />
-            <input className="dashboard-submit-button" type="submit" />
-          </form>
-          <form
-            className="dashboard-email-form"
-            onSubmit={this.newEmailSubmitHandler}
-          >
-            <input
-              className="form-text-input dashboard-input"
-              type="email"
-              onChange={this.newEmailChangeHandler}
-              value={this.state.newEmail}
-              placeholder="Update e-mail"
-            />
-            <input className="dashboard-submit-button" type="submit" />
-          </form>
+          <div>
+            <h4>Manage credentials</h4>
+            <form
+              className="dashboard-username-form"
+              onSubmit={this.newUsernameSubmitHandler}
+            >
+              <input
+                className="form-text-input dashboard-input"
+                type="text"
+                onChange={this.newUsernameChangeHandler}
+                value={this.state.newUsername}
+                placeholder="Update username"
+              />
+              <input className="dashboard-submit-button" type="submit" />
+            </form>
+            <form
+              className="dashboard-password-form"
+              onSubmit={this.newPasswordSubmitHandler}
+            >
+              <input
+                className="form-text-input dashboard-input"
+                type="password"
+                onChange={this.newPasswordChangeHandler}
+                value={this.state.newPassword}
+                placeholder="Update password"
+              />
+              <input
+                className="form-text-input dashboard-input"
+                type="password"
+                onChange={this.confirmNewPasswordChangeHandler}
+                value={this.state.confirmNewPassword}
+                placeholder="Confirm password"
+              />
+              <input className="dashboard-submit-button" type="submit" />
+            </form>
+            <form
+              className="dashboard-email-form"
+              onSubmit={this.newEmailSubmitHandler}
+            >
+              <input
+                className="form-text-input dashboard-input"
+                type="email"
+                onChange={this.newEmailChangeHandler}
+                value={this.state.newEmail}
+                placeholder="Update e-mail"
+              />
+              <input className="dashboard-submit-button" type="submit" />
+            </form>
+          </div>
           <div className="dashboard-follow-list-container">
             <h2>Following</h2>
             {this.getFollowedUsers()}

@@ -22,13 +22,13 @@ class UnconnectedSingleListing extends Component {
   }
 
   getUpdatedUser = async data => {
-    let userResponse = await fetch("/render-user", {
+    let response = await fetch("/render-user", {
       method: "POST",
       body: data
     });
-    let userResponseBody = await userResponse.text();
-    let userParsed = JSON.parse(userResponseBody);
-    this.props.dispatch({ type: "update-user", user: userParsed.user });
+    let responseBody = await response.text();
+    let parsed = JSON.parse(responseBody);
+    this.props.dispatch({ type: "update-user", user: parsed.user });
   };
 
   titleChangeHandler = event => {
