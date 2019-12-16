@@ -2,8 +2,8 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import * as dateformat from "dateformat";
-import "./styles/eventcard.css";
 // converts 'require syntax' to importable library
+import "./styles/eventcard.css";
 
 class UnconnectedEventCard extends Component {
   constructor(props) {

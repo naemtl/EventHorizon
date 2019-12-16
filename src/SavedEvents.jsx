@@ -27,16 +27,23 @@ class UnconnectSavedEvents extends Component {
     }
   };
 
+  displaySavedEvents = () => {
+    if (this.state.events.length === 0) {
+      return (
+        <div className="no-events-message">
+          You do not have any events saved
+        </div>
+      );
+    }
+    return this.state.events.map(event => {
+      return <EventCard event={event} />;
+    });
+  };
+
   render = () => {
     console.log("SAVED EVENTS STATE", this.state.events);
 
-    return (
-      <div className="ehorizon-grid">
-        {this.state.events.map(event => {
-          return <EventCard event={event} />;
-        })}
-      </div>
-    );
+    return <div className="ehorizon-grid">{this.displaySavedEvents()}</div>;
   };
 }
 

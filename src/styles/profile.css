@@ -1,5 +1,31 @@
 .profile-info-container {
-  margin: 0px auto;
-  max-width: 560px;
-  padding: 0 20px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.profile-info-avatar {
+  max-width: 100px;
+}
+
+.profile-info-content {
+  padding-top: 10px;
+}
+
+.profile-follow-button {
+  background: transparent;
+  border: none;
+  color: white;
+  display: flex;
+  align-items: center;
+  padding: unset;
+  cursor: pointer;
+}
+
+.profile-follow-button:focus {
+  outline: 0;
+  box-shadow: none !important;
+}
+
+.profile-follow-button:hover {
+  text-decoration: underline;
 }

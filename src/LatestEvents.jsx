@@ -36,6 +36,13 @@ class UnconnectedLatestEvents extends Component {
         parseInt(event.endDateTime) < Date.now() + 604800000
       );
     });
+    if (upcomingEvents.length === 0) {
+      return (
+        <div className="no-events-message">
+          There are no upcoming events at this time
+        </div>
+      );
+    }
     return upcomingEvents.map(event => {
       return <EventCard event={event} />;
     });

@@ -136,7 +136,15 @@ class UnconnectedCreateEvent extends Component {
         <div className="header-margin">
           <div className="form-container">
             <h2>Create Event</h2>
+            <h4>Event banner</h4>
             <form onSubmit={this.handleSubmit}>
+              <label htmlFor="banner">Banner</label>
+              <input
+                className="form-text-input event-banner-input"
+                type="file"
+                id="banner"
+                onChange={this.bannerChangeHandler}
+              />
               <label htmlFor="eventTitle">Title</label>
               <input
                 placeholder="Event title"
@@ -202,13 +210,7 @@ class UnconnectedCreateEvent extends Component {
                 value={this.state.location}
                 onChange={this.locationChangeHandler}
               />
-              <label htmlFor="banner">Banner</label>
-              <input
-                className="form-text-input event-banner-input"
-                type="file"
-                id="banner"
-                onChange={this.bannerChangeHandler}
-              />
+
               {/* TAGS */}
               <Select
                 onChange={this.handleSelectChange}

@@ -125,7 +125,15 @@ class UnconnectedSingleListing extends Component {
       ) {
         return (
           <div>
+            <h4>Update banner</h4>
             <form onSubmit={this.handleSubmit}>
+              <label htmlFor="banner">Banner</label>
+              <input
+                className="form-text-input"
+                type="file"
+                id="banner"
+                onChange={this.bannerChangeHandler}
+              />
               <label htmlFor="eventTitle">Title</label>
               <input
                 placeholder="Event title"
@@ -191,13 +199,7 @@ class UnconnectedSingleListing extends Component {
                 value={this.state.location}
                 onChange={this.locationChangeHandler}
               />
-              <label htmlFor="banner">Banner</label>
-              <input
-                className="form-text-input"
-                type="file"
-                id="banner"
-                onChange={this.bannerChangeHandler}
-              />
+
               {/* TAGS */}
               <Select
                 value={this.state.categories}

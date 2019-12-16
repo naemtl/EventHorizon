@@ -61,12 +61,16 @@ class UnconnectedUserProfile extends Component {
     ) {
       if (this.props.user.followUser.includes(this.state.viewedUser._id)) {
         return (
-          <div>
-            <button onClick={this.unfollowUser}>Unfollow</button>
-          </div>
+          <button className="profile-follow-button" onClick={this.unfollowUser}>
+            Unfollow {this.state.viewedUser.username}
+          </button>
         );
       }
-      return <button onClick={this.followUser}>Follow</button>;
+      return (
+        <button className="profile-follow-button" onClick={this.followUser}>
+          Follow {this.state.viewedUser.username}
+        </button>
+      );
     }
   };
 
@@ -171,29 +175,48 @@ class UnconnectedUserProfile extends Component {
   displayViewedUserEvents = () => {
     if (this.state.events.length !== 0) {
       return (
-        <>
+        <div>
           <h3>{this.state.viewedUser.username}'s upcoming events</h3>
           <div className="ehorizon-grid">
             {this.state.events.map(event => {
               return <EventCard event={event} />;
             })}
           </div>
-        </>
+        </div>
+      );
+    } else {
+      return (
+        <div>
+          <h3>{this.state.viewedUser.username}'s upcoming events</h3>
+          <div>Nothing planned at this time</div>
+        </div>
       );
     }
   };
 
   render = () => {
     return (
-      <div className="header-margin">
+      <div className="container header-margin">
         <div className="profile-info-container">
-          <div>{this.state.viewedUser.username}</div>
-          <div>{this.state.viewedUser.province}</div>
-          <div>{this.state.viewedUser.email}</div>
+          <div>
+            <div className="profile-info-content">
+              <img
+                className="profile-info-avatar"
+                src={this.state.viewedUser.avatar}
+                alt="event banner"
+              />
+            </div>
+            <div className="profile-info-content">
+              <div>{this.state.viewedUser.username}</div>
+              <div>{this.state.viewedUser.province}</div>
+              <div>{this.state.viewedUser.email}</div>
+            </div>
+          </div>
           {this.props.isLoggedIn && (
             <div>
-              <div>Send a message to this user</div>
-              <div>{this.showFollowUserButton()}</div>
+              <div className="profile-info-content">
+                {this.showFollowUserButton()}
+              </div>
               {/* <div>{this.showBlockUserButton()}</div> */}
             </div>
           )}

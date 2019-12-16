@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import EditSingleListing from "./EditSingleListing.jsx";
+import * as dateformat from "dateformat";
 
 import "./styles/single-listing.css";
 
@@ -190,7 +191,14 @@ class UnconnectedSingleListing extends Component {
               {this.state.eventHost.username}
             </Link>
           </div>
-
+          <div className="single-listing-desc listing-info">
+            Taking place at {this.state.event.location} in{" "}
+            {this.state.event.city} on{" "}
+            {dateformat(
+              this.state.event.startDateTime,
+              'dddd, mmmm dS "-" h:MM TT'
+            )}
+          </div>
           <div className="single-listing-desc listing-info">
             {this.state.event.description}
           </div>
