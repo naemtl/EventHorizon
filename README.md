@@ -1,5 +1,3 @@
-To start the server, run `nodemon server.js`
+Event management application. Users can create (host) events, sort them by category, search events, follow other hosts and save events. 
 
-Modify the `server.js` file to add endpoints
-
-The frontend code goes in the `/src` directory
+Tools used to build this project: React, Redux, Express (Node.js), MongoDB, and useful libraries from the React community such as react-datepicker and react-select.
