@@ -891,7 +891,7 @@ app.post("/get-event-hosts", (req, res) => {
       }
 
       let hosts = users.map(user => {
-        return user._id;
+        return { _id: user._id, username: user.username };
       });
       console.log("EVENT HOSTS", hosts);
       res.send({ success: true, hosts });

@@ -58,7 +58,7 @@ class UnconnectedSingleListing extends Component {
       let eventHost = parsed.hosts.find(host => {
         console.log("value of host and event: ", this.state.event, host);
 
-        return this.state.event.hostId === host;
+        return this.state.event.hostId === host._id;
       });
       console.log("Value of eventHost: ", eventHost);
       this.setState({ eventHost: eventHost });
