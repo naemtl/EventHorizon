@@ -6,6 +6,8 @@ import "react-datepicker/dist/react-datepicker.css";
 import Select from "react-select";
 import { options, customStyles } from "./ReactSelectConfig.js";
 
+import MessageBanner from "./MessageBanner.jsx";
+
 class UnconnectedCreateEvent extends Component {
   constructor(props) {
     super(props);
@@ -109,6 +111,7 @@ class UnconnectedCreateEvent extends Component {
       return;
     }
     window.alert("Event created.");
+
     this.setState({
       title: "",
       description: "",
@@ -224,6 +227,9 @@ class UnconnectedCreateEvent extends Component {
           </div>
         </div>
       );
+      // FIXME:
+      // <MessageBanner message={"Your event could not be created."} />;
+      // <MessageBanner message={"Event created."} />;
     } else {
       return <Redirect to="/" />;
     }
