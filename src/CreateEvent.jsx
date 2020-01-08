@@ -229,11 +229,14 @@ class UnconnectedCreateEvent extends Component {
               <input className="form-submit-button" type="submit" />
             </form>
             {this.state.eventCreated && <Redirect to="/my-events" />}
+            {!this.state.eventCreated && this.state.showMessageBanner && (
+              <MessageBanner message={"Your event could not be created."} />
+            )}
           </div>
         </div>
       );
       // FIXME:
-      // <MessageBanner message={"Your event could not be created."} />;
+      // ;
       // <MessageBanner message={"Event created."} />;
     } else {
       return <Redirect to="/" />;
