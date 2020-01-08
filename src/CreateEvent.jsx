@@ -19,7 +19,9 @@ class UnconnectedCreateEvent extends Component {
       city: "",
       location: "",
       banner: undefined,
-      categories: []
+      categories: [],
+      eventCreated: false,
+      showMessageBanner: false
     };
   }
 
@@ -108,6 +110,7 @@ class UnconnectedCreateEvent extends Component {
     console.log("parsed response from new-event endpoint: ", parsed);
     if (!parsed.success) {
       window.alert("Your event could not be created.");
+      this.setState({ showMessageBanner: true });
       return;
     }
     window.alert("Event created.");
@@ -120,7 +123,8 @@ class UnconnectedCreateEvent extends Component {
       city: "",
       location: "",
       banner: "",
-      categories: []
+      categories: [],
+      eventCreated: true
     });
   };
 
@@ -224,6 +228,7 @@ class UnconnectedCreateEvent extends Component {
               />
               <input className="form-submit-button" type="submit" />
             </form>
+            {this.state.eventCreated && <Redirect to="/my-events" />}
           </div>
         </div>
       );
