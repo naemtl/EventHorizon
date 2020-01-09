@@ -21,7 +21,8 @@ class UnconnectedCreateEvent extends Component {
       banner: undefined,
       categories: [],
       eventCreated: false,
-      showMessageBanner: false
+      showMessageBanner: false,
+      createdEventId: null
     };
   }
 
@@ -109,12 +110,11 @@ class UnconnectedCreateEvent extends Component {
     let parsed = JSON.parse(responseBody);
     console.log("parsed response from new-event endpoint: ", parsed);
     if (!parsed.success) {
-      window.alert("Your event could not be created.");
+      //window.alert("Your event could not be created.");
       this.setState({ showMessageBanner: true });
       return;
     }
-    window.alert("Event created.");
-
+    //window.alert("Event created.");
     this.setState({
       title: "",
       description: "",
@@ -124,7 +124,8 @@ class UnconnectedCreateEvent extends Component {
       location: "",
       banner: "",
       categories: [],
-      eventCreated: true
+      eventCreated: true,
+      createdEventId: parsed.createdEventId
     });
   };
 
@@ -228,16 +229,15 @@ class UnconnectedCreateEvent extends Component {
               />
               <input className="form-submit-button" type="submit" />
             </form>
-            {this.state.eventCreated && <Redirect to="/my-events" />}
+            {this.state.eventCreated && (
+              <Redirect to={"/event/" + this.state.createdEventId} />
+            )}
             {!this.state.eventCreated && this.state.showMessageBanner && (
               <MessageBanner message={"Your event could not be created."} />
             )}
           </div>
         </div>
       );
-      // FIXME:
-      // ;
-      // <MessageBanner message={"Event created."} />;
     } else {
       return <Redirect to="/" />;
     }

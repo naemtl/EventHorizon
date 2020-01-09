@@ -269,23 +269,33 @@ app.post("/new-event", upload.single("img"), (req, res) => {
     .findOne({ _id: ObjectID() }, (err, listing) => {
       if (err) {
         console.log("There was an error on event creation: ", err);
-        return res.json({ success: false });
+        res.json({ success: false });
+        return;
       }
-      dbo.collection("eventListings").insertOne({
-        title,
-        hostId,
-        description,
-        startDateTime,
-        endDateTime,
-        city,
-        location,
-        banner: frontendPath,
-        categories,
-        comments: [],
-        isFeatured: false,
-        isSpam: false
-      });
-      res.json({ success: true });
+      dbo.collection("eventListings").insertOne(
+        {
+          title,
+          hostId,
+          description,
+          startDateTime,
+          endDateTime,
+          city,
+          location,
+          banner: frontendPath,
+          categories,
+          comments: [],
+          isFeatured: false,
+          isSpam: false
+        },
+        (err, response) => {
+          if (err) {
+            console.log("There was an error on event creation: ", err);
+            res.json({ success: false });
+            return;
+          }
+          res.json({ success: true, createdEventId: response.ops[0]._id });
+        }
+      );
     });
 });
 
